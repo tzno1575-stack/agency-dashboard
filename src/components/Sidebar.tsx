@@ -1,6 +1,6 @@
 "use client";
 
-import { Home, Briefcase, MessageSquare, Settings } from "lucide-react";
+import { Home, Briefcase, MessageSquare, Settings, Palette, Key, Server } from "lucide-react";
 import type { Client } from "@/lib/data";
 
 interface SidebarProps {
@@ -8,16 +8,18 @@ interface SidebarProps {
   selectedClientId: string | null;
   onSelectClient: (id: string) => void;
   onAddClient: () => void;
+  onNavigate: (module: "dashboard" | "clients" | "messages" | "settings") => void;
+  activeModule: string;
 }
 
 const modules = [
-  { name: "Dashboard", icon: Home, id: "dashboard" },
-  { name: "Clients", icon: Briefcase, id: "clients" },
-  { name: "Messages", icon: MessageSquare, id: "messages" },
-  { name: "Settings", icon: Settings, id: "settings" },
+  { name: "Dashboard", icon: Home, id: "dashboard" as const, desc: "Tasks & overview" },
+  { name: "Clients", icon: Briefcase, id: "clients" as const, desc: "CRM & billing" },
+  { name: "Messages", icon: MessageSquare, id: "messages" as const, desc: "Ayla chat" },
+  { name: "Settings", icon: Settings, id: "settings" as const, desc: "Config & integrations" },
 ];
 
-export default function Sidebar({ clients, selectedClientId, onSelectClient, onAddClient }: SidebarProps) {
+export default function Sidebar({ clients, selectedClientId, onSelectClient, onAddClient, onNavigate, activeModule }: SidebarProps) {
   const getBillingBadge = (status: Client["billing"]["status"]) => {
     const colors = {
       paid: "text-green-400",
@@ -42,10 +44,19 @@ export default function Sidebar({ clients, selectedClientId, onSelectClient, onA
         {modules.map((mod) => (
           <button
             key={mod.id}
-            className="flex items-center gap-3 w-full px-3 py-2 rounded-lg text-sm text-gray-400 hover:text-white hover:bg-[#1a1f2e] transition-colors"
+            onClick={() => onNavigate(mod.id)}
+            className={`flex items-center gap-3 w-full px-3 py-2 rounded-lg text-sm transition-colors ${
+              activeModule === mod.id
+                ? "bg-[#1a1f2e] text-white"
+                : "text-gray-400 hover:text-white hover:bg-[#1a1f2e]"
+            }`}
+            title={mod.desc}
           >
             <mod.icon size={18} />
-            {mod.name}
+            <div className="text-left">
+              <div className="font-medium">{mod.name}</div>
+              <div className="text-[10px] text-gray-600">{mod.desc}</div>
+            </div>
           </button>
         ))}
       </nav>

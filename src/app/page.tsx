@@ -11,12 +11,13 @@ import ClientDetail from "@/components/ClientDetail";
 import TaskForce from "@/components/TaskForce";
 import SocialAccountsPanel from "@/components/SocialAccountsPanel";
 import ContentStudio from "@/components/ContentStudio";
+import SettingsPanel from "@/components/SettingsPanel";
 import { sampleClients, sampleTasks, sampleSocialAccounts } from "@/lib/data";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import type { Client, Task, Agent, SocialAccount, ScheduledPost } from "@/lib/data";
 
 type Mode = "taskforce" | "hybrid" | "autopilot";
-type View = "kanban" | "review" | "crm" | "agents" | "social" | "content";
+type View = "kanban" | "review" | "crm" | "agents" | "social" | "content" | "settings";
 
 export default function Dashboard() {
   const [clients, setClients, clientsLoaded] = useLocalStorage<Client[]>("aqd_clients", sampleClients);
@@ -29,6 +30,16 @@ export default function Dashboard() {
   const [view, setView] = useState<View>("kanban");
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
+  const [activeModule, setActiveModule] = useState<string>("dashboard");
+
+  const handleNavigate = (module: "dashboard" | "clients" | "messages" | "settings") => {
+    setActiveModule(module);
+    setMobileSidebarOpen(false);
+    if (module === "dashboard") setView("kanban");
+    if (module === "clients") setView("crm");
+    if (module === "messages") setChatOpen(true);
+    if (module === "settings") setView("settings");
+  };
 
   // Filter tasks for the selected client
   const clientTasks = tasks.filter((t) => t.clientId === selectedClientId);
@@ -137,6 +148,8 @@ export default function Dashboard() {
               handleAddClient();
               setMobileSidebarOpen(false);
             }}
+            onNavigate={handleNavigate}
+            activeModule={activeModule}
           />
         </div>
       )}
@@ -151,6 +164,8 @@ export default function Dashboard() {
             setView("crm");
           }}
           onAddClient={handleAddClient}
+          onNavigate={handleNavigate}
+          activeModule={activeModule}
         />
       </div>
       <main className="flex-1 flex flex-col overflow-hidden">
@@ -304,6 +319,7 @@ export default function Dashboard() {
               onDelete={(id) => setPosts(posts.filter((p) => p.id !== id))}
             />
           )}
+          {view === "settings" && <SettingsPanel />}
         </div>
 
         {/* Status bar */}
