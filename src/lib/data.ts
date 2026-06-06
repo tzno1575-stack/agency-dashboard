@@ -149,6 +149,12 @@ export const sampleSocialAccounts: SocialAccount[] = [
   },
 ];
 
+// Sample clients
+export const sampleClients: Client[] = [
+  { id: "1", name: "Maurice Andrews", website: "mauriceandrewssolicitors.co.uk", socials: [], email: "monzaur@mauriceandrews.co.uk", billing: { lineItems: [{ description: "Website clone + SEO", amount: 500 }], status: "paid" }, notes: "Criminal law firm, Birmingham." },
+  { id: "2", name: "Tesla Rides", website: "teslarides.co.uk", socials: [{ platform: "facebook", url: "#" }], email: "bookings@teslarides.co.uk", billing: { lineItems: [], status: "pending" }, notes: "Premium taxi. Sensory-friendly." },
+];
+
 export const sampleTasks: Task[] = [
   {
     id: "1",
