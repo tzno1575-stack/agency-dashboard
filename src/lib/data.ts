@@ -1,12 +1,17 @@
 // Data models for Agency OS Dashboard
 
+export interface BillingLineItem {
+  description: string;
+  amount: number;
+}
+
 export interface Client {
   id: string;
   name: string;
   website: string;
   socials: { platform: string; url: string }[];
   email: string;
-  billing: { amount: number; status: "paid" | "pending" | "overdue" };
+  billing: { lineItems: BillingLineItem[]; status: "paid" | "pending" | "overdue" };
   notes: string;
 }
 
@@ -57,7 +62,7 @@ export const sampleClients: Client[] = [
     website: "mauriceandrewssolicitors.co.uk",
     socials: [],
     email: "monzaur@mauriceandrews.co.uk",
-    billing: { amount: 500, status: "paid" },
+    billing: { lineItems: [{ description: "Website clone + SEO", amount: 500 }], status: "paid" },
     notes: "Criminal law firm, Birmingham. Website clone + SEO.",
   },
   {
@@ -66,7 +71,7 @@ export const sampleClients: Client[] = [
     website: "teslarides.co.uk",
     socials: [{ platform: "facebook", url: "#" }],
     email: "bookings@teslarides.co.uk",
-    billing: { amount: 0, status: "pending" },
+    billing: { lineItems: [], status: "pending" },
     notes: "Premium taxi service. Sensory-friendly. Needs Facebook presence.",
   },
 ];

@@ -51,7 +51,7 @@ export default function Dashboard() {
       website: "",
       socials: [],
       email: "",
-      billing: { amount: 0, status: "pending" },
+      billing: { lineItems: [], status: "pending" },
       notes: "",
     };
     setClients([...clients, newClient]);

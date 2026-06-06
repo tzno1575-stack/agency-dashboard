@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { X, Plus, Trash2, Globe, Mail, PoundSterling, StickyNote } from "lucide-react";
-import type { Client } from "@/lib/data";
+import type { Client, BillingLineItem } from "@/lib/data";
 
 interface ClientDetailProps {
   client: Client | null;
@@ -17,7 +17,7 @@ const emptyClient: Client = {
   website: "",
   socials: [],
   email: "",
-  billing: { amount: 0, status: "pending" },
+  billing: { lineItems: [], status: "pending" },
   notes: "",
 };
 
@@ -128,22 +128,89 @@ export default function ClientDetail({ client, onSave, onDelete, onClose }: Clie
 
         {/* Billing */}
         <div>
-          <label className="text-xs text-gray-500 mb-1 flex items-center gap-1">
-            <PoundSterling size={12} /> Billing
-          </label>
-          <div className="flex gap-2">
-            <input
-              type="number"
-              value={editing.billing.amount}
-              onChange={(e) =>
+          <div className="flex items-center justify-between mb-1">
+            <label className="text-xs text-gray-500 flex items-center gap-1">
+              <PoundSterling size={12} /> Billing
+            </label>
+            <button
+              onClick={() =>
                 setEditing({
                   ...editing,
-                  billing: { ...editing.billing, amount: Number(e.target.value) },
+                  billing: {
+                    ...editing.billing,
+                    lineItems: [...editing.billing.lineItems, { description: "", amount: 0 }],
+                  },
                 })
               }
-              className="w-24 bg-[#0f1320] border border-[#1e293b] rounded-lg px-3 py-2 text-sm text-gray-200 focus:outline-none focus:border-[#3b82f6]"
-              placeholder="0"
-            />
+              className="text-[#3b82f6] text-xs hover:underline flex items-center gap-1"
+            >
+              <Plus size={12} /> Add Item
+            </button>
+          </div>
+
+          {/* Line items */}
+          {editing.billing.lineItems.length === 0 ? (
+            <p className="text-xs text-gray-600 py-2">No billing items yet</p>
+          ) : (
+            <div className="space-y-1.5 mb-2">
+              {editing.billing.lineItems.map((item, i) => (
+                <div key={i} className="flex gap-1.5">
+                  <input
+                    type="text"
+                    value={item.description}
+                    onChange={(e) => {
+                      const items = [...editing.billing.lineItems];
+                      items[i] = { ...items[i], description: e.target.value };
+                      setEditing({
+                        ...editing,
+                        billing: { ...editing.billing, lineItems: items },
+                      });
+                    }}
+                    className="flex-1 bg-[#0f1320] border border-[#1e293b] rounded px-2 py-1.5 text-xs text-gray-200 focus:outline-none focus:border-[#3b82f6]"
+                    placeholder="Website design"
+                  />
+                  <input
+                    type="number"
+                    value={item.amount || ""}
+                    onChange={(e) => {
+                      const items = [...editing.billing.lineItems];
+                      items[i] = { ...items[i], amount: Number(e.target.value) };
+                      setEditing({
+                        ...editing,
+                        billing: { ...editing.billing, lineItems: items },
+                      });
+                    }}
+                    className="w-20 bg-[#0f1320] border border-[#1e293b] rounded px-2 py-1.5 text-xs text-gray-200 focus:outline-none focus:border-[#3b82f6]"
+                    placeholder="0"
+                  />
+                  <button
+                    onClick={() => {
+                      const items = editing.billing.lineItems.filter((_, j) => j !== i);
+                      setEditing({
+                        ...editing,
+                        billing: { ...editing.billing, lineItems: items },
+                      });
+                    }}
+                    className="text-gray-600 hover:text-red-400 p-1"
+                  >
+                    <X size={12} />
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Total + Status */}
+          <div className="flex gap-2 items-center">
+            <div className="flex-1 bg-[#1a1f2e] border border-[#1e293b] rounded-lg px-3 py-2 flex items-center justify-between">
+              <span className="text-xs text-gray-500">Total</span>
+              <span className="text-sm font-bold text-white">
+                £
+                {editing.billing.lineItems
+                  .reduce((sum, item) => sum + (item.amount || 0), 0)
+                  .toLocaleString()}
+              </span>
+            </div>
             <select
               value={editing.billing.status}
               onChange={(e) =>
@@ -152,7 +219,7 @@ export default function ClientDetail({ client, onSave, onDelete, onClose }: Clie
                   billing: { ...editing.billing, status: e.target.value as Client["billing"]["status"] },
                 })
               }
-              className="flex-1 bg-[#0f1320] border border-[#1e293b] rounded-lg px-3 py-2 text-sm text-gray-200 focus:outline-none focus:border-[#3b82f6]"
+              className="w-28 bg-[#0f1320] border border-[#1e293b] rounded-lg px-3 py-2 text-sm text-gray-200 focus:outline-none focus:border-[#3b82f6]"
             >
               <option value="paid">Paid</option>
               <option value="pending">Pending</option>
