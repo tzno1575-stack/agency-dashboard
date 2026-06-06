@@ -19,12 +19,35 @@ export interface Task {
   createdAt: string;
 }
 
+export interface Agent {
+  id: string;
+  type: "content" | "seo" | "dev" | "research" | "qa";
+  name: string;
+  task: string;
+  clientId: string;
+  status: "queued" | "running" | "done" | "failed";
+  output?: string;
+  createdAt: string;
+  completedAt?: string;
+}
+
 export interface ChatMessage {
   id: string;
   role: "user" | "assistant";
   content: string;
   timestamp: string;
 }
+
+// Agent type catalog
+export const agentTypes = [
+  { id: "content", label: "Content Agent", desc: "Writes copy, posts, emails", icon: "📝" },
+  { id: "seo", label: "SEO Agent", desc: "Meta tags, keywords, audits", icon: "🔍" },
+  { id: "dev", label: "Dev Agent", desc: "Code, fixes, deployments", icon: "⚡" },
+  { id: "research", label: "Research Agent", desc: "Market intel, competitor analysis", icon: "🧠" },
+  { id: "qa", label: "QA Agent", desc: "Tests, reviews, checks", icon: "✅" },
+] as const;
+
+export type AgentType = (typeof agentTypes)[number]["id"];
 
 // Sample data for development
 export const sampleClients: Client[] = [
