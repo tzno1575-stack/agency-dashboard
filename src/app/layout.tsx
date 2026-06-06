@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from "next";
-import ClientLayout from "./ClientLayout";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -23,7 +22,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="apple-mobile-web-app-title" content="Aql Digital" />
         <link rel="apple-touch-icon" href="/icon-192.png" />
       </head>
-      <body className="antialiased"><ClientLayout>{children}</ClientLayout></body>
+      <body className="antialiased">{children}</body>
     </html>
   );
 }

@@ -23,7 +23,10 @@ type View = "kanban" | "review" | "crm" | "agents" | "social" | "content" | "set
 
 export default function Dashboard() {
   const [clientsRaw, setClientsRaw, clientsLoaded] = useLocalStorage<Client[]>("aqd_clients", sampleClients);
-  const clients = clientsRaw.map(c => normalizeClient(c));
+  const clients = clientsRaw.map(c => {
+    try { return normalizeClient(c); }
+    catch { return normalizeClient({ id: c.id || "unknown" }); }
+  });
   const setClients = (value: Client[] | ((prev: Client[]) => Client[])) => {
     if (value instanceof Function) {
       setClientsRaw((prev) => normalizeClients(value(prev.map(normalizeClient))));
@@ -42,6 +45,17 @@ export default function Dashboard() {
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
   const [activeModule, setActiveModule] = useState<string>("dashboard");
+  const [fatalError, setFatalError] = useState<string | null>(null);
+
+  // Catch any rendering error
+  useEffect(() => {
+    const handler = (e: ErrorEvent) => {
+      setFatalError(e.message || "Unknown error");
+      e.preventDefault();
+    };
+    window.addEventListener("error", handler);
+    return () => window.removeEventListener("error", handler);
+  }, []);
 
   const handleNavigate = (module: "dashboard" | "clients" | "messages" | "settings") => {
     setActiveModule(module);
@@ -148,6 +162,26 @@ export default function Dashboard() {
   };
 
   const loaded = clientsLoaded && tasksLoaded && agentsLoaded && socialLoaded && postsLoaded;
+
+  if (fatalError) {
+    return (
+      <div className="flex h-screen bg-[#0a0e17] items-center justify-center">
+        <div className="text-center max-w-sm px-4">
+          <div className="text-4xl mb-4">⚠️</div>
+          <h2 className="text-lg font-semibold text-gray-300 mb-2">Something went wrong</h2>
+          <p className="text-sm text-gray-500 mb-4">{fatalError}</p>
+          <button onClick={() => { setFatalError(null); window.location.reload(); }}
+            className="px-4 py-2 bg-[#3b82f6] text-white text-sm rounded-lg hover:bg-[#2563eb]">
+            Try Again
+          </button>
+          <p className="text-xs text-gray-600 mt-4">
+            If this persists, try clearing browser data or disabling content blockers.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   if (!loaded) {
     return (
       <div className="flex h-screen bg-[#0a0e17] items-center justify-center text-gray-500">
