@@ -108,7 +108,7 @@ export default function Dashboard() {
     };
     setClients([...clients, newClient]);
     setSelectedClientId(newClient.id);
-    setActiveBoard("clients"); setView("crm");
+    setActiveBoard("clients");
   };
 
   const handleSaveClient = (updated: Client) => {
@@ -171,7 +171,7 @@ export default function Dashboard() {
         <div className="sidebar-mobile-overlay" onClick={(e) => { if (e.target === e.currentTarget) setMobileSidebarOpen(false); }}>
           <Sidebar
             clients={clients} selectedClientId={selectedClientId}
-            onSelectClient={(id) => { setSelectedClientId(id); setActiveBoard("clients"); setView("crm"); setMobileSidebarOpen(false); }}
+            onSelectClient={(id) => { setSelectedClientId(id); setActiveBoard("clients"); setMobileSidebarOpen(false); }}
             onAddClient={() => { handleAddClient(); setMobileSidebarOpen(false); }}
             onNavigate={handleNavigate} activeBoard={activeBoard}
             agentCount={agentCount} reviewCount={reviewCount}
@@ -183,7 +183,7 @@ export default function Dashboard() {
       <div className="sidebar-desktop">
         <Sidebar
           clients={clients} selectedClientId={selectedClientId}
-          onSelectClient={(id) => { setSelectedClientId(id); setActiveBoard("clients"); setView("crm"); }}
+          onSelectClient={(id) => { setSelectedClientId(id); setActiveBoard("clients"); }}
           onAddClient={handleAddClient} onNavigate={handleNavigate} activeBoard={activeBoard}
           agentCount={agentCount} reviewCount={reviewCount}
         />
