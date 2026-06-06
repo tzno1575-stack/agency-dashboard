@@ -289,9 +289,9 @@ export default function Dashboard() {
               Select a client from the sidebar
             </div>
           )}
-          {activeBoard === "clients" && selectedClient && (
 
           {activeBoard === "notifications" && <NotificationCenter />}
+
           {activeBoard === "clients" && selectedClient && (
             <div className="flex flex-1 overflow-hidden crm-stack">
               <div className="w-80 border-r border-[#1e293b] overflow-y-auto flex flex-col">
