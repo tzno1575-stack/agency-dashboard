@@ -14,7 +14,7 @@ import ContentStudio from "@/components/ContentStudio";
 import SettingsPanel from "@/components/SettingsPanel";
 import LiveMonitor from "@/components/LiveMonitor";
 import BottomNav from "@/components/BottomNav";
-import { sampleClients, sampleTasks, sampleSocialAccounts } from "@/lib/data";
+import { sampleClients, sampleTasks, sampleSocialAccounts, normalizeClient, normalizeClients } from "@/lib/data";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import type { Client, Task, Agent, SocialAccount, ScheduledPost } from "@/lib/data";
 
@@ -22,7 +22,15 @@ type Mode = "taskforce" | "hybrid" | "autopilot";
 type View = "kanban" | "review" | "crm" | "agents" | "social" | "content" | "settings" | "monitor";
 
 export default function Dashboard() {
-  const [clients, setClients, clientsLoaded] = useLocalStorage<Client[]>("aqd_clients", sampleClients);
+  const [clientsRaw, setClientsRaw, clientsLoaded] = useLocalStorage<Client[]>("aqd_clients", sampleClients);
+  const clients = clientsRaw.map(c => normalizeClient(c));
+  const setClients = (value: Client[] | ((prev: Client[]) => Client[])) => {
+    if (value instanceof Function) {
+      setClientsRaw((prev) => normalizeClients(value(prev.map(normalizeClient))));
+    } else {
+      setClientsRaw(normalizeClients(value));
+    }
+  };
   const [tasks, setTasks, tasksLoaded] = useLocalStorage<Task[]>("aqd_tasks", sampleTasks);
   const [agents, setAgents, agentsLoaded] = useLocalStorage<Agent[]>("aqd_agents", []);
   const [socialAccounts, setSocialAccounts, socialLoaded] = useLocalStorage<SocialAccount[]>("aqd_social", sampleSocialAccounts);

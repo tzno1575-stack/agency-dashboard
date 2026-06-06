@@ -15,6 +15,23 @@ export interface Client {
   notes: string;
 }
 
+/** Ensure client has all required fields — fixes old localStorage data without billing */
+export function normalizeClient(c: Partial<Client> & { id: string }): Client {
+  return {
+    id: c.id,
+    name: c.name || "Untitled Client",
+    website: c.website || "",
+    socials: c.socials || [],
+    email: c.email || "",
+    billing: c.billing || { lineItems: [], status: "pending" },
+    notes: c.notes || "",
+  };
+}
+
+export function normalizeClients(clients: (Partial<Client> & { id: string })[]): Client[] {
+  return clients.map(normalizeClient);
+}
+
 export interface Task {
   id: string;
   clientId: string;

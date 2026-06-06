@@ -86,7 +86,7 @@ export default function Sidebar({ clients, selectedClientId, onSelectClient, onA
           >
             <div className="flex items-center justify-between">
               <span className="font-medium truncate">{client.name}</span>
-              {getBillingBadge(client.billing.status)}
+              {getBillingBadge(client.billing?.status || "pending")}
             </div>
             <div className="text-xs text-gray-500 truncate">{client.website}</div>
           </button>
