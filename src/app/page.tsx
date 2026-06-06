@@ -12,6 +12,7 @@ import TaskForce from "@/components/TaskForce";
 import SocialAccountsPanel from "@/components/SocialAccountsPanel";
 import ContentStudio from "@/components/ContentStudio";
 import SettingsPanel from "@/components/SettingsPanel";
+import BottomNav from "@/components/BottomNav";
 import { sampleClients, sampleTasks, sampleSocialAccounts } from "@/lib/data";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import type { Client, Task, Agent, SocialAccount, ScheduledPost } from "@/lib/data";
@@ -39,6 +40,12 @@ export default function Dashboard() {
     if (module === "clients") setView("crm");
     if (module === "messages") setChatOpen(true);
     if (module === "settings") setView("settings");
+  };
+
+  const handleBottomNav = (id: string) => {
+    if (id === "chat") { setChatOpen(true); return; }
+    setView(id as View);
+    setActiveModule(id === "kanban" ? "dashboard" : id === "crm" ? "clients" : "agents");
   };
 
   // Filter tasks for the selected client
@@ -330,6 +337,13 @@ export default function Dashboard() {
           <span className="ml-auto">Aql Digital Agency OS v0.4</span>
         </footer>
       </main>
+
+      {/* Bottom Navigation (mobile only) */}
+      <BottomNav
+        activeView={chatOpen ? "chat" : view}
+        agentCount={agents.filter((a) => a.status === "running" || a.status === "queued").length}
+        onNavigate={handleBottomNav}
+      />
 
       {/* Chat panel — slides in/out */}
       {chatOpen && (

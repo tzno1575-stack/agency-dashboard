@@ -129,6 +129,21 @@ body {
     max-height: 50vh;
   }
 
+  /* Bottom nav safe area */
+  .safe-area-pb {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  /* Add bottom padding for mobile nav */
+  main {
+    padding-bottom: 3.5rem;
+  }
+  @media (min-width: 769px) {
+    main {
+      padding-bottom: 0;
+    }
+  }
+
   /* Buttons: larger tap targets */
   button, a {
     min-height: 40px;
