@@ -128,7 +128,7 @@ export const sampleSocialAccounts: SocialAccount[] = [
     clientId: "2",
     platform: "facebook",
     pageName: "Tesla Rides",
-    pageUrl: "https://www.facebook.com/816125214914764",
+    pageUrl: "https://www.facebook.com/profile.php?id=61581496414531",
     status: "connected",
   },
   {
