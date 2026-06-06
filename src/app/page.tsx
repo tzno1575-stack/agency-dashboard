@@ -8,17 +8,21 @@ import ModeSwitcher from "@/components/ModeSwitcher";
 import ReviewQueue from "@/components/ReviewQueue";
 import ClientDetail from "@/components/ClientDetail";
 import TaskForce from "@/components/TaskForce";
-import { sampleClients, sampleTasks } from "@/lib/data";
+import SocialAccountsPanel from "@/components/SocialAccountsPanel";
+import ContentStudio from "@/components/ContentStudio";
+import { sampleClients, sampleTasks, sampleSocialAccounts } from "@/lib/data";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
-import type { Client, Task, Agent } from "@/lib/data";
+import type { Client, Task, Agent, SocialAccount, ScheduledPost } from "@/lib/data";
 
 type Mode = "taskforce" | "hybrid" | "autopilot";
-type View = "kanban" | "review" | "crm" | "agents";
+type View = "kanban" | "review" | "crm" | "agents" | "social" | "content";
 
 export default function Dashboard() {
   const [clients, setClients, clientsLoaded] = useLocalStorage<Client[]>("aqd_clients", sampleClients);
   const [tasks, setTasks, tasksLoaded] = useLocalStorage<Task[]>("aqd_tasks", sampleTasks);
   const [agents, setAgents, agentsLoaded] = useLocalStorage<Agent[]>("aqd_agents", []);
+  const [socialAccounts, setSocialAccounts, socialLoaded] = useLocalStorage<SocialAccount[]>("aqd_social", sampleSocialAccounts);
+  const [posts, setPosts, postsLoaded] = useLocalStorage<ScheduledPost[]>("aqd_posts", []);
   const [selectedClientId, setSelectedClientId] = useState<string | null>(sampleClients[0]?.id ?? null);
   const [mode, setMode] = useState<Mode>("hybrid");
   const [view, setView] = useState<View>("kanban");
@@ -97,7 +101,7 @@ export default function Dashboard() {
     } catch {}
   };
 
-  const loaded = clientsLoaded && tasksLoaded && agentsLoaded;
+  const loaded = clientsLoaded && tasksLoaded && agentsLoaded && socialLoaded && postsLoaded;
   if (!loaded) {
     return (
       <div className="flex h-screen bg-[#0a0e17] items-center justify-center text-gray-500">
@@ -148,6 +152,26 @@ export default function Dashboard() {
                   {agents.filter((a) => a.status === "running" || a.status === "queued").length}
                 </span>
               )}
+            </button>
+            <button
+              onClick={() => setView("social")}
+              className={`px-3 py-1.5 text-xs rounded-md transition-colors ${
+                view === "social"
+                  ? "bg-[#1a1f2e] text-white"
+                  : "text-gray-500 hover:text-gray-300"
+              }`}
+            >
+              Social
+            </button>
+            <button
+              onClick={() => setView("content")}
+              className={`px-3 py-1.5 text-xs rounded-md transition-colors ${
+                view === "content"
+                  ? "bg-[#1a1f2e] text-white"
+                  : "text-gray-500 hover:text-gray-300"
+              }`}
+            >
+              Content
             </button>
             <button
               onClick={() => setView("crm")}
@@ -212,6 +236,23 @@ export default function Dashboard() {
             </div>
           )}
           {view === "review" && <ReviewQueue />}
+          {view === "social" && selectedClient && (
+            <SocialAccountsPanel
+              accounts={socialAccounts}
+              clientId={selectedClientId!}
+              clientName={selectedClient?.name || ""}
+              onUpdate={setSocialAccounts}
+            />
+          )}
+          {view === "content" && selectedClient && (
+            <ContentStudio
+              posts={posts}
+              accounts={socialAccounts}
+              clientId={selectedClientId!}
+              onSave={(post) => setPosts([...posts, post])}
+              onDelete={(id) => setPosts(posts.filter((p) => p.id !== id))}
+            />
+          )}
         </div>
 
         {/* Status bar */}

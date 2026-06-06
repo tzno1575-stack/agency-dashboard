@@ -54,6 +54,84 @@ export const agentTypes = [
 
 export type AgentType = (typeof agentTypes)[number]["id"];
 
+// --- Social Media Management ---
+
+export type SocialPlatform = "facebook" | "instagram" | "tiktok" | "x";
+
+export interface SocialAccount {
+  id: string;
+  clientId: string;
+  platform: SocialPlatform;
+  pageName: string;
+  pageUrl: string;
+  status: "connected" | "pending" | "disconnected";
+  accessToken?: string; // stored in Bitwarden, ref only
+}
+
+export interface ScheduledPost {
+  id: string;
+  clientId: string;
+  platform: SocialPlatform;
+  content: string;
+  imageUrl?: string;
+  hashtags: string[];
+  scheduledAt: string;
+  status: "draft" | "scheduled" | "posted" | "failed";
+  aiPrompt?: string; // original prompt used to generate
+  postedAt?: string;
+  errorMessage?: string;
+}
+
+export const socialPlatforms: { id: SocialPlatform; label: string; color: string; icon: string }[] = [
+  { id: "facebook", label: "Facebook", color: "bg-blue-600", icon: "📘" },
+  { id: "instagram", label: "Instagram", color: "bg-pink-500", icon: "📷" },
+  { id: "tiktok", label: "TikTok", color: "bg-gray-900", icon: "🎵" },
+  { id: "x", label: "X (Twitter)", color: "bg-gray-700", icon: "🐦" },
+];
+
+export const hashtagGroups: { name: string; tags: string[] }[] = [
+  {
+    name: "Tesla Rides — Sensory",
+    tags: ["#SENtransport", "#AutismFriendly", "#SensoryFriendly", "#Tipton", "#WestMidlands", "#SpecialNeedsTravel"],
+  },
+  {
+    name: "Law Firm — Criminal",
+    tags: ["#CriminalDefence", "#Solicitor", "#Birmingham", "#LegalAid", "#JusticeForAll"],
+  },
+  {
+    name: "Small Business",
+    tags: ["#SmallBusiness", "#SupportLocal", "#UKBusiness", "#Entrepreneur"],
+  },
+];
+
+// Sample social accounts for Tesla Rides
+export const sampleSocialAccounts: SocialAccount[] = [
+  {
+    id: "sa-1",
+    clientId: "2",
+    platform: "facebook",
+    pageName: "Tesla Rides UK",
+    pageUrl: "https://facebook.com/teslaridesuk",
+    status: "pending",
+  },
+  {
+    id: "sa-2",
+    clientId: "2",
+    platform: "instagram",
+    pageName: "@teslaridesuk",
+    pageUrl: "https://instagram.com/teslaridesuk",
+    status: "disconnected",
+  },
+  {
+    id: "sa-3",
+    clientId: "2",
+    platform: "tiktok",
+    pageName: "@teslarides",
+    pageUrl: "https://tiktok.com/@teslarides",
+    status: "disconnected",
+  },
+];
+
 // Sample data for development
 export const sampleClients: Client[] = [
   {
