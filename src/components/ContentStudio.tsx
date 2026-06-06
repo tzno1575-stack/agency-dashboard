@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Send, Calendar, Hash, Sparkles, Clock, Trash2, ExternalLink } from "lucide-react";
+import { Send, Calendar, Hash, Sparkles, Clock, Trash2, ExternalLink, ArrowLeft, X } from "lucide-react";
 import { socialPlatforms, hashtagGroups } from "@/lib/data";
 import type { ScheduledPost, SocialAccount, SocialPlatform } from "@/lib/data";
 
@@ -11,9 +11,10 @@ interface ContentStudioProps {
   clientId: string;
   onSave: (post: ScheduledPost) => void;
   onDelete: (id: string) => void;
+  onBack?: () => void;
 }
 
-export default function ContentStudio({ posts, accounts, clientId, onSave, onDelete }: ContentStudioProps) {
+export default function ContentStudio({ posts, accounts, clientId, onSave, onDelete, onBack }: ContentStudioProps) {
   const [content, setContent] = useState("");
   const [platform, setPlatform] = useState<SocialPlatform>("facebook");
   const [selectedHashtags, setSelectedHashtags] = useState<string[]>([]);
@@ -90,7 +91,17 @@ export default function ContentStudio({ posts, accounts, clientId, onSave, onDel
   };
 
   return (
-    <div className="flex-1 flex overflow-hidden">
+    <div className="flex-1 flex flex-col overflow-hidden">
+      {/* Mobile back button */}
+      {onBack && (
+        <div className="md:hidden flex items-center gap-2 px-4 py-3 border-b border-[#1e293b] bg-[#0f1320] shrink-0">
+          <button onClick={onBack} className="p-1 text-gray-400 hover:text-white">
+            <ArrowLeft size={20} />
+          </button>
+          <span className="text-sm font-medium text-gray-300">Content Studio</span>
+        </div>
+      )}
+      <div className="flex-1 flex overflow-hidden">
       {/* Post creator */}
       <div className="flex-1 overflow-y-auto p-4">
         <h2 className="text-sm font-semibold text-gray-300 uppercase tracking-wider mb-4">
@@ -301,6 +312,7 @@ export default function ContentStudio({ posts, accounts, clientId, onSave, onDel
           </div>
         )}
       </div>
+    </div>
     </div>
   );
 }

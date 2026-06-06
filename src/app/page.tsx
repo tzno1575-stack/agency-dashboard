@@ -349,13 +349,29 @@ export default function Dashboard() {
             />
           )}
           {view === "content" && selectedClient && (
-            <ContentStudio
-              posts={posts}
-              accounts={socialAccounts}
-              clientId={selectedClientId!}
-              onSave={(post) => setPosts([...posts, post])}
-              onDelete={(id) => setPosts(posts.filter((p) => p.id !== id))}
-            />
+            <>
+              {/* Mobile: full-screen with back button */}
+              <div className="md:hidden fixed inset-0 z-50 bg-[#0a0e17]">
+                <ContentStudio
+                  posts={posts}
+                  accounts={socialAccounts}
+                  clientId={selectedClientId!}
+                  onSave={(post) => setPosts([...posts, post])}
+                  onDelete={(id) => setPosts(posts.filter((p) => p.id !== id))}
+                  onBack={() => setView("kanban")}
+                />
+              </div>
+              {/* Desktop: inline */}
+              <div className="hidden md:block flex-1 overflow-hidden">
+                <ContentStudio
+                  posts={posts}
+                  accounts={socialAccounts}
+                  clientId={selectedClientId!}
+                  onSave={(post) => setPosts([...posts, post])}
+                  onDelete={(id) => setPosts(posts.filter((p) => p.id !== id))}
+                />
+              </div>
+            </>
           )}
           {view === "settings" && <SettingsPanel />}
           {view === "monitor" && <LiveMonitor />}

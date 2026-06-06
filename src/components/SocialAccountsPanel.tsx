@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Plus, CheckCircle2, Clock, XCircle, ExternalLink, RefreshCw } from "lucide-react";
+import { Plus, CheckCircle2, Clock, XCircle, ExternalLink, RefreshCw, Trash2 } from "lucide-react";
 import { socialPlatforms } from "@/lib/data";
 import type { SocialAccount, SocialPlatform } from "@/lib/data";
 
@@ -45,6 +45,10 @@ export default function SocialAccountsPanel({ accounts, clientId, clientName, on
     setShowAdd(false);
   };
 
+  const handleDelete = (accountId: string) => {
+    onUpdate(accounts.filter((a) => a.id !== accountId));
+  };
+
   const handleStatusToggle = (accountId: string) => {
     onUpdate(
       accounts.map((a) => {
@@ -80,6 +84,15 @@ export default function SocialAccountsPanel({ accounts, clientId, clientName, on
             Add Account
           </button>
         )}
+        {availablePlatforms.length === 0 && (
+          <button
+            onClick={() => setShowAdd(!showAdd)}
+            className="flex items-center gap-1.5 text-gray-500 text-xs hover:underline"
+          >
+            <Plus size={14} />
+            Add Account
+          </button>
+        )}
       </div>
 
       {/* Add form */}
@@ -90,9 +103,9 @@ export default function SocialAccountsPanel({ accounts, clientId, clientName, on
             onChange={(e) => setNewPlatform(e.target.value as SocialPlatform)}
             className="w-full bg-[#0f1320] border border-[#1e293b] rounded px-3 py-2 text-sm text-gray-200"
           >
-            {availablePlatforms.map((p) => (
+            {socialPlatforms.map((p) => (
               <option key={p.id} value={p.id}>
-                {p.icon} {p.label}
+                {p.icon} {p.label}{connectedPlatforms.includes(p.id) ? " (already added)" : ""}
               </option>
             ))}
           </select>
@@ -163,6 +176,13 @@ export default function SocialAccountsPanel({ accounts, clientId, clientName, on
                     title="Toggle status"
                   >
                     <RefreshCw size={14} />
+                  </button>
+                  <button
+                    onClick={() => handleDelete(account.id)}
+                    className="p-1.5 text-gray-500 hover:text-red-400 rounded"
+                    title="Remove account"
+                  >
+                    <Trash2 size={14} />
                   </button>
                   {account.pageUrl && account.pageUrl !== "#" && (
                     <a
