@@ -93,7 +93,7 @@ export default function ContentStudio({ posts, accounts, clientId, onSave, onDel
   };
 
   return (
-    <div className="flex-1 flex flex-col overflow-hidden bg-[#0a0e17]">
+    <div className="flex-1 flex flex-col min-h-0 overflow-hidden bg-[#0a0e17]">
       {/* Header */}
       <div className="flex items-center gap-3 px-4 py-3 border-b border-[#1e293b] bg-[#0f1320] shrink-0">
         {onBack && (
@@ -111,7 +111,7 @@ export default function ContentStudio({ posts, accounts, clientId, onSave, onDel
         </button>
       </div>
 
-      <div className="flex-1 overflow-y-auto">
+      <div className="flex-1 overflow-y-auto pb-20">
         <div className="max-w-2xl mx-auto p-4 space-y-5">
           {/* === PLATFORM SELECTOR === */}
           <div>

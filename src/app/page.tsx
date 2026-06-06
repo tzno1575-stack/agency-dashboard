@@ -248,7 +248,7 @@ export default function Dashboard() {
         </header>
 
         {/* Content area */}
-        <div className="flex-1 overflow-hidden flex">
+        <div className="flex-1 min-h-0 overflow-hidden flex">
           {activeBoard === "dashboard" && (
             <div className="kanban-mobile flex gap-4 h-full p-4">
               <KanbanBoard tasks={tasks} onTasksChange={setTasks} />
