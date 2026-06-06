@@ -1,6 +1,6 @@
 "use client";
 
-import { LayoutDashboard, Users, MessageCircle, Bot } from "lucide-react";
+import { LayoutDashboard, Users, MessageCircle, Activity } from "lucide-react";
 
 interface BottomNavProps {
   activeView: string;
@@ -11,7 +11,7 @@ interface BottomNavProps {
 const navItems = [
   { id: "kanban", label: "Tasks", icon: LayoutDashboard },
   { id: "crm", label: "CRM", icon: Users },
-  { id: "agents", label: "Agents", icon: Bot },
+  { id: "monitor", label: "Live", icon: Activity },
   { id: "chat", label: "Chat", icon: MessageCircle },
 ];
 
@@ -32,11 +32,6 @@ export default function BottomNav({ activeView, agentCount, onNavigate }: Bottom
             >
               <div className="relative">
                 <Icon size={20} />
-                {item.id === "agents" && agentCount > 0 && (
-                  <span className="absolute -top-1 -right-2 bg-blue-500 text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center">
-                    {agentCount}
-                  </span>
-                )}
               </div>
               <span className="text-[10px] font-medium">{item.label}</span>
             </button>

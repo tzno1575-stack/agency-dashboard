@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { Menu, X, MessageCircle } from "lucide-react";
+import { Menu, X, MessageCircle, Activity } from "lucide-react";
 import Sidebar from "@/components/Sidebar";
 import KanbanBoard from "@/components/KanbanBoard";
 import ChatWidget from "@/components/ChatWidget";
@@ -12,13 +12,14 @@ import TaskForce from "@/components/TaskForce";
 import SocialAccountsPanel from "@/components/SocialAccountsPanel";
 import ContentStudio from "@/components/ContentStudio";
 import SettingsPanel from "@/components/SettingsPanel";
+import LiveMonitor from "@/components/LiveMonitor";
 import BottomNav from "@/components/BottomNav";
 import { sampleClients, sampleTasks, sampleSocialAccounts } from "@/lib/data";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import type { Client, Task, Agent, SocialAccount, ScheduledPost } from "@/lib/data";
 
 type Mode = "taskforce" | "hybrid" | "autopilot";
-type View = "kanban" | "review" | "crm" | "agents" | "social" | "content" | "settings";
+type View = "kanban" | "review" | "crm" | "agents" | "social" | "content" | "settings" | "monitor";
 
 export default function Dashboard() {
   const [clients, setClients, clientsLoaded] = useLocalStorage<Client[]>("aqd_clients", sampleClients);
@@ -45,6 +46,7 @@ export default function Dashboard() {
 
   const handleBottomNav = (id: string) => {
     if (id === "chat") { setChatOpen(true); return; }
+    if (id === "monitor") { setView("monitor"); setActiveModule("monitor"); return; }
     setView(id as View);
     setActiveModule(id === "kanban" ? "dashboard" : id === "crm" ? "clients" : "agents");
   };
@@ -272,6 +274,18 @@ export default function Dashboard() {
                 </span>
               )}
             </button>
+            {/* Monitor */}
+            <button
+              onClick={() => setView("monitor")}
+              className={`px-3 py-1.5 text-xs rounded-md transition-colors flex items-center gap-1 ${
+                view === "monitor"
+                  ? "bg-[#1a1f2e] text-white"
+                  : "text-gray-500 hover:text-gray-300"
+              }`}
+            >
+              <Activity size={13} />
+              Live
+            </button>
             {/* Chat toggle */}
             <button
               onClick={() => setChatOpen(!chatOpen)}
@@ -344,6 +358,7 @@ export default function Dashboard() {
             />
           )}
           {view === "settings" && <SettingsPanel />}
+          {view === "monitor" && <LiveMonitor />}
         </div>
 
         {/* Status bar */}
