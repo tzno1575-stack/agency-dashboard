@@ -14,12 +14,13 @@ import SettingsPanel from "@/components/SettingsPanel";
 import LiveMonitor from "@/components/LiveMonitor";
 import IdeaGen from "@/components/IdeaGen";
 import NotificationCenter from "@/components/NotificationCenter";
+import BillingModule from "@/components/BillingModule";
 import BottomNav from "@/components/BottomNav";
 import { sampleClients, sampleTasks, sampleSocialAccounts, normalizeClient, normalizeClients } from "@/lib/data";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import type { Client, Task, Agent, SocialAccount, ScheduledPost } from "@/lib/data";
 
-type NavBoard = "dashboard" | "taskforce" | "autopilot" | "ideagen" | "review" | "social" | "content" | "clients" | "notifications" | "messages" | "settings";
+type NavBoard = "dashboard" | "taskforce" | "autopilot" | "ideagen" | "review" | "social" | "content" | "clients" | "billing" | "notifications" | "messages" | "settings";
 
 export default function Dashboard() {
   const [clientsRaw, setClientsRaw, clientsLoaded] = useLocalStorage<Client[]>("aqd_clients", sampleClients);
@@ -238,6 +239,7 @@ export default function Dashboard() {
             {activeBoard === "social" && "📱 Social Accounts"}
             {activeBoard === "content" && "✍️ Content Studio"}
             {activeBoard === "clients" && "💼 Clients"}
+            {activeBoard === "billing" && "💰 Billing"}
             {activeBoard === "notifications" && "🔔 Notifications"}
             {activeBoard === "messages" && "💬 Messages"}
             {activeBoard === "settings" && "⚙️ Settings"}
@@ -291,6 +293,10 @@ export default function Dashboard() {
           )}
 
           {activeBoard === "notifications" && <NotificationCenter />}
+
+          {activeBoard === "billing" && (
+            <BillingModule clients={clients} onUpdate={setClients} />
+          )}
 
           {activeBoard === "clients" && selectedClient && (
             <div className="flex flex-1 overflow-hidden crm-stack">
