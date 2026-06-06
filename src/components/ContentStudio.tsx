@@ -56,20 +56,23 @@ export default function ContentStudio({ posts, accounts, clientId, onSave, onDel
     setScheduleTime("09:00");
   };
 
-  const handleAIGenerate = () => {
+  const handleAIGenerate = async () => {
     if (!aiPrompt.trim()) return;
-    // Store the prompt — actual generation happens via TaskForce agent
-    const promptPost: ScheduledPost = {
-      id: `post-${Date.now()}`,
-      clientId,
-      platform,
-      content: `[AI GENERATING: ${aiPrompt.trim()}]`,
-      hashtags: selectedHashtags,
-      scheduledAt: new Date().toISOString(),
-      status: "draft",
-      aiPrompt: aiPrompt.trim(),
-    };
-    onSave(promptPost);
+    // Push to review queue — user approves before it becomes a draft
+    try {
+      await fetch("/api/review", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          title: `AI Content: ${aiPrompt.trim().slice(0, 60)}...`,
+          description: aiPrompt.trim(),
+          agent: "Content Agent (AI)",
+          type: "content",
+          clientId,
+          output: `[Generating content based on: "${aiPrompt.trim()}"]`,
+        }),
+      });
+    } catch {}
     setAiPrompt("");
   };
 

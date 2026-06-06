@@ -26,6 +26,7 @@ export default function Dashboard() {
   const [agents, setAgents, agentsLoaded] = useLocalStorage<Agent[]>("aqd_agents", []);
   const [socialAccounts, setSocialAccounts, socialLoaded] = useLocalStorage<SocialAccount[]>("aqd_social", sampleSocialAccounts);
   const [posts, setPosts, postsLoaded] = useLocalStorage<ScheduledPost[]>("aqd_posts", []);
+  const [reviewCount, setReviewCount] = useState(0);
   const [selectedClientId, setSelectedClientId] = useState<string | null>(sampleClients[0]?.id ?? null);
   const [mode, setMode] = useState<Mode>("hybrid");
   const [view, setView] = useState<View>("kanban");
@@ -68,6 +69,20 @@ export default function Dashboard() {
     fetchAgents();
     return () => clearInterval(interval);
   }, [fetchAgents]);
+
+  // Poll review count
+  useEffect(() => {
+    const fetchReview = async () => {
+      try {
+        const res = await fetch("/api/review");
+        const data = await res.json();
+        setReviewCount(data.items?.filter((i: any) => i.status === "pending").length || 0);
+      } catch {}
+    };
+    fetchReview();
+    const interval = setInterval(fetchReview, 15000);
+    return () => clearInterval(interval);
+  }, []);
 
   const handleAddClient = () => {
     const newClient: Client = {
@@ -251,9 +266,11 @@ export default function Dashboard() {
               }`}
             >
               Review
-              <span className="bg-yellow-500/20 text-yellow-500 text-[10px] px-1.5 py-0.5 rounded-full">
-                2
-              </span>
+              {reviewCount > 0 && (
+                <span className="bg-yellow-500/20 text-yellow-500 text-[10px] px-1.5 py-0.5 rounded-full">
+                  {reviewCount}
+                </span>
+              )}
             </button>
             {/* Chat toggle */}
             <button
