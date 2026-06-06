@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Plus, CheckCircle2, Clock, XCircle, ExternalLink, RefreshCw, Trash2 } from "lucide-react";
+import { Plus, CheckCircle2, Clock, XCircle, ExternalLink, RefreshCw, Trash2, Pencil, Check, X } from "lucide-react";
 import { socialPlatforms } from "@/lib/data";
 import type { SocialAccount, SocialPlatform } from "@/lib/data";
 
@@ -20,11 +20,15 @@ const statusConfig = {
 
 export default function SocialAccountsPanel({ accounts, clientId, clientName, onUpdate }: SocialAccountsPanelProps) {
   const [showAdd, setShowAdd] = useState(false);
+  const [editingId, setEditingId] = useState<string | null>(null);
   const [newPlatform, setNewPlatform] = useState<SocialPlatform>("facebook");
   const [newPageName, setNewPageName] = useState("");
   const [newPageUrl, setNewPageUrl] = useState("");
+  // Edit form state
+  const [editPlatform, setEditPlatform] = useState<SocialPlatform>("facebook");
+  const [editPageName, setEditPageName] = useState("");
+  const [editPageUrl, setEditPageUrl] = useState("");
 
-  // Filter accounts for this client
   const clientAccounts = accounts.filter((a) => a.clientId === clientId);
   const connectedPlatforms = clientAccounts.map((a) => a.platform);
   const availablePlatforms = socialPlatforms.filter((p) => !connectedPlatforms.includes(p.id));
@@ -63,6 +67,29 @@ export default function SocialAccountsPanel({ accounts, clientId, clientName, on
     );
   };
 
+  const startEdit = (account: SocialAccount) => {
+    setEditingId(account.id);
+    setEditPlatform(account.platform);
+    setEditPageName(account.pageName);
+    setEditPageUrl(account.pageUrl);
+  };
+
+  const cancelEdit = () => {
+    setEditingId(null);
+  };
+
+  const saveEdit = () => {
+    if (!editingId || !editPageName.trim()) return;
+    onUpdate(
+      accounts.map((a) =>
+        a.id === editingId
+          ? { ...a, platform: editPlatform, pageName: editPageName.trim(), pageUrl: editPageUrl.trim() || "#" }
+          : a
+      )
+    );
+    setEditingId(null);
+  };
+
   return (
     <div className="p-4">
       <div className="flex items-center justify-between mb-4">
@@ -75,24 +102,15 @@ export default function SocialAccountsPanel({ accounts, clientId, clientName, on
             {clientAccounts.length} total
           </p>
         </div>
-        {availablePlatforms.length > 0 && (
-          <button
-            onClick={() => setShowAdd(!showAdd)}
-            className="flex items-center gap-1.5 text-[#3b82f6] text-xs hover:underline"
-          >
-            <Plus size={14} />
-            Add Account
-          </button>
-        )}
-        {availablePlatforms.length === 0 && (
-          <button
-            onClick={() => setShowAdd(!showAdd)}
-            className="flex items-center gap-1.5 text-gray-500 text-xs hover:underline"
-          >
-            <Plus size={14} />
-            Add Account
-          </button>
-        )}
+        <button
+          onClick={() => setShowAdd(!showAdd)}
+          className={`flex items-center gap-1.5 text-xs hover:underline ${
+            availablePlatforms.length > 0 ? "text-[#3b82f6]" : "text-gray-500"
+          }`}
+        >
+          <Plus size={14} />
+          Add Account
+        </button>
       </div>
 
       {/* Add form */}
@@ -113,7 +131,7 @@ export default function SocialAccountsPanel({ accounts, clientId, clientName, on
             type="text"
             value={newPageName}
             onChange={(e) => setNewPageName(e.target.value)}
-            placeholder="Page name (e.g. Tesla Rides UK)"
+            placeholder="Page name (e.g. Tesla Rides)"
             className="w-full bg-[#0f1320] border border-[#1e293b] rounded px-3 py-2 text-sm text-gray-200 focus:outline-none focus:border-[#3b82f6]"
           />
           <input
@@ -144,15 +162,61 @@ export default function SocialAccountsPanel({ accounts, clientId, clientName, on
             const platform = socialPlatforms.find((p) => p.id === account.platform);
             const status = statusConfig[account.status];
             const StatusIcon = status.icon;
+            const isEditing = editingId === account.id;
+
+            if (isEditing) {
+              return (
+                <div key={account.id} className="bg-[#1a1f2e] border border-[#3b82f6] rounded-lg p-3 space-y-2">
+                  <select
+                    value={editPlatform}
+                    onChange={(e) => setEditPlatform(e.target.value as SocialPlatform)}
+                    className="w-full bg-[#0f1320] border border-[#1e293b] rounded px-3 py-2 text-sm text-gray-200"
+                  >
+                    {socialPlatforms.map((p) => (
+                      <option key={p.id} value={p.id}>
+                        {p.icon} {p.label}
+                      </option>
+                    ))}
+                  </select>
+                  <input
+                    type="text"
+                    value={editPageName}
+                    onChange={(e) => setEditPageName(e.target.value)}
+                    placeholder="Page name"
+                    className="w-full bg-[#0f1320] border border-[#1e293b] rounded px-3 py-2 text-sm text-gray-200 focus:outline-none focus:border-[#3b82f6]"
+                  />
+                  <input
+                    type="text"
+                    value={editPageUrl}
+                    onChange={(e) => setEditPageUrl(e.target.value)}
+                    placeholder="Page URL"
+                    className="w-full bg-[#0f1320] border border-[#1e293b] rounded px-3 py-2 text-sm text-gray-200 focus:outline-none focus:border-[#3b82f6]"
+                  />
+                  <div className="flex gap-2">
+                    <button
+                      onClick={saveEdit}
+                      className="flex-1 bg-[#3b82f6] text-white text-xs py-1.5 rounded flex items-center justify-center gap-1 hover:bg-[#2563eb]"
+                    >
+                      <Check size={12} /> Save
+                    </button>
+                    <button
+                      onClick={cancelEdit}
+                      className="flex-1 bg-gray-700 text-gray-300 text-xs py-1.5 rounded flex items-center justify-center gap-1 hover:bg-gray-600"
+                    >
+                      <X size={12} /> Cancel
+                    </button>
+                  </div>
+                </div>
+              );
+            }
+
             return (
               <div
                 key={account.id}
                 className="bg-[#1a1f2e] border border-[#1e293b] rounded-lg p-3 flex items-center gap-3"
               >
-                {/* Platform icon */}
                 <span className="text-xl shrink-0">{platform?.icon}</span>
 
-                {/* Info */}
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2">
                     <span className="text-sm font-medium text-gray-200 truncate">
@@ -168,8 +232,14 @@ export default function SocialAccountsPanel({ accounts, clientId, clientName, on
                   <p className="text-xs text-gray-500 truncate">{platform?.label}</p>
                 </div>
 
-                {/* Actions */}
                 <div className="flex gap-1 shrink-0">
+                  <button
+                    onClick={() => startEdit(account)}
+                    className="p-1.5 text-gray-500 hover:text-[#3b82f6] rounded"
+                    title="Edit account"
+                  >
+                    <Pencil size={14} />
+                  </button>
                   <button
                     onClick={() => handleStatusToggle(account.id)}
                     className="p-1.5 text-gray-500 hover:text-gray-300 rounded"
