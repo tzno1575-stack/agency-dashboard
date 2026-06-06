@@ -48,7 +48,7 @@ export default function KanbanBoard({ tasks, onTasksChange }: KanbanBoardProps) 
       fetch("/api/tasks", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ task: { ...movedTask, status: "ready" }, action: "start" }),
+        body: JSON.stringify({ task: { ...moved, status: "ready" }, action: "start" }),
       }).catch(console.error);
     }
   };
