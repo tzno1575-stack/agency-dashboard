@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import { Menu, X } from "lucide-react";
 import Sidebar from "@/components/Sidebar";
 import KanbanBoard from "@/components/KanbanBoard";
 import ChatWidget from "@/components/ChatWidget";
@@ -26,6 +27,7 @@ export default function Dashboard() {
   const [selectedClientId, setSelectedClientId] = useState<string | null>(sampleClients[0]?.id ?? null);
   const [mode, setMode] = useState<Mode>("hybrid");
   const [view, setView] = useState<View>("kanban");
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
   // Filter tasks for the selected client
   const clientTasks = tasks.filter((t) => t.clientId === selectedClientId);
@@ -114,23 +116,57 @@ export default function Dashboard() {
 
   return (
     <div className="flex h-screen bg-[#0a0e17] text-gray-200 overflow-hidden">
-      <Sidebar
-        clients={clients}
-        selectedClientId={selectedClientId}
-        onSelectClient={(id) => {
-          setSelectedClientId(id);
-          setView("crm");
-        }}
-        onAddClient={handleAddClient}
-      />
+      {/* Mobile sidebar overlay */}
+      {mobileSidebarOpen && (
+        <div
+          className="sidebar-mobile-overlay"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setMobileSidebarOpen(false);
+          }}
+        >
+          <Sidebar
+            clients={clients}
+            selectedClientId={selectedClientId}
+            onSelectClient={(id) => {
+              setSelectedClientId(id);
+              setView("crm");
+              setMobileSidebarOpen(false);
+            }}
+            onAddClient={() => {
+              handleAddClient();
+              setMobileSidebarOpen(false);
+            }}
+          />
+        </div>
+      )}
+
+      {/* Desktop sidebar */}
+      <div className="sidebar-desktop">
+        <Sidebar
+          clients={clients}
+          selectedClientId={selectedClientId}
+          onSelectClient={(id) => {
+            setSelectedClientId(id);
+            setView("crm");
+          }}
+          onAddClient={handleAddClient}
+        />
+      </div>
       <main className="flex-1 flex flex-col overflow-hidden">
         {/* Header */}
-        <header className="flex items-center gap-4 px-4 py-3 border-b border-[#1e293b] bg-[#0f1320] shrink-0">
+        <header className="flex items-center gap-2 md:gap-4 px-3 md:px-4 py-3 border-b border-[#1e293b] bg-[#0f1320] shrink-0">
+          {/* Hamburger */}
+          <button
+            className="hamburger text-gray-400 hover:text-white"
+            onClick={() => setMobileSidebarOpen(true)}
+          >
+            <Menu size={22} />
+          </button>
           <ModeSwitcher mode={mode} onChange={setMode} />
-          <div className="flex gap-1 ml-auto">
+          <div className="flex gap-1 ml-auto tabs-scroll">
             <button
               onClick={() => setView("kanban")}
-              className={`px-3 py-1.5 text-xs rounded-md transition-colors ${
+              className={`px-2 md:px-3 py-1.5 text-xs rounded-md whitespace-nowrap transition-colors ${
                 view === "kanban"
                   ? "bg-[#1a1f2e] text-white"
                   : "text-gray-500 hover:text-gray-300"
@@ -202,7 +238,9 @@ export default function Dashboard() {
         {/* Content */}
         <div className="flex-1 overflow-hidden flex">
           {view === "kanban" && (
-            <KanbanBoard tasks={tasks} onTasksChange={setTasks} />
+            <div className="kanban-mobile flex gap-4 h-full p-4">
+              <KanbanBoard tasks={tasks} onTasksChange={setTasks} />
+            </div>
           )}
           {view === "agents" && (
             <TaskForce
@@ -212,7 +250,7 @@ export default function Dashboard() {
             />
           )}
           {view === "crm" && (
-            <div className="flex flex-1 overflow-hidden">
+            <div className="flex flex-1 overflow-hidden crm-stack">
               <div className="w-80 border-r border-[#1e293b] overflow-y-auto flex flex-col">
                 <ClientDetail
                   client={selectedClient}
@@ -260,7 +298,7 @@ export default function Dashboard() {
           <span>
             Mode: {mode === "hybrid" ? "Hybrid (10-80-10)" : mode === "taskforce" ? "TaskForce" : "AutoPilot"}
           </span>
-          <span className="ml-auto">Aql Digital Agency OS v0.3</span>
+          <span className="ml-auto">Aql Digital Agency OS v0.4</span>
         </footer>
       </main>
       <ChatWidget />
