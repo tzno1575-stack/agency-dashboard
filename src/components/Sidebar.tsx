@@ -7,6 +7,7 @@ interface SidebarProps {
   clients: Client[];
   selectedClientId: string | null;
   onSelectClient: (id: string) => void;
+  onAddClient: () => void;
 }
 
 const modules = [
@@ -16,9 +17,18 @@ const modules = [
   { name: "Settings", icon: Settings, id: "settings" },
 ];
 
-export default function Sidebar({ clients, selectedClientId, onSelectClient }: SidebarProps) {
+export default function Sidebar({ clients, selectedClientId, onSelectClient, onAddClient }: SidebarProps) {
+  const getBillingBadge = (status: Client["billing"]["status"]) => {
+    const colors = {
+      paid: "text-green-400",
+      pending: "text-yellow-400",
+      overdue: "text-red-400",
+    };
+    return <span className={`text-[10px] ${colors[status]}`}>●</span>;
+  };
+
   return (
-    <aside className="w-64 bg-[#111827] border-r border-[#1e293b] flex flex-col h-full">
+    <aside className="w-64 bg-[#111827] border-r border-[#1e293b] flex flex-col h-full shrink-0">
       {/* Logo */}
       <div className="p-4 border-b border-[#1e293b]">
         <h1 className="text-lg font-bold text-white">
@@ -44,9 +54,14 @@ export default function Sidebar({ clients, selectedClientId, onSelectClient }: S
       <div className="p-3 border-t border-[#1e293b] flex-1 overflow-y-auto">
         <div className="flex items-center justify-between mb-2">
           <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
-            Clients
+            Clients ({clients.length})
           </span>
-          <button className="text-[#3b82f6] text-xs hover:underline">+ Add</button>
+          <button
+            onClick={onAddClient}
+            className="text-[#3b82f6] text-xs hover:underline"
+          >
+            + Add
+          </button>
         </div>
         {clients.map((client) => (
           <button
@@ -58,10 +73,16 @@ export default function Sidebar({ clients, selectedClientId, onSelectClient }: S
                 : "text-gray-400 hover:text-white hover:bg-[#1a1f2e]"
             }`}
           >
-            <div className="font-medium truncate">{client.name}</div>
+            <div className="flex items-center justify-between">
+              <span className="font-medium truncate">{client.name}</span>
+              {getBillingBadge(client.billing.status)}
+            </div>
             <div className="text-xs text-gray-500 truncate">{client.website}</div>
           </button>
         ))}
+        {clients.length === 0 && (
+          <p className="text-xs text-gray-600 text-center py-4">No clients yet</p>
+        )}
       </div>
 
       {/* Footer */}

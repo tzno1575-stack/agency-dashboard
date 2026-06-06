@@ -2,7 +2,7 @@
 
 import { Users, GitMerge, Zap } from "lucide-react";
 
-type Mode = "paperclip" | "hybrid" | "polsia";
+type Mode = "taskforce" | "hybrid" | "nightshift";
 
 interface ModeSwitcherProps {
   mode: Mode;
@@ -11,8 +11,8 @@ interface ModeSwitcherProps {
 
 const modes: { id: Mode; label: string; icon: typeof Users; desc: string }[] = [
   {
-    id: "paperclip",
-    label: "Paperclip",
+    id: "taskforce",
+    label: "TaskForce",
     icon: Users,
     desc: "You direct agents",
   },
@@ -23,10 +23,10 @@ const modes: { id: Mode; label: string; icon: typeof Users; desc: string }[] = [
     desc: "Best of both",
   },
   {
-    id: "polsia",
-    label: "Polsia",
+    id: "nightshift",
+    label: "NightShift",
     icon: Zap,
-    desc: "Full autonomy",
+    desc: "24/7 autonomy",
   },
 ];
 
