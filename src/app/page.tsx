@@ -315,7 +315,12 @@ export default function Dashboard() {
               onDeploy={handleDeployAgent}
             />
           )}
-          {view === "crm" && (
+          {view === "crm" && !selectedClient && (
+            <div className="flex-1 flex items-center justify-center text-gray-500 text-sm">
+              Select a client from the sidebar to view details
+            </div>
+          )}
+          {view === "crm" && selectedClient && (
             <div className="flex flex-1 overflow-hidden crm-stack">
               <div className="w-80 border-r border-[#1e293b] overflow-y-auto flex flex-col">
                 <ClientDetail
