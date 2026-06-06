@@ -19,6 +19,7 @@ export default function ContentStudio({ posts, accounts, clientId, onSave, onDel
   const [platform, setPlatform] = useState<SocialPlatform>("facebook");
   const [selectedHashtags, setSelectedHashtags] = useState<string[]>([]);
   const [aiPrompt, setAiPrompt] = useState("");
+  const [aiLoading, setAiLoading] = useState(false);
   const [scheduleDate, setScheduleDate] = useState("");
   const [scheduleTime, setScheduleTime] = useState("09:00");
   const [showHashtagPicker, setShowHashtagPicker] = useState(false);
@@ -54,20 +55,45 @@ export default function ContentStudio({ posts, accounts, clientId, onSave, onDel
 
   const handleAIGenerate = async () => {
     if (!aiPrompt.trim()) return;
+    setAiLoading(true);
     try {
-      await fetch("/api/review", {
+      const res = await fetch("/api/social-pipeline", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          title: `AI: ${aiPrompt.trim().slice(0, 60)}`,
-          description: aiPrompt.trim(),
-          agent: "Content Agent",
-          type: "content",
+          prompt: aiPrompt.trim(),
+          platform,
           clientId,
-          output: `[Generating: "${aiPrompt.trim()}"]`,
+          imagePrompt: undefined, // future: add image prompt input
         }),
       });
+      const data = await res.json();
+      if (data.content) {
+        setContent(data.content);
+        if (data.hashtags?.length) {
+          setSelectedHashtags((prev) => {
+            const newTags = data.hashtags.filter((t: string) => !prev.includes(t));
+            return [...prev, ...newTags];
+          });
+        }
+        // Also push to review queue for approval
+        try {
+          await fetch("/api/review", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              title: `AI Generated: ${aiPrompt.trim().slice(0, 60)}`,
+              description: aiPrompt.trim(),
+              agent: "Social Pipeline AI",
+              type: "content",
+              clientId,
+              output: data.content,
+            }),
+          });
+        } catch {}
+      }
     } catch {}
+    setAiLoading(false);
     setAiPrompt("");
   };
 
