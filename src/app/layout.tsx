@@ -1,10 +1,15 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Aql Digital — Agency OS",
   description: "AI-powered agency command center. Orchestrate agents, manage clients, automate workflows.",
-  viewport: "width=device-width, initial-scale=1, viewport-fit=cover",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
