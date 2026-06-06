@@ -1,9 +1,9 @@
 "use client";
 
-import { Home, Briefcase, MessageSquare, Settings, Users, Zap, ClipboardCheck, Share2, PenLine, ChevronLeft, ChevronRight, Menu, Lightbulb } from "lucide-react";
+import { Home, Briefcase, MessageSquare, Settings, Users, Zap, ClipboardCheck, Share2, PenLine, ChevronLeft, ChevronRight, Menu, Lightbulb, Bell } from "lucide-react";
 import type { Client } from "@/lib/data";
 
-export type NavBoard = "dashboard" | "taskforce" | "autopilot" | "ideagen" | "review" | "social" | "content" | "clients" | "messages" | "settings";
+export type NavBoard = "dashboard" | "taskforce" | "autopilot" | "ideagen" | "review" | "social" | "content" | "clients" | "notifications" | "messages" | "settings";
 
 interface SidebarProps {
   clients: Client[];
@@ -29,6 +29,7 @@ const boards: { id: NavBoard; section: string; name: string; icon: typeof Home; 
   { id: "social", section: "workspace", name: "Social", icon: Share2, color: "text-blue-400" },
   { id: "content", section: "workspace", name: "Content", icon: PenLine, color: "text-green-400" },
   { id: "clients", section: "workspace", name: "Clients", icon: Briefcase },
+  { id: "notifications", section: "system", name: "Notifications", icon: Bell, color: "text-blue-400" },
   { id: "messages", section: "system", name: "Messages", icon: MessageSquare },
   { id: "settings", section: "system", name: "Settings", icon: Settings },
 ];
