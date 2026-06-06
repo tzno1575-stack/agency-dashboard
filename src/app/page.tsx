@@ -250,9 +250,7 @@ export default function Dashboard() {
         {/* Content area */}
         <div className="flex-1 min-h-0 overflow-hidden flex">
           {activeBoard === "dashboard" && (
-            <div className="kanban-mobile flex gap-4 h-full p-4">
-              <KanbanBoard tasks={tasks} onTasksChange={setTasks} />
-            </div>
+            <KanbanBoard tasks={tasks} onTasksChange={setTasks} clients={clientOptions} />
           )}
 
           {activeBoard === "taskforce" && (
@@ -292,13 +290,10 @@ export default function Dashboard() {
                   onClose={() => setActiveBoard("dashboard")} />
               </div>
               <div className="flex-1 flex flex-col">
-                <div className="px-4 py-2 text-xs text-gray-500 border-b border-[#1e293b]">
-                  Tasks for {selectedClient?.name || "client"} ({clientTasks.length})
-                </div>
                 <KanbanBoard tasks={clientTasks} onTasksChange={(updated) => {
                   const others = tasks.filter((t) => t.clientId !== selectedClientId);
                   setTasks([...others, ...updated]);
-                }} />
+                }} clients={clientOptions} selectedClientId={selectedClientId || undefined} />
               </div>
             </div>
           )}
