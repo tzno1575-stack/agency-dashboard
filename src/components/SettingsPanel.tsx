@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { 
-  Palette, Key, Server, Globe, Shield, Brain, 
-  Github, Cloud, ChevronDown, ChevronRight, CheckCircle2, 
+  Palette, Globe, Shield, Brain, 
+  GitBranch, Cloud, ChevronDown, ChevronRight, CheckCircle2, 
   XCircle, Clock, RefreshCw, ExternalLink, Terminal, Bot
 } from "lucide-react";
 
@@ -45,7 +45,7 @@ const integrations: IntegrationStatus[] = [
   {
     id: "github",
     name: "GitHub",
-    icon: Github,
+    icon: GitBranch,
     color: "text-gray-300",
     status: "connected",
     details: "tzno1575-stack · agency-dashboard repo · 40+ commits",
@@ -185,7 +185,7 @@ export default function SettingsPanel() {
               Redeploy Dashboard
             </button>
             <button className="flex items-center gap-1.5 justify-center px-3 py-2 bg-[#0f1320] border border-[#1e293b] rounded-lg text-xs text-gray-400 hover:text-white hover:border-[#3b82f6] transition-colors">
-              <Github size={12} />
+              <GitBranch size={12} />
               View on GitHub
             </button>
             <button className="flex items-center gap-1.5 justify-center px-3 py-2 bg-[#0f1320] border border-[#1e293b] rounded-lg text-xs text-gray-400 hover:text-white hover:border-[#3b82f6] transition-colors">
