@@ -11,7 +11,7 @@ import { sampleClients, sampleTasks } from "@/lib/data";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import type { Client, Task } from "@/lib/data";
 
-type Mode = "taskforce" | "hybrid" | "nightshift";
+type Mode = "taskforce" | "hybrid" | "autopilot";
 type View = "kanban" | "review" | "crm";
 
 export default function Dashboard() {
@@ -158,7 +158,7 @@ export default function Dashboard() {
         {/* Status bar */}
         <footer className="px-4 py-1.5 border-t border-[#1e293b] bg-[#0f1320] text-xs text-gray-600 flex items-center gap-4 shrink-0">
           <span>
-            Mode: {mode === "hybrid" ? "Hybrid (10-80-10)" : mode === "taskforce" ? "TaskForce" : "NightShift"}
+            Mode: {mode === "hybrid" ? "Hybrid (10-80-10)" : mode === "taskforce" ? "TaskForce" : "AutoPilot"}
           </span>
           <span className="ml-auto">Aql Digital Agency OS v0.2</span>
         </footer>

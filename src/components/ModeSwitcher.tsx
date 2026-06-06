@@ -2,7 +2,7 @@
 
 import { Users, GitMerge, Zap } from "lucide-react";
 
-type Mode = "taskforce" | "hybrid" | "nightshift";
+type Mode = "taskforce" | "hybrid" | "autopilot";
 
 interface ModeSwitcherProps {
   mode: Mode;
@@ -23,8 +23,8 @@ const modes: { id: Mode; label: string; icon: typeof Users; desc: string }[] = [
     desc: "Best of both",
   },
   {
-    id: "nightshift",
-    label: "NightShift",
+    id: "autopilot",
+    label: "AutoPilot",
     icon: Zap,
     desc: "24/7 autonomy",
   },
