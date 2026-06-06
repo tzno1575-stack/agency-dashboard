@@ -23,6 +23,7 @@ const emptyClient: Client = {
 
 export default function ClientDetail({ client, onSave, onDelete, onClose }: ClientDetailProps) {
   const [editing, setEditing] = useState<Client>(client || emptyClient);
+  const [saved, setSaved] = useState(false);
 
   // Reset form only when a different client is selected
   const [lastClientId, setLastClientId] = useState<string | null>(null);
@@ -30,8 +31,19 @@ export default function ClientDetail({ client, onSave, onDelete, onClose }: Clie
     if (client?.id !== lastClientId) {
       setEditing(client ? { ...client } : { ...emptyClient });
       setLastClientId(client?.id || null);
+      setSaved(false);
     }
   }, [client, lastClientId]);
+
+  const handleSave = () => {
+    const savedClient = {
+      ...editing,
+      id: editing.id || `client-${Date.now()}`,
+    };
+    onSave(savedClient);
+    setSaved(true);
+    setTimeout(() => setSaved(false), 2000);
+  };
 
   if (!client) {
     return (
@@ -40,14 +52,6 @@ export default function ClientDetail({ client, onSave, onDelete, onClose }: Clie
       </div>
     );
   }
-
-  const handleSave = () => {
-    const saved = {
-      ...editing,
-      id: editing.id || `client-${Date.now()}`,
-    };
-    onSave(saved);
-  };
 
   const handleAddSocial = () => {
     setEditing({
@@ -211,9 +215,13 @@ export default function ClientDetail({ client, onSave, onDelete, onClose }: Clie
         <div className="flex gap-2 pt-2">
           <button
             onClick={handleSave}
-            className="flex-1 bg-[#3b82f6] text-white text-sm py-2 rounded-lg hover:bg-[#2563eb] transition-colors"
+            className={`flex-1 text-sm py-2 rounded-lg transition-all ${
+              saved
+                ? "bg-green-600 text-white"
+                : "bg-[#3b82f6] text-white hover:bg-[#2563eb]"
+            }`}
           >
-            Save Client
+            {saved ? "✓ Saved!" : "Save Client"}
           </button>
           <button
             onClick={() => onDelete(client.id)}
