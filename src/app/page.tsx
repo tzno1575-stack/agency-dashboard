@@ -12,12 +12,13 @@ import SocialAccountsPanel from "@/components/SocialAccountsPanel";
 import ContentStudio from "@/components/ContentStudio";
 import SettingsPanel from "@/components/SettingsPanel";
 import LiveMonitor from "@/components/LiveMonitor";
+import IdeaGen from "@/components/IdeaGen";
 import BottomNav from "@/components/BottomNav";
 import { sampleClients, sampleTasks, sampleSocialAccounts, normalizeClient, normalizeClients } from "@/lib/data";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import type { Client, Task, Agent, SocialAccount, ScheduledPost } from "@/lib/data";
 
-type NavBoard = "dashboard" | "taskforce" | "autopilot" | "review" | "social" | "content" | "clients" | "messages" | "settings";
+type NavBoard = "dashboard" | "taskforce" | "autopilot" | "ideagen" | "review" | "social" | "content" | "clients" | "messages" | "settings";
 
 export default function Dashboard() {
   const [clientsRaw, setClientsRaw, clientsLoaded] = useLocalStorage<Client[]>("aqd_clients", sampleClients);
@@ -231,6 +232,7 @@ export default function Dashboard() {
             {activeBoard === "dashboard" && "📋 Dashboard"}
             {activeBoard === "taskforce" && "📎 TaskForce"}
             {activeBoard === "autopilot" && "🤖 AutoPilot"}
+            {activeBoard === "ideagen" && "💡 IdeaGen"}
             {activeBoard === "review" && "✅ Review Queue"}
             {activeBoard === "social" && "📱 Social Accounts"}
             {activeBoard === "content" && "✍️ Content Studio"}
@@ -258,6 +260,8 @@ export default function Dashboard() {
           )}
 
           {activeBoard === "autopilot" && <LiveMonitor />}
+
+          {activeBoard === "ideagen" && <IdeaGen />}
 
           {activeBoard === "review" && <ReviewQueue />}
 

@@ -149,28 +149,6 @@ export const sampleSocialAccounts: SocialAccount[] = [
   },
 ];
 
-// Sample data for development
-export const sampleClients: Client[] = [
-  {
-    id: "1",
-    name: "Maurice Andrews",
-    website: "mauriceandrewssolicitors.co.uk",
-    socials: [],
-    email: "monzaur@mauriceandrews.co.uk",
-    billing: { lineItems: [{ description: "Website clone + SEO", amount: 500 }], status: "paid" },
-    notes: "Criminal law firm, Birmingham. Website clone + SEO.",
-  },
-  {
-    id: "2",
-    name: "Tesla Rides",
-    website: "teslarides.co.uk",
-    socials: [{ platform: "facebook", url: "#" }],
-    email: "bookings@teslarides.co.uk",
-    billing: { lineItems: [], status: "pending" },
-    notes: "Premium taxi service. Sensory-friendly. Needs Facebook presence.",
-  },
-];
-
 export const sampleTasks: Task[] = [
   {
     id: "1",
@@ -200,4 +178,25 @@ export const sampleTasks: Task[] = [
     status: "planning",
     createdAt: "2026-06-06",
   },
+];
+
+// Idea Generator types
+export interface Idea {
+  id: number;
+  businessName: string;
+  description: string;
+  estimatedRevenue: string;
+  startupCost: string;
+  difficulty: "Easy" | "Medium" | "Hard" | "Expert";
+}
+
+export const sampleIdeas: Idea[] = [
+  { id: 1, businessName: "LocalBiz Web Studio", description: "Build affordable websites for small businesses. Every shop, café and tradesperson needs an online presence.", estimatedRevenue: "£2K–£5K/month", startupCost: "£300", difficulty: "Easy" },
+  { id: 2, businessName: "Social Spark", description: "Social media management for local restaurants and retailers. Content calendars, engagement, basic Meta ad campaigns.", estimatedRevenue: "£1.5K–£3K/month", startupCost: "£100", difficulty: "Easy" },
+  { id: 3, businessName: "CodeCraft Academy", description: "Weekend coding workshops for career-switchers. Partner with local co-working spaces. High margins, low overhead.", estimatedRevenue: "£3K–£8K/month", startupCost: "£500", difficulty: "Medium" },
+  { id: 4, businessName: "MarketReach AI", description: "AI-powered market research reports for small businesses. Automate competitor analysis and customer personas.", estimatedRevenue: "£4K–£10K/month", startupCost: "£1,000", difficulty: "Hard" },
+  { id: 5, businessName: "ContentFlow", description: "Subscription blog and newsletter service for B2B companies. Ghostwriting, SEO, distribution included.", estimatedRevenue: "£3K–£6K/month", startupCost: "£200", difficulty: "Medium" },
+  { id: 6, businessName: "PrintOnDemand Hub", description: "Custom merch via Shopify + Printful. Niche into local pride or professional in-jokes. Zero inventory.", estimatedRevenue: "£1K–£4K/month", startupCost: "£100", difficulty: "Easy" },
+  { id: 7, businessName: "SaaS Starter Kit", description: "Micro-SaaS for a narrow audience. e.g. appointment scheduling for dog groomers at £19–49/month.", estimatedRevenue: "£5K–£15K/month", startupCost: "£5,000", difficulty: "Expert" },
+  { id: 8, businessName: "Virtual PA Service", description: "Remote admin support for busy professionals. Email, calendar, data entry, travel booking.", estimatedRevenue: "£2K–£4K/month", startupCost: "£200", difficulty: "Medium" },
 ];
