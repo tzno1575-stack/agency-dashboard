@@ -24,10 +24,14 @@ const emptyClient: Client = {
 export default function ClientDetail({ client, onSave, onDelete, onClose }: ClientDetailProps) {
   const [editing, setEditing] = useState<Client>(client || emptyClient);
 
-  // Reset form when client changes
+  // Reset form only when a different client is selected
+  const [lastClientId, setLastClientId] = useState<string | null>(null);
   useEffect(() => {
-    setEditing(client || emptyClient);
-  }, [client]);
+    if (client?.id !== lastClientId) {
+      setEditing(client ? { ...client } : { ...emptyClient });
+      setLastClientId(client?.id || null);
+    }
+  }, [client, lastClientId]);
 
   if (!client) {
     return (
