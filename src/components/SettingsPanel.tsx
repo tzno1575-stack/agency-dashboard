@@ -104,7 +104,8 @@ export default function SettingsPanel() {
         }
       }
     } catch (e) {
-      setResults((prev) => ({ ...prev, [id]: { status: "failed", result: { error: "Network error" } }));
+      const failResult = { status: "failed", result: { error: "Network error" } };
+      setResults((prev) => ({ ...prev, [id]: failResult }));
     }
     setTesting(null);
   };
