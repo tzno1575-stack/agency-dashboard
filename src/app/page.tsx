@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { Menu, X, MessageCircle, Activity } from "lucide-react";
+import { X, MessageCircle } from "lucide-react";
 import Sidebar from "@/components/Sidebar";
 import KanbanBoard from "@/components/KanbanBoard";
 import ChatWidget from "@/components/ChatWidget";
@@ -39,14 +39,17 @@ export default function Dashboard() {
   const [reviewCount, setReviewCount] = useState(0);
   const [selectedClientId, setSelectedClientId] = useState<string | null>(sampleClients[0]?.id ?? null);
   const [activeBoard, setActiveBoard] = useState<NavBoard>("dashboard");
-  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [sidebarExpandedMobile, setSidebarExpandedMobile] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
   const [fatalError, setFatalError] = useState<string | null>(null);
 
   const agentCount = agents.filter((a) => a.status === "running" || a.status === "queued").length;
 
+  // Catch rendering errors — self-healing
   useEffect(() => {
     const handler = (e: ErrorEvent) => {
+      console.error("Dashboard error:", e.message);
       setFatalError(e.message || "Unknown error");
       e.preventDefault();
     };
@@ -54,14 +57,24 @@ export default function Dashboard() {
     return () => window.removeEventListener("error", handler);
   }, []);
 
-  // Navigation from sidebar
+  // Keyboard shortcut: Ctrl+B to toggle sidebar
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === "b") {
+        e.preventDefault();
+        setSidebarCollapsed(prev => !prev);
+      }
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, []);
+
   const handleNavigate = (board: NavBoard) => {
     setActiveBoard(board);
-    setMobileSidebarOpen(false);
+    setSidebarExpandedMobile(false);
     if (board === "messages") setChatOpen(true);
   };
 
-  // Bottom nav for mobile
   const handleBottomNav = (id: string) => {
     if (id === "chat") { setChatOpen(true); return; }
     setActiveBoard(id as NavBoard);
@@ -144,6 +157,18 @@ export default function Dashboard() {
     } catch {}
   };
 
+  // Derive sidebar CSS classes
+  const sidebarClasses = [
+    "app-sidebar",
+    sidebarCollapsed ? "collapsed" : "",
+    sidebarExpandedMobile ? "expanded-mobile" : "",
+  ].filter(Boolean).join(" ");
+
+  const mainClasses = [
+    "app-main",
+    sidebarCollapsed ? "sidebar-collapsed" : "",
+  ].filter(Boolean).join(" ");
+
   const loaded = clientsLoaded && tasksLoaded && agentsLoaded && socialLoaded && postsLoaded;
 
   if (fatalError) {
@@ -154,7 +179,9 @@ export default function Dashboard() {
           <h2 className="text-lg font-semibold text-gray-300 mb-2">Something went wrong</h2>
           <p className="text-sm text-gray-500 mb-4">{fatalError}</p>
           <button onClick={() => { setFatalError(null); window.location.reload(); }}
-            className="px-4 py-2 bg-[#3b82f6] text-white text-sm rounded-lg">Try Again</button>
+            className="px-4 py-2 bg-[#3b82f6] text-white text-sm rounded-lg hover:bg-[#2563eb]">
+            Reload Dashboard
+          </button>
         </div>
       </div>
     );
@@ -166,37 +193,40 @@ export default function Dashboard() {
 
   return (
     <div className="flex h-screen bg-[#0a0e17] text-gray-200 overflow-hidden">
-      {/* Mobile sidebar overlay */}
-      {mobileSidebarOpen && (
-        <div className="sidebar-mobile-overlay" onClick={(e) => { if (e.target === e.currentTarget) setMobileSidebarOpen(false); }}>
-          <Sidebar
-            clients={clients} selectedClientId={selectedClientId}
-            onSelectClient={(id) => { setSelectedClientId(id); setActiveBoard("clients"); setMobileSidebarOpen(false); }}
-            onAddClient={() => { handleAddClient(); setMobileSidebarOpen(false); }}
-            onNavigate={handleNavigate} activeBoard={activeBoard}
-            agentCount={agentCount} reviewCount={reviewCount}
-          />
-        </div>
-      )}
-
-      {/* Desktop sidebar */}
-      <div className="sidebar-desktop">
+      {/* === FIXED SIDEBAR FRAME === */}
+      <div className={sidebarClasses}>
         <Sidebar
-          clients={clients} selectedClientId={selectedClientId}
-          onSelectClient={(id) => { setSelectedClientId(id); setActiveBoard("clients"); }}
-          onAddClient={handleAddClient} onNavigate={handleNavigate} activeBoard={activeBoard}
-          agentCount={agentCount} reviewCount={reviewCount}
+          clients={clients}
+          selectedClientId={selectedClientId}
+          onSelectClient={(id) => {
+            setSelectedClientId(id);
+            setActiveBoard("clients");
+            setSidebarExpandedMobile(false);
+          }}
+          onAddClient={() => { handleAddClient(); setSidebarExpandedMobile(false); }}
+          onNavigate={handleNavigate}
+          activeBoard={activeBoard}
+          agentCount={agentCount}
+          reviewCount={reviewCount}
+          collapsed={sidebarCollapsed}
+          onToggleCollapse={() => setSidebarCollapsed(prev => !prev)}
+          onMobileExpand={() => setSidebarExpandedMobile(prev => !prev)}
+          mobileExpanded={sidebarExpandedMobile}
         />
       </div>
 
-      <main className="flex-1 flex flex-col overflow-hidden">
+      {/* Mobile backdrop when sidebar expanded */}
+      {sidebarExpandedMobile && (
+        <div
+          className="fixed inset-0 bg-black/50 z-30 md:hidden"
+          onClick={() => setSidebarExpandedMobile(false)}
+        />
+      )}
+
+      {/* === MAIN CONTENT === */}
+      <main className={mainClasses}>
         {/* Header */}
         <header className="flex items-center gap-2 md:gap-4 px-3 md:px-4 py-3 border-b border-[#1e293b] bg-[#0f1320] shrink-0">
-          <button className="hamburger text-gray-400 hover:text-white" onClick={() => setMobileSidebarOpen(true)}>
-            <Menu size={22} />
-          </button>
-
-          {/* Board title */}
           <span className="text-sm font-semibold text-gray-300 hidden sm:block">
             {activeBoard === "dashboard" && "📋 Dashboard"}
             {activeBoard === "taskforce" && "📎 TaskForce"}
@@ -219,25 +249,20 @@ export default function Dashboard() {
 
         {/* Content area */}
         <div className="flex-1 overflow-hidden flex">
-          {/* === DASHBOARD === */}
           {activeBoard === "dashboard" && (
             <div className="kanban-mobile flex gap-4 h-full p-4">
               <KanbanBoard tasks={tasks} onTasksChange={setTasks} />
             </div>
           )}
 
-          {/* === TASKFORCE === */}
           {activeBoard === "taskforce" && (
             <TaskForce agents={agents} clients={clientOptions} onDeploy={handleDeployAgent} />
           )}
 
-          {/* === AUTOPILOT === */}
           {activeBoard === "autopilot" && <LiveMonitor />}
 
-          {/* === REVIEW QUEUE === */}
           {activeBoard === "review" && <ReviewQueue />}
 
-          {/* === SOCIAL ACCOUNTS === */}
           {activeBoard === "social" && selectedClient && (
             <SocialAccountsPanel accounts={socialAccounts} clientId={selectedClientId!}
               clientName={selectedClient?.name || ""} onUpdate={setSocialAccounts} />
@@ -248,7 +273,6 @@ export default function Dashboard() {
             </div>
           )}
 
-          {/* === CONTENT STUDIO === */}
           {activeBoard === "content" && selectedClient && (
             <>
               <div className="md:hidden fixed inset-0 z-50 bg-[#0a0e17]">
@@ -268,7 +292,6 @@ export default function Dashboard() {
             </div>
           )}
 
-          {/* === CLIENTS / CRM === */}
           {activeBoard === "clients" && !selectedClient && (
             <div className="flex-1 flex items-center justify-center text-gray-500 text-sm">
               Select a client from the sidebar
@@ -292,14 +315,12 @@ export default function Dashboard() {
             </div>
           )}
 
-          {/* === MESSAGES === */}
           {activeBoard === "messages" && (
             <div className="flex-1 flex">
               <ChatWidget />
             </div>
           )}
 
-          {/* === SETTINGS === */}
           {activeBoard === "settings" && <SettingsPanel />}
         </div>
       </main>

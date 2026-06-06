@@ -1,6 +1,6 @@
 "use client";
 
-import { Home, Briefcase, MessageSquare, Settings, Users, Zap, ClipboardCheck, Share2, PenLine } from "lucide-react";
+import { Home, Briefcase, MessageSquare, Settings, Users, Zap, ClipboardCheck, Share2, PenLine, ChevronLeft, ChevronRight, Menu } from "lucide-react";
 import type { Client } from "@/lib/data";
 
 export type NavBoard = "dashboard" | "taskforce" | "autopilot" | "review" | "social" | "content" | "clients" | "messages" | "settings";
@@ -14,52 +14,77 @@ interface SidebarProps {
   activeBoard: NavBoard;
   agentCount?: number;
   reviewCount?: number;
+  collapsed: boolean;
+  onToggleCollapse: () => void;
+  onMobileExpand: () => void;
+  mobileExpanded: boolean;
 }
 
-const boards: { id: NavBoard; section: string; name: string; icon: typeof Home; desc: string; color?: string }[] = [
-  // ── BOARDS ──
-  { id: "dashboard", section: "boards", name: "Dashboard", icon: Home, desc: "Tasks & kanban" },
-  { id: "taskforce", section: "boards", name: "TaskForce", icon: Users, desc: "Hire & direct agents", color: "text-amber-400" },
-  { id: "autopilot", section: "boards", name: "AutoPilot", icon: Zap, desc: "24/7 operations", color: "text-purple-400" },
-
-  // ── WORKSPACE ──
-  { id: "review", section: "workspace", name: "Review Queue", icon: ClipboardCheck, desc: "Approve agent output", color: "text-yellow-400" },
-  { id: "social", section: "workspace", name: "Social Accounts", icon: Share2, desc: "Facebook, IG, TikTok, X", color: "text-blue-400" },
-  { id: "content", section: "workspace", name: "Content Studio", icon: PenLine, desc: "Create & schedule posts", color: "text-green-400" },
-  { id: "clients", section: "workspace", name: "Clients", icon: Briefcase, desc: "CRM & billing" },
-
-  // ── SYSTEM ──
-  { id: "messages", section: "system", name: "Messages", icon: MessageSquare, desc: "Ayla chat" },
-  { id: "settings", section: "system", name: "Settings", icon: Settings, desc: "Config & integrations" },
+const boards: { id: NavBoard; section: string; name: string; icon: typeof Home; color?: string }[] = [
+  { id: "dashboard", section: "boards", name: "Dashboard", icon: Home },
+  { id: "taskforce", section: "boards", name: "TaskForce", icon: Users, color: "text-amber-400" },
+  { id: "autopilot", section: "boards", name: "AutoPilot", icon: Zap, color: "text-purple-400" },
+  { id: "review", section: "workspace", name: "Review Queue", icon: ClipboardCheck, color: "text-yellow-400" },
+  { id: "social", section: "workspace", name: "Social", icon: Share2, color: "text-blue-400" },
+  { id: "content", section: "workspace", name: "Content", icon: PenLine, color: "text-green-400" },
+  { id: "clients", section: "workspace", name: "Clients", icon: Briefcase },
+  { id: "messages", section: "system", name: "Messages", icon: MessageSquare },
+  { id: "settings", section: "system", name: "Settings", icon: Settings },
 ];
 
-export default function Sidebar({ clients, selectedClientId, onSelectClient, onAddClient, onNavigate, activeBoard, agentCount = 0, reviewCount = 0 }: SidebarProps) {
+export default function Sidebar({
+  clients, selectedClientId, onSelectClient, onAddClient, onNavigate,
+  activeBoard, agentCount = 0, reviewCount = 0,
+  collapsed, onToggleCollapse, onMobileExpand, mobileExpanded,
+}: SidebarProps) {
   const getBillingBadge = (status: Client["billing"]["status"]) => {
     const colors = { paid: "text-green-400", pending: "text-yellow-400", overdue: "text-red-400" };
     return <span className={`text-[10px] ${colors[status]}`}>●</span>;
   };
 
-  const sections: { key: string; label: string; items: typeof boards }[] = [
+  const sections = [
     { key: "boards", label: "Boards", items: boards.filter(b => b.section === "boards") },
     { key: "workspace", label: "Workspace", items: boards.filter(b => b.section === "workspace") },
     { key: "system", label: "System", items: boards.filter(b => b.section === "system") },
   ];
 
   return (
-    <aside className="w-60 bg-[#111827] border-r border-[#1e293b] flex flex-col h-full shrink-0">
+    <>
       {/* Logo */}
-      <div className="p-3 border-b border-[#1e293b]">
-        <h1 className="text-base font-bold text-white">
-          <span className="text-[#3b82f6]">Aql</span> Digital
+      <div className="p-3 border-b border-[#1e293b] flex items-center gap-2 shrink-0">
+        {/* Mobile: menu icon to expand */}
+        <button
+          onClick={onMobileExpand}
+          className="md:hidden text-gray-400 hover:text-white p-0.5"
+          title="Expand menu"
+        >
+          <Menu size={18} />
+        </button>
+
+        {/* Desktop: collapse toggle */}
+        <button
+          onClick={onToggleCollapse}
+          className="sidebar-collapse-btn hidden md:flex text-gray-500 hover:text-gray-300 p-0.5 shrink-0"
+          title={collapsed ? "Expand sidebar (Ctrl+B)" : "Collapse sidebar (Ctrl+B)"}
+        >
+          {collapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
+        </button>
+
+        <h1 className="text-base font-bold text-white sidebar-logo-text truncate">
+          <span className="text-[#3b82f6]">Aql</span> <span className="sidebar-logo-text">Digital</span>
         </h1>
-        <p className="text-[10px] text-gray-500 mt-0.5">Agency OS</p>
+
+        {/* Show just "A" when collapsed */}
+        {collapsed && (
+          <span className="hidden md:block text-[#3b82f6] font-bold text-lg">A</span>
+        )}
       </div>
 
       {/* Navigation */}
       <nav className="flex-1 overflow-y-auto py-2">
         {sections.map((section, si) => (
           <div key={section.key} className={si > 0 ? "mt-1 pt-1 border-t border-[#1e293b]/50" : ""}>
-            <span className="text-[9px] font-semibold text-gray-500 uppercase tracking-widest px-3 py-1.5 block">
+            <span className="sidebar-section-label text-[9px] font-semibold text-gray-500 uppercase tracking-widest px-3 py-1.5 block">
               {section.label}
             </span>
             {section.items.map((board) => {
@@ -74,37 +99,36 @@ export default function Sidebar({ clients, selectedClientId, onSelectClient, onA
                       ? "bg-[#1a1f2e] text-white border-r-2 border-[#3b82f6]"
                       : "text-gray-400 hover:text-white hover:bg-[#1a1f2e] border-r-2 border-transparent"
                   }`}
-                  title={board.desc}
                 >
-                  <Icon size={16} className={isActive ? board.color || "" : ""} />
-                  <div className="text-left flex-1 min-w-0">
-                    <div className="font-medium text-xs flex items-center gap-1.5 truncate">
-                      {board.name}
-                      {board.id === "taskforce" && agentCount > 0 && (
-                        <span className="bg-blue-500/20 text-blue-400 text-[9px] px-1.5 py-0.5 rounded-full leading-none shrink-0">
-                          {agentCount}
-                        </span>
-                      )}
-                      {board.id === "review" && reviewCount > 0 && (
-                        <span className="bg-yellow-500/20 text-yellow-400 text-[9px] px-1.5 py-0.5 rounded-full leading-none shrink-0">
-                          {reviewCount}
-                        </span>
-                      )}
-                    </div>
-                  </div>
+                  <Icon size={16} className={`shrink-0 ${isActive ? board.color || "" : ""}`} />
+                  <span className="sidebar-label text-xs font-medium truncate flex items-center gap-1.5">
+                    {board.name}
+                    {board.id === "taskforce" && agentCount > 0 && (
+                      <span className="bg-blue-500/20 text-blue-400 text-[9px] px-1.5 py-0.5 rounded-full leading-none shrink-0">
+                        {agentCount}
+                      </span>
+                    )}
+                    {board.id === "review" && reviewCount > 0 && (
+                      <span className="bg-yellow-500/20 text-yellow-400 text-[9px] px-1.5 py-0.5 rounded-full leading-none shrink-0">
+                        {reviewCount}
+                      </span>
+                    )}
+                  </span>
                 </button>
               );
             })}
           </div>
         ))}
 
-        {/* Client selector — compact, at bottom of nav */}
-        <div className="mt-2 pt-2 border-t border-[#1e293b]">
+        {/* Client selector */}
+        <div className="sidebar-client-list mt-2 pt-2 border-t border-[#1e293b]">
           <div className="flex items-center justify-between px-3 py-1">
-            <span className="text-[9px] font-semibold text-gray-500 uppercase tracking-widest">
+            <span className="sidebar-section-label text-[9px] font-semibold text-gray-500 uppercase tracking-widest">
               Clients ({clients.length})
             </span>
-            <button onClick={onAddClient} className="text-[#3b82f6] text-[10px] hover:underline">+ Add</button>
+            <button onClick={onAddClient} className="sidebar-label text-[#3b82f6] text-[10px] hover:underline shrink-0">
+              + Add
+            </button>
           </div>
           {clients.map((client) => (
             <button
@@ -117,22 +141,24 @@ export default function Sidebar({ clients, selectedClientId, onSelectClient, onA
               }`}
             >
               <div className="flex items-center justify-between">
-                <span className="font-medium truncate">{client.name}</span>
-                {getBillingBadge(client.billing?.status || "pending")}
+                <span className="sidebar-label font-medium truncate">{client.name}</span>
+                <span className="sidebar-label">{getBillingBadge(client.billing?.status || "pending")}</span>
               </div>
             </button>
           ))}
           {clients.length === 0 && (
-            <p className="text-[10px] text-gray-600 text-center py-2">No clients yet</p>
+            <p className="sidebar-label text-[10px] text-gray-600 text-center py-2">No clients</p>
           )}
         </div>
       </nav>
 
       {/* Footer */}
-      <div className="p-2.5 border-t border-[#1e293b] text-[10px] text-gray-600 flex items-center gap-1.5">
-        <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse shrink-0" />
-        Hermes connected
+      <div className="p-2.5 border-t border-[#1e293b] shrink-0">
+        <div className="sidebar-footer-text text-[10px] text-gray-600 flex items-center gap-1.5">
+          <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse shrink-0" />
+          Hermes
+        </div>
       </div>
-    </aside>
+    </>
   );
 }

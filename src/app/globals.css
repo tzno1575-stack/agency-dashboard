@@ -7,100 +7,167 @@
   --border: #1e293b;
   --accent: #3b82f6;
   --text: #e2e8f0;
+  --sidebar-width: 240px;
+  --sidebar-collapsed: 52px;
 }
 
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
   background: var(--bg);
   color: var(--text);
   font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  margin: 0;
-  padding: 0;
+  margin: 0; padding: 0;
   -webkit-tap-highlight-color: transparent;
+  overflow: hidden;
 }
 
 /* Scrollbar styling */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #334155; }
+
+/* === FIXED SIDEBAR FRAME === */
+.app-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: var(--sidebar-width);
+  z-index: 40;
+  background: var(--sidebar);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  transition: width 0.2s ease;
+  overflow: hidden;
 }
 
-::-webkit-scrollbar-track {
-  background: transparent;
+.app-sidebar.collapsed {
+  width: var(--sidebar-collapsed);
 }
 
-::-webkit-scrollbar-thumb {
-  background: #1e293b;
-  border-radius: 3px;
+/* Main content shifts with sidebar */
+.app-main {
+  margin-left: var(--sidebar-width);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: margin-left 0.2s ease;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #334155;
+.app-sidebar.collapsed ~ .app-main,
+.app-main.sidebar-collapsed {
+  margin-left: var(--sidebar-collapsed);
 }
 
-/* Mobile responsive */
+/* === MOBILE: thin icon sidebar + overlay expand === */
 @media (max-width: 768px) {
-  /* Hide desktop sidebar, show mobile overlay */
-  .sidebar-desktop {
-    display: none !important;
+  .app-sidebar {
+    width: var(--sidebar-collapsed);
   }
 
-  .sidebar-mobile-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 50;
-    background: rgba(0, 0, 0, 0.6);
-    display: flex;
+  .app-main {
+    margin-left: var(--sidebar-collapsed);
   }
 
-  .sidebar-mobile-overlay aside {
-    width: 280px;
+  .app-sidebar.expanded-mobile {
+    width: 260px;
     max-width: 85vw;
-    height: 100%;
-    animation: slideInLeft 0.2s ease-out;
+    box-shadow: 4px 0 24px rgba(0,0,0,0.5);
   }
 
-  @keyframes slideInLeft {
-    from { transform: translateX(-100%); }
-    to { transform: translateX(0); }
-  }
-
-  @keyframes slideInRight {
-    from { transform: translateX(100%); }
-    to { transform: translateX(0); }
-  }
-
-  .animate-slide-in {
-    animation: slideInRight 0.25s ease-out;
-  }
-
-  /* Header tabs scrollable */
-  .tabs-scroll {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-  }
-  .tabs-scroll::-webkit-scrollbar {
+  .app-sidebar .sidebar-label,
+  .app-sidebar .sidebar-section-label,
+  .app-sidebar .sidebar-logo-text,
+  .app-sidebar .sidebar-client-list,
+  .app-sidebar .sidebar-footer-text {
     display: none;
   }
 
-  /* Kanban columns scroll horizontally */
-  .kanban-mobile {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    padding-bottom: 12px;
-  }
-  .kanban-mobile > * {
-    min-width: 260px;
-    flex-shrink: 0;
+  .app-sidebar.expanded-mobile .sidebar-label,
+  .app-sidebar.expanded-mobile .sidebar-section-label,
+  .app-sidebar.expanded-mobile .sidebar-logo-text,
+  .app-sidebar.expanded-mobile .sidebar-client-list,
+  .app-sidebar.expanded-mobile .sidebar-footer-text {
+    display: block;
   }
 
-  /* CRM: stack vertically */
+  /* Mobile: tap area bigger */
+  .app-sidebar button, .app-sidebar a {
+    min-height: 44px;
+    justify-content: center;
+    padding: 8px !important;
+  }
+
+  .app-sidebar.expanded-mobile button,
+  .app-sidebar.expanded-mobile a {
+    justify-content: flex-start;
+    padding: 8px 12px !important;
+  }
+}
+
+/* === DESKTOP: full sidebar with collapse toggle === */
+@media (min-width: 769px) {
+  .app-sidebar .sidebar-collapse-btn {
+    display: flex;
+  }
+
+  .app-sidebar.collapsed .sidebar-label,
+  .app-sidebar.collapsed .sidebar-section-label,
+  .app-sidebar.collapsed .sidebar-logo-text,
+  .app-sidebar.collapsed .sidebar-client-list,
+  .app-sidebar.collapsed .sidebar-footer-text {
+    display: none;
+  }
+
+  .app-sidebar.collapsed button,
+  .app-sidebar.collapsed a {
+    justify-content: center;
+    padding: 8px 4px !important;
+  }
+}
+
+/* === ANIMATIONS === */
+@keyframes slideInLeft {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes slideInRight {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+.animate-slide-in {
+  animation: slideInRight 0.25s ease-out;
+}
+
+/* === SCROLL BEHAVIOUR === */
+.tabs-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.tabs-scroll::-webkit-scrollbar { display: none; }
+
+/* Kanban horizontal scroll */
+.kanban-mobile {
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 12px;
+}
+.kanban-mobile > * {
+  min-width: 260px;
+  flex-shrink: 0;
+}
+
+/* CRM: stack vertically on mobile */
+@media (max-width: 768px) {
   .crm-stack {
     flex-direction: column !important;
   }
@@ -108,61 +175,14 @@ body {
     width: 100% !important;
     max-height: 50%;
   }
-
-  /* Content Studio: stack */
-  .content-stack {
-    flex-direction: column !important;
-  }
-  .content-stack > *:last-child {
-    width: 100% !important;
-    border-left: none !important;
-    border-top: 1px solid var(--border);
-  }
-
-  /* Chat widget: bottom sheet toggle */
-  .chat-widget {
-    position: fixed;
-    bottom: 0;
-    right: 0;
-    z-index: 40;
-    width: 100%;
-    max-height: 50vh;
-  }
-
-  /* Bottom nav safe area */
-  .safe-area-pb {
-    padding-bottom: env(safe-area-inset-bottom, 0px);
-  }
-
-  /* Add bottom padding for mobile nav */
   main {
     padding-bottom: 3.5rem;
   }
-  @media (min-width: 769px) {
-    main {
-      padding-bottom: 0;
-    }
-  }
-
-  /* Buttons: larger tap targets */
-  button, a {
-    min-height: 40px;
-    min-width: 40px;
-  }
-
-  /* Smaller text on mobile */
-  .text-sm {
-    font-size: 0.8125rem;
-  }
 }
 
-/* Hamburger menu button */
-.hamburger {
-  display: none;
+@media (min-width: 769px) {
+  main { padding-bottom: 0; }
 }
 
-@media (max-width: 768px) {
-  .hamburger {
-    display: flex;
-  }
-}
+/* Hamburger — hidden now, sidebar is always visible */
+.hamburger { display: none; }
