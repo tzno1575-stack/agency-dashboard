@@ -273,23 +273,11 @@ export default function Dashboard() {
             </div>
           )}
 
-          {activeBoard === "content" && selectedClient && (
-            <>
-              <div className="md:hidden fixed inset-0 z-50 bg-[#0a0e17]">
-                <ContentStudio posts={posts} accounts={socialAccounts} clientId={selectedClientId!}
-                  onSave={(post) => setPosts([...posts, post])} onDelete={(id) => setPosts(posts.filter((p) => p.id !== id))}
-                  onBack={() => setActiveBoard("dashboard")} />
-              </div>
-              <div className="hidden md:block flex-1 overflow-hidden">
-                <ContentStudio posts={posts} accounts={socialAccounts} clientId={selectedClientId!}
-                  onSave={(post) => setPosts([...posts, post])} onDelete={(id) => setPosts(posts.filter((p) => p.id !== id))} />
-              </div>
-            </>
-          )}
-          {activeBoard === "content" && !selectedClient && (
-            <div className="flex-1 flex items-center justify-center text-gray-500 text-sm">
-              Select a client from the sidebar first
-            </div>
+          {activeBoard === "content" && (
+            <ContentStudio posts={posts} accounts={socialAccounts} clientId={selectedClientId || ""}
+              onSave={(post) => setPosts([...posts, post])}
+              onDelete={(id) => setPosts(posts.filter((p) => p.id !== id))}
+              onBack={() => setActiveBoard("dashboard")} />
           )}
 
           {activeBoard === "clients" && !selectedClient && (
