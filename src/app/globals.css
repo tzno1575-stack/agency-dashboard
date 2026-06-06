@@ -60,12 +60,21 @@ body {
     width: 280px;
     max-width: 85vw;
     height: 100%;
-    animation: slideIn 0.2s ease-out;
+    animation: slideInLeft 0.2s ease-out;
   }
 
-  @keyframes slideIn {
+  @keyframes slideInLeft {
     from { transform: translateX(-100%); }
     to { transform: translateX(0); }
+  }
+
+  @keyframes slideInRight {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
+  }
+
+  .animate-slide-in {
+    animation: slideInRight 0.25s ease-out;
   }
 
   /* Header tabs scrollable */

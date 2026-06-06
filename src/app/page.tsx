@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, MessageCircle } from "lucide-react";
 import Sidebar from "@/components/Sidebar";
 import KanbanBoard from "@/components/KanbanBoard";
 import ChatWidget from "@/components/ChatWidget";
@@ -28,6 +28,7 @@ export default function Dashboard() {
   const [mode, setMode] = useState<Mode>("hybrid");
   const [view, setView] = useState<View>("kanban");
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+  const [chatOpen, setChatOpen] = useState(false);
 
   // Filter tasks for the selected client
   const clientTasks = tasks.filter((t) => t.clientId === selectedClientId);
@@ -232,6 +233,18 @@ export default function Dashboard() {
                 2
               </span>
             </button>
+            {/* Chat toggle */}
+            <button
+              onClick={() => setChatOpen(!chatOpen)}
+              className={`px-3 py-1.5 text-xs rounded-md transition-colors flex items-center gap-1 ${
+                chatOpen
+                  ? "bg-[#3b82f6] text-white"
+                  : "text-gray-500 hover:text-gray-300"
+              }`}
+            >
+              <MessageCircle size={14} />
+              Chat
+            </button>
           </div>
         </header>
 
@@ -301,7 +314,28 @@ export default function Dashboard() {
           <span className="ml-auto">Aql Digital Agency OS v0.4</span>
         </footer>
       </main>
-      <ChatWidget />
+
+      {/* Chat panel — slides in/out */}
+      {chatOpen && (
+        <>
+          {/* Mobile backdrop */}
+          <div
+            className="fixed inset-0 bg-black/50 z-30 md:hidden"
+            onClick={() => setChatOpen(false)}
+          />
+          {/* Panel */}
+          <div className="fixed md:relative inset-y-0 right-0 w-80 max-w-[85vw] z-40 md:z-auto animate-slide-in md:animate-none">
+            <ChatWidget />
+            {/* Close button on mobile */}
+            <button
+              onClick={() => setChatOpen(false)}
+              className="absolute top-2 right-2 md:hidden bg-[#1a1f2e] p-1 rounded text-gray-400 hover:text-white"
+            >
+              <X size={18} />
+            </button>
+          </div>
+        </>
+      )}
     </div>
   );
 }
