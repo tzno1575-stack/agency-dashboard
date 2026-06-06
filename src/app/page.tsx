@@ -17,8 +17,7 @@ import { sampleClients, sampleTasks, sampleSocialAccounts, normalizeClient, norm
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import type { Client, Task, Agent, SocialAccount, ScheduledPost } from "@/lib/data";
 
-type NavBoard = "dashboard" | "taskforce" | "autopilot" | "clients" | "messages" | "settings";
-type View = "kanban" | "review" | "crm" | "agents" | "social" | "content" | "monitor";
+type NavBoard = "dashboard" | "taskforce" | "autopilot" | "review" | "social" | "content" | "clients" | "messages" | "settings";
 
 export default function Dashboard() {
   const [clientsRaw, setClientsRaw, clientsLoaded] = useLocalStorage<Client[]>("aqd_clients", sampleClients);
@@ -40,7 +39,6 @@ export default function Dashboard() {
   const [reviewCount, setReviewCount] = useState(0);
   const [selectedClientId, setSelectedClientId] = useState<string | null>(sampleClients[0]?.id ?? null);
   const [activeBoard, setActiveBoard] = useState<NavBoard>("dashboard");
-  const [view, setView] = useState<View>("kanban");
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
   const [fatalError, setFatalError] = useState<string | null>(null);
@@ -60,17 +58,12 @@ export default function Dashboard() {
   const handleNavigate = (board: NavBoard) => {
     setActiveBoard(board);
     setMobileSidebarOpen(false);
-    if (board === "dashboard") setView("kanban");
-    if (board === "clients") setView("crm");
     if (board === "messages") setChatOpen(true);
   };
 
   // Bottom nav for mobile
   const handleBottomNav = (id: string) => {
     if (id === "chat") { setChatOpen(true); return; }
-    if (id === "monitor") { setActiveBoard("autopilot"); return; }
-    if (id === "kanban") { setActiveBoard("dashboard"); setView("kanban"); return; }
-    if (id === "crm") { setActiveBoard("clients"); setView("crm"); return; }
     setActiveBoard(id as NavBoard);
   };
 
@@ -208,64 +201,74 @@ export default function Dashboard() {
             {activeBoard === "dashboard" && "📋 Dashboard"}
             {activeBoard === "taskforce" && "📎 TaskForce"}
             {activeBoard === "autopilot" && "🤖 AutoPilot"}
+            {activeBoard === "review" && "✅ Review Queue"}
+            {activeBoard === "social" && "📱 Social Accounts"}
+            {activeBoard === "content" && "✍️ Content Studio"}
             {activeBoard === "clients" && "💼 Clients"}
+            {activeBoard === "messages" && "💬 Messages"}
             {activeBoard === "settings" && "⚙️ Settings"}
           </span>
 
-          {/* Sub-tabs for Dashboard */}
-          {activeBoard === "dashboard" && (
-            <div className="flex gap-1 ml-4 tabs-scroll">
-              {(["kanban", "review"] as const).map((v) => (
-                <button key={v} onClick={() => setView(v)}
-                  className={`px-2 md:px-3 py-1.5 text-xs rounded-md whitespace-nowrap transition-colors ${
-                    view === v ? "bg-[#1a1f2e] text-white" : "text-gray-500 hover:text-gray-300"
-                  }`}>
-                  {v === "kanban" ? "Tasks" : "Review"}
-                  {v === "review" && reviewCount > 0 && (
-                    <span className="ml-1 bg-yellow-500/20 text-yellow-400 text-[10px] px-1.5 py-0.5 rounded-full">{reviewCount}</span>
-                  )}
-                </button>
-              ))}
-            </div>
-          )}
-
           <div className="flex gap-1 ml-auto tabs-scroll">
-            {activeBoard === "dashboard" && (
-              <>
-                <button onClick={() => { setActiveBoard("clients"); setView("crm"); }}
-                  className="px-3 py-1.5 text-xs rounded-md text-gray-500 hover:text-gray-300">CRM</button>
-                <button onClick={() => setChatOpen(!chatOpen)}
-                  className={`px-3 py-1.5 text-xs rounded-md flex items-center gap-1 ${chatOpen ? "bg-[#3b82f6] text-white" : "text-gray-500 hover:text-gray-300"}`}>
-                  <MessageCircle size={14} />Chat
-                </button>
-              </>
-            )}
-            {activeBoard !== "dashboard" && (
-              <button onClick={() => { setActiveBoard("dashboard"); setView("kanban"); }}
-                className="px-3 py-1.5 text-xs rounded-md text-gray-500 hover:text-gray-300">← Dashboard</button>
-            )}
+            <button onClick={() => setChatOpen(!chatOpen)}
+              className={`px-3 py-1.5 text-xs rounded-md flex items-center gap-1 ${chatOpen ? "bg-[#3b82f6] text-white" : "text-gray-500 hover:text-gray-300"}`}>
+              <MessageCircle size={14} />Chat
+            </button>
           </div>
         </header>
 
         {/* Content area */}
         <div className="flex-1 overflow-hidden flex">
-          {/* === DASHBOARD BOARD === */}
-          {activeBoard === "dashboard" && view === "kanban" && (
+          {/* === DASHBOARD === */}
+          {activeBoard === "dashboard" && (
             <div className="kanban-mobile flex gap-4 h-full p-4">
               <KanbanBoard tasks={tasks} onTasksChange={setTasks} />
             </div>
           )}
-          {activeBoard === "dashboard" && view === "review" && <ReviewQueue />}
 
-          {/* === TASKFORCE BOARD === */}
+          {/* === TASKFORCE === */}
           {activeBoard === "taskforce" && (
             <TaskForce agents={agents} clients={clientOptions} onDeploy={handleDeployAgent} />
           )}
 
-          {/* === AUTOPILOT BOARD === */}
+          {/* === AUTOPILOT === */}
           {activeBoard === "autopilot" && <LiveMonitor />}
 
-          {/* === CLIENTS BOARD === */}
+          {/* === REVIEW QUEUE === */}
+          {activeBoard === "review" && <ReviewQueue />}
+
+          {/* === SOCIAL ACCOUNTS === */}
+          {activeBoard === "social" && selectedClient && (
+            <SocialAccountsPanel accounts={socialAccounts} clientId={selectedClientId!}
+              clientName={selectedClient?.name || ""} onUpdate={setSocialAccounts} />
+          )}
+          {activeBoard === "social" && !selectedClient && (
+            <div className="flex-1 flex items-center justify-center text-gray-500 text-sm">
+              Select a client from the sidebar first
+            </div>
+          )}
+
+          {/* === CONTENT STUDIO === */}
+          {activeBoard === "content" && selectedClient && (
+            <>
+              <div className="md:hidden fixed inset-0 z-50 bg-[#0a0e17]">
+                <ContentStudio posts={posts} accounts={socialAccounts} clientId={selectedClientId!}
+                  onSave={(post) => setPosts([...posts, post])} onDelete={(id) => setPosts(posts.filter((p) => p.id !== id))}
+                  onBack={() => setActiveBoard("dashboard")} />
+              </div>
+              <div className="hidden md:block flex-1 overflow-hidden">
+                <ContentStudio posts={posts} accounts={socialAccounts} clientId={selectedClientId!}
+                  onSave={(post) => setPosts([...posts, post])} onDelete={(id) => setPosts(posts.filter((p) => p.id !== id))} />
+              </div>
+            </>
+          )}
+          {activeBoard === "content" && !selectedClient && (
+            <div className="flex-1 flex items-center justify-center text-gray-500 text-sm">
+              Select a client from the sidebar first
+            </div>
+          )}
+
+          {/* === CLIENTS / CRM === */}
           {activeBoard === "clients" && !selectedClient && (
             <div className="flex-1 flex items-center justify-center text-gray-500 text-sm">
               Select a client from the sidebar
@@ -289,32 +292,20 @@ export default function Dashboard() {
             </div>
           )}
 
-          {/* === SETTINGS BOARD === */}
-          {activeBoard === "settings" && <SettingsPanel />}
+          {/* === MESSAGES === */}
+          {activeBoard === "messages" && (
+            <div className="flex-1 flex">
+              <ChatWidget />
+            </div>
+          )}
 
-          {/* === SOCIAL (shown inside CRM when clicked) === */}
-          {view === "social" && selectedClient && (
-            <SocialAccountsPanel accounts={socialAccounts} clientId={selectedClientId!}
-              clientName={selectedClient?.name || ""} onUpdate={setSocialAccounts} />
-          )}
-          {view === "content" && selectedClient && (
-            <>
-              <div className="md:hidden fixed inset-0 z-50 bg-[#0a0e17]">
-                <ContentStudio posts={posts} accounts={socialAccounts} clientId={selectedClientId!}
-                  onSave={(post) => setPosts([...posts, post])} onDelete={(id) => setPosts(posts.filter((p) => p.id !== id))}
-                  onBack={() => setView("kanban")} />
-              </div>
-              <div className="hidden md:block flex-1 overflow-hidden">
-                <ContentStudio posts={posts} accounts={socialAccounts} clientId={selectedClientId!}
-                  onSave={(post) => setPosts([...posts, post])} onDelete={(id) => setPosts(posts.filter((p) => p.id !== id))} />
-              </div>
-            </>
-          )}
+          {/* === SETTINGS === */}
+          {activeBoard === "settings" && <SettingsPanel />}
         </div>
       </main>
 
       {/* Bottom Navigation (mobile) */}
-      <BottomNav activeView={chatOpen ? "chat" : activeBoard === "taskforce" ? "agents" : activeBoard === "autopilot" ? "monitor" : activeBoard === "clients" ? "crm" : view}
+      <BottomNav activeView={chatOpen ? "chat" : activeBoard}
         agentCount={agentCount} onNavigate={handleBottomNav} />
 
       {/* Chat panel */}
