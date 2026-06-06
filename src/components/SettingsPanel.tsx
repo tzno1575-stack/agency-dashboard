@@ -77,16 +77,48 @@ const statusConfig = {
 export default function SettingsPanel() {
   const [expanded, setExpanded] = useState<string | null>(null);
   const [testing, setTesting] = useState<string | null>(null);
+  const [saving, setSaving] = useState<string | null>(null);
+  const [results, setResults] = useState<Record<string, any>>({});
 
   const handleTest = async (id: string) => {
     setTesting(id);
-    // Simulate test — in production this calls /api/settings/test
-    await new Promise((r) => setTimeout(r, 1500));
+    try {
+      const res = await fetch("/api/integrations", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ integration: id, action: "test", params: {} }),
+      });
+      const data = await res.json();
+      // Poll for result
+      const jobId = data.job?.id;
+      if (jobId) {
+        for (let i = 0; i < 10; i++) {
+          await new Promise((r) => setTimeout(r, 3000));
+          const poll = await fetch(`/api/integrations?after=${jobId.split("-")[1]}`);
+          const pollData = await poll.json();
+          const match = pollData.results?.find((r: any) => r.id === jobId);
+          if (match) {
+            setResults((prev) => ({ ...prev, [id]: match }));
+            break;
+          }
+        }
+      }
+    } catch (e) {
+      setResults((prev) => ({ ...prev, [id]: { status: "failed", result: { error: "Network error" } }));
+    }
     setTesting(null);
   };
 
-  const handleSave = (id: string) => {
-    // In production: POST to /api/settings → forwards to Hermes → Bitwarden
+  const handleSave = async (id: string) => {
+    setSaving(id);
+    // POST save action — keys get stored via Hermes → Bitwarden
+    await fetch("/api/integrations", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ integration: id, action: "save_key", params: {} }),
+    });
+    await new Promise((r) => setTimeout(r, 1000));
+    setSaving(null);
     setExpanded(null);
   };
 
@@ -109,7 +141,7 @@ export default function SettingsPanel() {
               key={integration.id}
               className="bg-[#1a1f2e] border border-[#1e293b] rounded-lg overflow-hidden"
             >
-              {/* Header — clickable */}
+              {/* Status line with live result */}
               <button
                 onClick={() => setExpanded(isExpanded ? null : integration.id)}
                 className="w-full flex items-center gap-3 p-4 text-left hover:bg-[#1a1f2e]/80 transition-colors"
@@ -118,10 +150,24 @@ export default function SettingsPanel() {
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2">
                     <h3 className="text-sm font-medium text-gray-200">{integration.name}</h3>
-                    <span className={`w-1.5 h-1.5 rounded-full ${status.dot}`} />
-                    <StatusIcon size={12} className={status.color} />
+                    {results[integration.id] ? (
+                      results[integration.id].status === "done" ? (
+                        <CheckCircle2 size={12} className="text-green-400" />
+                      ) : (
+                        <XCircle size={12} className="text-red-400" />
+                      )
+                    ) : (
+                      <>
+                        <span className={`w-1.5 h-1.5 rounded-full ${status.dot}`} />
+                        <StatusIcon size={12} className={status.color} />
+                      </>
+                    )}
                   </div>
-                  <p className="text-xs text-gray-500 mt-0.5 truncate">{integration.details}</p>
+                  <p className="text-xs text-gray-500 mt-0.5 truncate">
+                    {results[integration.id]
+                      ? results[integration.id].result?.error || results[integration.id].result?.message || "Done"
+                      : integration.details}
+                  </p>
                 </div>
                 {isExpanded ? (
                   <ChevronDown size={16} className="text-gray-500" />
@@ -159,9 +205,10 @@ export default function SettingsPanel() {
                     </button>
                     <button
                       onClick={() => handleSave(integration.id)}
-                      className="flex-1 px-3 py-1.5 text-xs rounded-lg bg-[#3b82f6] text-white hover:bg-[#2563eb] transition-colors"
+                      disabled={saving === integration.id}
+                      className="flex-1 px-3 py-1.5 text-xs rounded-lg bg-[#3b82f6] text-white hover:bg-[#2563eb] disabled:opacity-50 transition-colors"
                     >
-                      Save to Vault
+                      {saving === integration.id ? "Saving..." : "Save to Vault"}
                     </button>
                   </div>
                 </div>
