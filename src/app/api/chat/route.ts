@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
-import { kv } from "@vercel/kv";
+import { Redis } from "@upstash/redis";
+
+const redis = Redis.fromEnv();
 
 export async function POST(request: Request) {
   try {
@@ -17,10 +19,10 @@ export async function POST(request: Request) {
       timestamp: new Date().toISOString(),
     };
 
-    // Push to KV inbox
-    await kv.rpush("chat:inbox", msg);
+    // Push to Upstash Redis inbox
+    await redis.rpush("chat:inbox", JSON.stringify(msg));
 
-    // Notify via Telegram (keep existing behavior)
+    // Notify via Telegram so Hermes sees it
     try {
       const { TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID } = process.env;
       if (TELEGRAM_BOT_TOKEN && TELEGRAM_CHAT_ID) {
