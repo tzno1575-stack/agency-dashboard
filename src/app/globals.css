@@ -50,7 +50,8 @@ body {
   display: flex;
   flex-direction: column;
   transition: width 0.2s ease;
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .app-sidebar.collapsed {
@@ -63,7 +64,8 @@ body {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
   transition: margin-left 0.2s ease;
 }
 

@@ -271,7 +271,7 @@ export default function Dashboard() {
 
         {/* Content area */}
         <HelpTips board={activeBoard} />
-        <div className="flex-1 min-h-0 overflow-hidden flex">
+        <div className="flex-1 min-h-0 flex flex-col">
           {activeBoard === "briefing" && <DailyBriefing />}
 
           {activeBoard === "setup" && <SetupBoard />}
@@ -326,12 +326,12 @@ export default function Dashboard() {
           )}
 
           {activeBoard === "clients" && selectedClient && (
-            <div className="flex flex-1 overflow-hidden crm-stack">
-              <div className="w-80 border-r border-[#1a1a1a] overflow-y-auto flex flex-col">
+            <div className="flex flex-1 min-h-0 crm-stack">
+              <div className="w-80 border-r border-[#1a1a1a] overflow-y-auto flex flex-col bg-white">
                 <ClientDetail client={selectedClient} onSave={handleSaveClient} onDelete={handleDeleteClient}
                   onClose={() => setActiveBoard("dashboard")} />
               </div>
-              <div className="flex-1 flex flex-col">
+              <div className="flex-1 min-h-0 flex flex-col overflow-hidden">
                 <KanbanBoard tasks={clientTasks} onTasksChange={(updated) => {
                   const others = tasks.filter((t) => t.clientId !== selectedClientId);
                   setTasks([...others, ...updated]);
