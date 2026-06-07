@@ -1,9 +1,9 @@
 "use client";
 
-import { Home, Briefcase, MessageSquare, Settings, Users, Zap, ClipboardCheck, Share2, PenLine, ChevronLeft, ChevronRight, Menu, Lightbulb, Bell, DollarSign, Sunrise } from "lucide-react";
+import { Home, Briefcase, MessageSquare, Settings, Users, Zap, ClipboardCheck, Share2, PenLine, ChevronLeft, ChevronRight, Menu, Lightbulb, Bell, DollarSign, Sunrise, Film, Link, BookOpen } from "lucide-react";
 import type { Client } from "@/lib/data";
 
-export type NavBoard = "briefing" | "dashboard" | "taskforce" | "autopilot" | "ideagen" | "review" | "social" | "content" | "clients" | "billing" | "notifications" | "messages" | "settings";
+export type NavBoard = "briefing" | "dashboard" | "videostudio" | "taskforce" | "autopilot" | "ideagen" | "review" | "social" | "content" | "affiliates" | "kdp" | "clients" | "billing" | "notifications" | "messages" | "settings";
 
 interface SidebarProps {
   clients: Client[];
@@ -23,6 +23,7 @@ interface SidebarProps {
 const boards: { id: NavBoard; section: string; name: string; icon: typeof Home; color?: string }[] = [
   { id: "briefing", section: "boards", name: "Briefing", icon: Sunrise, color: "text-orange-400" },
   { id: "dashboard", section: "boards", name: "Dashboard", icon: Home },
+  { id: "videostudio", section: "boards", name: "Video Studio", icon: Film, color: "text-purple-400" },
   { id: "taskforce", section: "boards", name: "TaskForce", icon: Users, color: "text-amber-400" },
   { id: "autopilot", section: "boards", name: "AutoPilot", icon: Zap, color: "text-purple-400" },
   { id: "ideagen", section: "boards", name: "IdeaGen", icon: Lightbulb, color: "text-yellow-400" },
@@ -30,6 +31,8 @@ const boards: { id: NavBoard; section: string; name: string; icon: typeof Home; 
   { id: "social", section: "workspace", name: "Social", icon: Share2, color: "text-blue-400" },
   { id: "content", section: "workspace", name: "Content", icon: PenLine, color: "text-green-400" },
   { id: "clients", section: "workspace", name: "Clients", icon: Briefcase },
+  { id: "affiliates", section: "workspace", name: "Affiliates", icon: Link, color: "text-green-400" },
+  { id: "kdp", section: "workspace", name: "KDP Books", icon: BookOpen, color: "text-amber-400" },
   { id: "billing", section: "workspace", name: "Billing", icon: DollarSign, color: "text-green-400" },
   { id: "notifications", section: "system", name: "Notifications", icon: Bell, color: "text-blue-400" },
   { id: "messages", section: "system", name: "Messages", icon: MessageSquare },
