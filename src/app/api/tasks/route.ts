@@ -1,4 +1,13 @@
 import { NextResponse } from "next/server";
+import { sampleTasks } from "@/lib/data";
+
+export async function GET() {
+  try {
+    return NextResponse.json({ tasks: sampleTasks });
+  } catch {
+    return NextResponse.json({ tasks: [] });
+  }
+}
 
 export async function POST(request: Request) {
   try {

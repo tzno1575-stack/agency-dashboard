@@ -1,6 +1,14 @@
 import { NextResponse } from "next/server";
 import { sampleIdeas } from "@/lib/data";
 
+export async function GET() {
+  try {
+    return NextResponse.json({ ideas: sampleIdeas });
+  } catch {
+    return NextResponse.json({ ideas: [] });
+  }
+}
+
 export async function POST(request: Request) {
   try {
     const { skills, budget, location } = await request.json();
