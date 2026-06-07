@@ -1,27 +1,26 @@
 import { NextResponse } from "next/server";
-import { Redis } from "@upstash/redis";
 import { sampleReviews } from "@/lib/data";
 
-const redis = Redis.fromEnv();
-
-// GET: List review items — falls back to sample data when Redis empty
+// GET: List review items using Upstash REST API directly
 export async function GET() {
   try {
-    const raw = await redis.lrange("review:queue", 0, -1);
+    const url = `${process.env.UPSTASH_REDIS_REST_URL}/lrange/review:queue/0/-1`;
+    const res = await fetch(url, {
+      headers: { Authorization: `Bearer ${process.env.UPSTASH_REDIS_REST_TOKEN}` },
+    });
+    const json = await res.json();
+    const raw = json.result || [];
 
-    // Parse items, filter nulls/empties
-    const items = ((raw || []) as string[])
+    const items = (raw as string[])
       .filter((item: string) => item && item.trim().startsWith("{"))
       .map((item: string) => {
         try { return JSON.parse(item); } catch { return null; }
       })
       .filter(Boolean);
 
-    // Fall back to sample data if nothing in Redis
     if (items.length === 0) {
       return NextResponse.json({ items: sampleReviews });
     }
-
     return NextResponse.json({ items });
   } catch (e) {
     return NextResponse.json({ items: [] });
