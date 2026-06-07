@@ -137,7 +137,6 @@ body {
   /* Main content: allow scrolling on mobile */
   .app-main {
     overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
     padding-bottom: calc(var(--bottom-nav-h) + env(safe-area-inset-bottom, 0px));
   }
 
