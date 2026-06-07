@@ -76,83 +76,38 @@ body {
   margin-left: var(--sidebar-collapsed);
 }
 
-/* === MOBILE: redesigned for premium touch UX === */
+/* === MOBILE: FULLY HIDDEN SIDEBAR — bottom nav only === */
 @media (max-width: 768px) {
+  /* Completely hide sidebar — bottom nav is the only nav on mobile */
   .app-sidebar {
-    width: var(--mobile-sidebar);
-    border-right-width: 1px;
+    display: none !important;
+    width: 0 !important;
+    border: none !important;
   }
 
-  /* Slightly wider when expanded */
-  .app-sidebar.expanded-mobile {
-    width: 270px;
-    max-width: 85vw;
-    box-shadow: 8px 0 32px rgba(0,0,0,0.3);
-    z-index: 50;
-  }
-
+  /* Main content: full width, no left margin */
   .app-main {
-    margin-left: var(--mobile-sidebar);
-  }
-
-  /* Hide labels/icons selectively — icon-only mode */
-  .app-sidebar .sidebar-label,
-  .app-sidebar .sidebar-section-label,
-  .app-sidebar .sidebar-logo-text,
-  .app-sidebar .sidebar-client-list,
-  .app-sidebar .sidebar-footer-text {
-    display: none;
-  }
-
-  /* Show everything when expanded */
-  .app-sidebar.expanded-mobile .sidebar-label,
-  .app-sidebar.expanded-mobile .sidebar-section-label,
-  .app-sidebar.expanded-mobile .sidebar-logo-text,
-  .app-sidebar.expanded-mobile .sidebar-client-list,
-  .app-sidebar.expanded-mobile .sidebar-footer-text {
-    display: block;
-  }
-
-  .app-sidebar.expanded-mobile .sidebar-section-label {
-    /* display:block already set at lines 108-114 — this block deleted */
-  }
-
-  /* Mobile sidebar: big touch targets (56px icon-only bar) */
-  .app-sidebar button,
-  .app-sidebar a {
-    min-height: 48px;
-    justify-content: center;
-    padding: 10px 4px !important;
-    font-size: 13px;
-  }
-
-  .app-sidebar .sidebar-collapse-btn {
-    display: none;
-  }
-
-  /* When expanded, align left */
-  .app-sidebar.expanded-mobile button,
-  .app-sidebar.expanded-mobile a {
-    justify-content: flex-start;
-    padding: 12px 14px !important;
-    font-size: 14px;
-  }
-
-  /* Main content: allow scrolling on mobile */
-  .app-main {
-    overflow-y: auto;
+    margin-left: 0 !important;
     padding-bottom: calc(var(--bottom-nav-h) + env(safe-area-inset-bottom, 0px));
+    overflow-y: auto;
+    height: 100vh;
   }
 
-  /* Bigger header on mobile */
+  /* Mobile header: taller, cleaner, centered board name */
   .app-main header {
-    padding: 12px 16px !important;
-    min-height: 52px;
+    padding: 14px 16px !important;
+    min-height: 56px;
+    background: white;
+    border-bottom: 1px solid #e5e7eb;
   }
 
-  /* Content cards: more breathing room */
+  /* Cards get breathing room on mobile */
   .app-main [class*="p-3"] { padding: 16px !important; }
   .app-main [class*="p-4"] { padding: 20px !important; }
+  .app-main [class*="p-6"] { padding: 20px !important; }
+
+  /* Kill any leftover horizontal overflow */
+  body { overflow-x: hidden; }
 }
 
 /* === DESKTOP: full sidebar with collapse toggle === */

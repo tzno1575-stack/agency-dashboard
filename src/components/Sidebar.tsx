@@ -1,6 +1,6 @@
 "use client";
 
-import { Home, Briefcase, MessageSquare, Settings, Users, Zap, ClipboardCheck, Share2, PenLine, ChevronLeft, ChevronRight, Menu, Lightbulb, Bell, DollarSign, Sunrise, Film, Link, BookOpen, FileText, Sparkles, Globe } from "lucide-react";
+import { Home, Briefcase, MessageSquare, Settings, Users, Zap, ClipboardCheck, Share2, PenLine, ChevronLeft, ChevronRight, Lightbulb, Bell, DollarSign, Sunrise, Film, Link, BookOpen, FileText, Sparkles, Globe } from "lucide-react";
 import type { Client } from "@/lib/data";
 
 export type NavBoard = "briefing" | "dashboard" | "aichat" | "setup" | "sitebuilder" | "videostudio" | "taskforce" | "autopilot" | "ideagen" | "standards" | "review" | "social" | "content" | "affiliates" | "kdp" | "clients" | "billing" | "notifications" | "messages" | "settings";
@@ -16,8 +16,6 @@ interface SidebarProps {
   reviewCount?: number;
   collapsed: boolean;
   onToggleCollapse: () => void;
-  onMobileExpand: () => void;
-  mobileExpanded: boolean;
 }
 
 const boards: { id: NavBoard; section: string; name: string; icon: typeof Home; color?: string }[] = [
@@ -46,7 +44,7 @@ const boards: { id: NavBoard; section: string; name: string; icon: typeof Home; 
 export default function Sidebar({
   clients, selectedClientId, onSelectClient, onAddClient, onNavigate,
   activeBoard, agentCount = 0, reviewCount = 0,
-  collapsed, onToggleCollapse, onMobileExpand, mobileExpanded,
+  collapsed, onToggleCollapse,
 }: SidebarProps) {
   const getBillingBadge = (status: Client["billing"]["status"]) => {
     const colors = { paid: "text-green-400", pending: "text-yellow-400", overdue: "text-red-400" };
@@ -63,15 +61,6 @@ export default function Sidebar({
     <>
       {/* Logo */}
       <div className="p-3 md:p-3 py-3.5 border-b border-[#1a1a1a] flex items-center gap-2.5 shrink-0 min-h-[52px]">
-        {/* Mobile: menu icon to expand */}
-        <button
-          onClick={onMobileExpand}
-          className="md:hidden text-gray-500 hover:text-gray-900 p-1 -ml-0.5"
-          title="Expand menu"
-        >
-          <Menu size={22} />
-        </button>
-
         {/* Desktop: collapse toggle */}
         <button
           onClick={onToggleCollapse}

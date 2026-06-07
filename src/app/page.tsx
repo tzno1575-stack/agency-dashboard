@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { X, MessageCircle, Menu } from "lucide-react";
+import { MessageCircle } from "lucide-react";
 import Sidebar from "@/components/Sidebar";
 import KanbanBoard from "@/components/KanbanBoard";
 import ChatWidget from "@/components/ChatWidget";
@@ -52,7 +52,6 @@ export default function Dashboard() {
   const [selectedClientId, setSelectedClientId] = useState<string | null>(sampleClients[0]?.id ?? null);
   const [activeBoard, setActiveBoard] = useState<NavBoard>("briefing");
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
-  const [sidebarExpandedMobile, setSidebarExpandedMobile] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
   const [fatalError, setFatalError] = useState<string | null>(null);
 
@@ -83,7 +82,6 @@ export default function Dashboard() {
 
   const handleNavigate = (board: NavBoard) => {
     setActiveBoard(board);
-    setSidebarExpandedMobile(false);
     if (board === "messages") setChatOpen(true);
   };
 
@@ -173,7 +171,6 @@ export default function Dashboard() {
   const sidebarClasses = [
     "app-sidebar",
     sidebarCollapsed ? "collapsed" : "",
-    sidebarExpandedMobile ? "expanded-mobile" : "",
   ].filter(Boolean).join(" ");
 
   const mainClasses = [
@@ -213,43 +210,24 @@ export default function Dashboard() {
           onSelectClient={(id) => {
             setSelectedClientId(id);
             setActiveBoard("clients");
-            setSidebarExpandedMobile(false);
           }}
-          onAddClient={() => { handleAddClient(); setSidebarExpandedMobile(false); }}
+          onAddClient={handleAddClient}
           onNavigate={handleNavigate}
           activeBoard={activeBoard}
           agentCount={agentCount}
           reviewCount={reviewCount}
           collapsed={sidebarCollapsed}
           onToggleCollapse={() => setSidebarCollapsed(prev => !prev)}
-          onMobileExpand={() => setSidebarExpandedMobile(prev => !prev)}
-          mobileExpanded={sidebarExpandedMobile}
         />
       </div>
-
-      {/* Mobile backdrop when sidebar expanded */}
-      {sidebarExpandedMobile && (
-        <div
-          className="fixed inset-0 bg-black/50 z-40 md:hidden"
-          onClick={() => setSidebarExpandedMobile(false)}
-        />
-      )}
 
       {/* === MAIN CONTENT === */}
       <main className={mainClasses}>
         {/* Header */}
-      <header className="flex items-center gap-3 px-4 py-3 border-b border-[#1a1a1a] bg-white shrink-0 min-h-[52px]">
-        {/* Mobile: hamburger to open sidebar */}
-        <button
-          onClick={() => setSidebarExpandedMobile(prev => !prev)}
-          className="md:hidden p-2 -ml-2 text-gray-500 hover:text-gray-900 min-w-[44px] min-h-[44px] flex items-center justify-center shrink-0"
-          title="Open menu"
-        >
-          <Menu size={22} />
-        </button>
+      <header className="flex items-center gap-3 px-4 py-3 border-b border-[#e5e7eb] bg-white shrink-0 min-h-[56px]">
 
-        {/* Board name — always visible */}
-        <span className="text-sm font-semibold text-gray-800 flex-1 text-center md:text-left">
+        {/* Board name — always visible, centered on mobile */}
+        <span className="text-base font-bold text-gray-800 flex-1 text-center md:text-left">
           {activeBoard === "briefing" && "☀️ Daily Briefing"}
           {activeBoard === "dashboard" && "📋 Tasks"}
           {activeBoard === "aichat" && "🤖 AI Chat"}
@@ -372,18 +350,11 @@ export default function Dashboard() {
       <BottomNav activeView={chatOpen ? "messages" : activeBoard}
         agentCount={agentCount} reviewCount={reviewCount} onNavigate={handleBottomNav} />
 
-      {/* Chat panel — only show slide-out when NOT already on Messages board */}
+      {/* Chat panel — desktop only, full-width on mobile use Messages board */}
       {chatOpen && activeBoard !== "messages" && (
-        <>
-          <div className="fixed inset-0 bg-black/50 z-30 md:hidden" onClick={() => setChatOpen(false)} />
-          <div className="fixed md:relative md:h-full inset-y-0 right-0 w-80 max-w-[85vw] z-50 md:z-auto animate-slide-in md:animate-none">
-            <ChatWidget />
-            <button onClick={() => setChatOpen(false)}
-              className="absolute top-2 right-2 md:hidden bg-white p-1 rounded text-gray-500 hover:text-gray-900">
-              <X size={18} />
-            </button>
-          </div>
-        </>
+        <div className="hidden md:flex fixed md:relative md:h-full inset-y-0 right-0 w-80 max-w-[85vw] z-50 animate-slide-in md:animate-none bg-white border-l border-[#1a1a1a]">
+          <ChatWidget />
+        </div>
       )}
     </div>
   );
