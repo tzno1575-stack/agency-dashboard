@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { CheckCircle2, XCircle, Clock, Send, Eye, Image, HardDrive, AlertTriangle, MessageCircle, RefreshCw } from "lucide-react";
 import type { ScheduledPost, SocialAccount } from "@/lib/data";
 
@@ -41,11 +41,30 @@ const SAMPLE_APPROVALS: ApprovalItem[] = [
 ];
 
 export default function ApprovalPipeline({ posts, accounts, clientId, onDelete }: ApprovalPipelineProps) {
-  const [approvals, setApprovals] = useState<ApprovalItem[]>(SAMPLE_APPROVALS);
+  const [approvals, setApprovals] = useState<ApprovalItem[]>([]);
+  const [loading, setLoading] = useState(true);
   const [selectedItem, setSelectedItem] = useState<ApprovalItem | null>(null);
   const [feedback, setFeedback] = useState("");
   const [showPreview, setShowPreview] = useState(false);
   const [publishing, setPublishing] = useState<string | null>(null);
+
+  // Fetch live approvals from Redis
+  useEffect(() => {
+    fetch("/api/review")
+      .then(r => r.json())
+      .then(data => {
+        if (data.items && data.items.length > 0) {
+          setApprovals(data.items.map((item: any) => ({
+            ...item,
+            status: item.status || "pending",
+          })));
+        } else {
+          setApprovals(SAMPLE_APPROVALS);
+        }
+      })
+      .catch(() => setApprovals(SAMPLE_APPROVALS))
+      .finally(() => setLoading(false));
+  }, []);
 
   const pending = approvals.filter(a => a.status === "pending");
   const approved = approvals.filter(a => a.status === "approved");
