@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { 
   Palette, Globe, Shield, Brain, 
-  GitBranch, Cloud, ChevronDown, ChevronRight, CheckCircle2, 
+  GitBranch, Cloud, ChevronDown, ChevronRight, CheckCircle2, Stethoscope, 
   XCircle, Clock, RefreshCw, ExternalLink, Terminal, Bot
 } from "lucide-react";
 
@@ -75,6 +75,15 @@ const statusConfig = {
 };
 
 export default function SettingsPanel() {
+  const [health, setHealth] = useState<any>(null);
+  const [healthLoading, setHealthLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("/api/health")
+      .then(r => r.json())
+      .then(d => { setHealth(d); setHealthLoading(false); })
+      .catch(() => setHealthLoading(false));
+  }, []);
   const [expanded, setExpanded] = useState<string | null>(null);
   const [testing, setTesting] = useState<string | null>(null);
   const [saving, setSaving] = useState<string | null>(null);
@@ -245,6 +254,44 @@ export default function SettingsPanel() {
               Open Dashboard
             </button>
           </div>
+        </div>
+
+        {/* System Health — Hermes Doctor equivalent */}
+        <div className="bg-[#1a1f2e] border border-[#1e293b] rounded-lg p-4">
+          <div className="flex items-center gap-3 mb-3">
+            <Stethoscope size={16} className="text-green-400" />
+            <div>
+              <h3 className="text-sm font-medium text-gray-200">System Health</h3>
+              <p className="text-xs text-gray-500">Dashboard + Hermes self-repair status</p>
+            </div>
+            <span className={`ml-auto text-[10px] px-2 py-0.5 rounded-full ${
+              healthLoading ? "bg-gray-500/10 text-gray-500" :
+              health?.status === "healthy" ? "bg-green-500/10 text-green-400" :
+              health?.status === "warning" ? "bg-yellow-500/10 text-yellow-400" :
+              "bg-red-500/10 text-red-400"
+            }`}>
+              {healthLoading ? "⋯" : health?.status || "unknown"}
+            </span>
+          </div>
+          {healthLoading ? (
+            <p className="text-xs text-gray-600">Checking system health...</p>
+          ) : health?.checks ? (
+            <div className="space-y-2">
+              {Object.entries(health.checks as Record<string, any>).map(([key, check]: [string, any]) => (
+                <div key={key} className="flex items-center justify-between text-xs">
+                  <span className="text-gray-400 capitalize">{key.replace("_", " ")}</span>
+                  <span className={`flex items-center gap-1 ${
+                    check.status === "ok" ? "text-green-400" :
+                    check.status === "warn" ? "text-yellow-400" : "text-red-400"
+                  }`}>
+                    {check.status === "ok" ? <CheckCircle2 size={10} /> :
+                     check.status === "warn" ? "⚠️" : <XCircle size={10} />}
+                    {check.message}
+                  </span>
+                </div>
+              ))}
+            </div>
+          ) : null}
         </div>
 
         {/* Theme */}
