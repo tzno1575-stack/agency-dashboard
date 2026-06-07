@@ -205,150 +205,13 @@ export default function ApprovalPipeline({ posts, accounts, clientId, onDelete }
     );
   }
 
-  // Expanded view — full-screen card on mobile
+  // Full-screen overlay when a post is tapped — like opening a new tab
   const expandedItem = expandedId ? approvals.find(a => a.id === expandedId) : null;
-
-  if (expandedItem) {
-    const badge = getPlatformBadge(expandedItem.platform);
-    return (
-      <div className="flex-1 flex flex-col overflow-hidden bg-[#0a0e17]">
-        {/* Back button */}
-        <div className="px-3 py-2 border-b border-[#1e293b] bg-[#0f1320] shrink-0">
-          <button
-            onClick={() => setExpandedId(null)}
-            className="flex items-center gap-1.5 text-sm text-gray-400 hover:text-white"
-          >
-            <ChevronLeft size={18} />
-            Back to list
-          </button>
-        </div>
-
-        {/* Scrollable content */}
-        <div className="flex-1 overflow-y-auto">
-          <div className="p-4 space-y-4">
-            {/* Meta */}
-            <div className="flex items-center gap-2 flex-wrap">
-              <span className={`text-[11px] px-2 py-0.5 rounded-full ${
-                expandedItem.status === "pending" ? "bg-amber-500/10 text-amber-400" :
-                expandedItem.status === "approved" ? "bg-green-500/10 text-green-400" :
-                "bg-red-500/10 text-red-400"
-              }`}>
-                {expandedItem.status}
-                {(expandedItem as any).autoApproved && " ⚡"}
-              </span>
-              <span className={`text-[11px] px-2 py-0.5 rounded-full ${badge.bg} ${badge.text}`}>
-                {badge.label}
-              </span>
-              <span className="text-[11px] text-gray-600">{formatDate(expandedItem.createdAt)}</span>
-            </div>
-
-            {/* Title if present */}
-            {expandedItem.title && (
-              <h3 className="text-base font-semibold text-white leading-snug">
-                {expandedItem.title}
-              </h3>
-            )}
-
-            {/* Agent */}
-            {expandedItem.agent && (
-              <div className="text-[11px] text-gray-500">By {expandedItem.agent}</div>
-            )}
-
-            {/* Main content — FULL, no truncation */}
-            <div className="bg-[#111827] border border-[#1e293b] rounded-xl p-4">
-              <p className="text-sm text-gray-200 leading-relaxed whitespace-pre-wrap break-words">
-                {expandedItem.content}
-              </p>
-            </div>
-
-            {/* Image if present */}
-            {expandedItem.imageUrl && (
-              <img 
-                src={expandedItem.imageUrl} 
-                alt="Post" 
-                className="w-full rounded-xl border border-[#1e293b]"
-              />
-            )}
-
-            {/* Feedback if rejected */}
-            {expandedItem.feedback && (
-              <div className="bg-red-500/10 border border-red-500/20 rounded-xl p-4">
-                <div className="flex items-center gap-1.5 mb-1">
-                  <AlertTriangle size={14} className="text-red-400" />
-                  <span className="text-xs font-medium text-red-400">Feedback</span>
-                </div>
-                <p className="text-sm text-red-300">{expandedItem.feedback}</p>
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Bottom action bar — fixed */}
-        <div className="px-4 py-3 border-t border-[#1e293b] bg-[#0f1320] shrink-0">
-          {expandedItem.status === "pending" && (
-            <div className="space-y-2">
-              <div className="flex gap-2">
-                <button
-                  onClick={() => handleApprove(expandedItem.id)}
-                  className="flex-1 py-3 text-sm font-medium bg-green-600 text-white rounded-xl hover:bg-green-700 flex items-center justify-center gap-2 active:scale-[0.98] transition-transform"
-                >
-                  <CheckCircle2 size={16} /> Approve & Post
-                </button>
-                <button
-                  onClick={() => handleReject(expandedItem.id)}
-                  className="flex-1 py-3 text-sm font-medium bg-red-500/10 text-red-400 border border-red-500/20 rounded-xl hover:bg-red-500/20 flex items-center justify-center gap-2 active:scale-[0.98] transition-transform"
-                >
-                  <XCircle size={16} /> Reject
-                </button>
-              </div>
-              <textarea
-                value={feedback}
-                onChange={(e) => setFeedback(e.target.value)}
-                placeholder="Optional feedback (required if rejecting)..."
-                className="w-full bg-[#0a0e17] border border-[#1e293b] rounded-xl px-3 py-2 text-sm text-gray-300 placeholder-gray-600 resize-none"
-                rows={2}
-              />
-            </div>
-          )}
-
-          {expandedItem.status === "approved" && (
-            <button
-              onClick={() => handlePublish(expandedItem.id)}
-              disabled={publishing === expandedItem.id}
-              className="w-full py-3 text-sm font-medium bg-blue-600 text-white rounded-xl hover:bg-blue-700 flex items-center justify-center gap-2 disabled:opacity-50 active:scale-[0.98] transition-transform"
-            >
-              {publishing === expandedItem.id ? (
-                <><RefreshCw size={16} className="animate-spin" /> Publishing...</>
-              ) : (
-                <><Send size={16} /> Publish Now</>
-              )}
-            </button>
-          )}
-
-          {expandedItem.status === "rejected" && (
-            <button
-              onClick={() => handleResubmit(expandedItem.id)}
-              className="w-full py-3 text-sm font-medium bg-amber-600 text-white rounded-xl hover:bg-amber-700 flex items-center justify-center gap-2 active:scale-[0.98] transition-transform"
-            >
-              <RefreshCw size={16} /> Resubmit for Review
-            </button>
-          )}
-
-          {expandedItem.status === "published" && (
-            <div className="flex items-center justify-center gap-2 text-sm text-green-400 py-2">
-              <CheckCircle2 size={16} />
-              Published to {expandedItem.platform}
-            </div>
-          )}
-        </div>
-      </div>
-    );
-  }
 
   // List view
   return (
-    <div className="flex-1 flex flex-col overflow-hidden">
-      {/* Auto-Authorize Controls */}
+    <>
+      <div className="flex-1 flex flex-col overflow-hidden">
       <div className="px-3 py-2 border-b border-[#1e293b] bg-[#0a0e17] shrink-0">
         <div className="flex items-center justify-between">
           <button
@@ -522,5 +385,130 @@ export default function ApprovalPipeline({ posts, accounts, clientId, onDelete }
         })}
       </div>
     </div>
+
+    {/* FULL-SCREEN OVERLAY — like opening a new tab */}
+    {expandedItem && (
+      <div className="fixed inset-0 z-50 bg-[#0a0e17] flex flex-col" style={{ height: "100dvh" }}>
+        {/* Top bar: back + meta */}
+        <div className="px-4 py-3 border-b border-[#1e293b] bg-[#0f1320] shrink-0">
+          <button
+            onClick={() => setExpandedId(null)}
+            className="flex items-center gap-2 text-sm text-gray-300 hover:text-white py-1"
+          >
+            <ChevronLeft size={20} />
+            <span className="font-medium">Back</span>
+          </button>
+          <div className="flex items-center gap-2 mt-2 flex-wrap">
+            <span className={`text-[11px] px-2 py-0.5 rounded-full ${
+              expandedItem.status === "pending" ? "bg-amber-500/10 text-amber-400" :
+              expandedItem.status === "approved" ? "bg-green-500/10 text-green-400" :
+              "bg-red-500/10 text-red-400"
+            }`}>
+              {expandedItem.status}
+              {(expandedItem as any).autoApproved && " ⚡"}
+            </span>
+            <span className={`text-[11px] px-2 py-0.5 rounded-full ${getPlatformBadge(expandedItem.platform).bg} ${getPlatformBadge(expandedItem.platform).text}`}>
+              {getPlatformBadge(expandedItem.platform).label}
+            </span>
+            <span className="text-[11px] text-gray-600">{formatDate(expandedItem.createdAt)}</span>
+          </div>
+        </div>
+
+        {/* Scrollable content — THE FULL POST */}
+        <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4">
+          {expandedItem.title && (
+            <h2 className="text-lg font-bold text-white leading-snug">
+              {expandedItem.title}
+            </h2>
+          )}
+
+          {expandedItem.agent && (
+            <div className="text-xs text-gray-500">Drafted by {expandedItem.agent}</div>
+          )}
+
+          <div className="bg-[#111827] border border-[#1e293b] rounded-xl p-5">
+            <p className="text-[15px] text-gray-100 leading-relaxed whitespace-pre-wrap break-words">
+              {expandedItem.content}
+            </p>
+          </div>
+
+          {expandedItem.imageUrl && (
+            <img src={expandedItem.imageUrl} alt="Post" className="w-full rounded-xl border border-[#1e293b]" />
+          )}
+
+          {expandedItem.feedback && (
+            <div className="bg-red-500/10 border border-red-500/20 rounded-xl p-4">
+              <div className="flex items-center gap-1.5 mb-1">
+                <AlertTriangle size={14} className="text-red-400" />
+                <span className="text-xs font-medium text-red-400">Feedback</span>
+              </div>
+              <p className="text-sm text-red-300">{expandedItem.feedback}</p>
+            </div>
+          )}
+
+          <div className="h-24" />
+        </div>
+
+        {/* Bottom action bar */}
+        <div className="px-4 py-4 border-t border-[#1e293b] bg-[#0f1320] shrink-0">
+          {expandedItem.status === "pending" && (
+            <div className="space-y-3">
+              <div className="flex gap-3">
+                <button
+                  onClick={() => handleApprove(expandedItem.id)}
+                  className="flex-1 py-3.5 text-sm font-semibold bg-green-600 text-white rounded-xl hover:bg-green-700 flex items-center justify-center gap-2 active:scale-[0.97] transition-transform"
+                >
+                  <CheckCircle2 size={18} /> Approve & Post
+                </button>
+                <button
+                  onClick={() => handleReject(expandedItem.id)}
+                  className="flex-1 py-3.5 text-sm font-semibold bg-red-500/10 text-red-400 border border-red-500/20 rounded-xl hover:bg-red-500/20 flex items-center justify-center gap-2 active:scale-[0.97] transition-transform"
+                >
+                  <XCircle size={18} /> Reject
+                </button>
+              </div>
+              <textarea
+                value={feedback}
+                onChange={(e) => setFeedback(e.target.value)}
+                placeholder="Feedback (optional)..."
+                className="w-full bg-[#0a0e17] border border-[#1e293b] rounded-xl px-4 py-3 text-sm text-gray-300 placeholder-gray-600 resize-none"
+                rows={2}
+              />
+            </div>
+          )}
+
+          {expandedItem.status === "approved" && (
+            <button
+              onClick={() => handlePublish(expandedItem.id)}
+              disabled={publishing === expandedItem.id}
+              className="w-full py-3.5 text-sm font-semibold bg-blue-600 text-white rounded-xl hover:bg-blue-700 flex items-center justify-center gap-2 disabled:opacity-50 active:scale-[0.97] transition-transform"
+            >
+              {publishing === expandedItem.id ? (
+                <><RefreshCw size={18} className="animate-spin" /> Publishing...</>
+              ) : (
+                <><Send size={18} /> Publish Now</>
+              )}
+            </button>
+          )}
+
+          {expandedItem.status === "rejected" && (
+            <button
+              onClick={() => handleResubmit(expandedItem.id)}
+              className="w-full py-3.5 text-sm font-semibold bg-amber-600 text-white rounded-xl hover:bg-amber-700 flex items-center justify-center gap-2 active:scale-[0.97] transition-transform"
+            >
+              <RefreshCw size={18} /> Resubmit for Review
+            </button>
+          )}
+
+          {expandedItem.status === "published" && (
+            <div className="flex items-center justify-center gap-2 text-sm text-green-400 py-3">
+              <CheckCircle2 size={18} />
+              Published to {expandedItem.platform}
+            </div>
+          )}
+        </div>
+      </div>
+    )}
+  </>
   );
 }
