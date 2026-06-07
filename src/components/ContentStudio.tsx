@@ -24,6 +24,7 @@ export default function ContentStudio({ posts, accounts, clientId, onSave, onDel
   const [scheduleTime, setScheduleTime] = useState("09:00");
   const [showHashtagPicker, setShowHashtagPicker] = useState(false);
   const [showPosts, setShowPosts] = useState(false);
+  const [activeTab, setActiveTab] = useState<"composer" | "higgsfield">("composer");
 
   const clientPosts = posts
     .filter((p) => p.clientId === clientId)
@@ -127,7 +128,19 @@ export default function ContentStudio({ posts, accounts, clientId, onSave, onDel
             <X size={20} />
           </button>
         )}
+        <div className="flex items-center gap-2 flex-1 min-w-0">
         <h2 className="text-sm font-semibold text-gray-300">Content Studio</h2>
+        <div className="flex gap-1 ml-3 bg-[#0a0e17] rounded-lg p-0.5 border border-[#1e293b]">
+          <button onClick={() => setActiveTab("composer")}
+            className={`px-2.5 py-1 text-[10px] rounded-md transition-colors ${activeTab === "composer" ? "bg-[#1a1f2e] text-white" : "text-gray-500 hover:text-gray-300"}`}>
+            ✍️ Composer
+          </button>
+          <button onClick={() => setActiveTab("higgsfield")}
+            className={`px-2.5 py-1 text-[10px] rounded-md transition-colors ${activeTab === "higgsfield" ? "bg-[#1a1f2e] text-white" : "text-gray-500 hover:text-gray-300"}`}>
+            🎬 Higgsfield
+          </button>
+        </div>
+      </div>
         <button
           onClick={() => setShowPosts(!showPosts)}
           className="ml-auto flex items-center gap-1.5 text-xs text-gray-400 hover:text-white bg-[#1a1f2e] px-3 py-1.5 rounded-lg border border-[#1e293b]"
@@ -138,6 +151,7 @@ export default function ContentStudio({ posts, accounts, clientId, onSave, onDel
       </div>
 
       <div className="flex-1 overflow-y-auto pb-20">
+        {activeTab === "composer" && (
         <div className="max-w-2xl mx-auto p-4 space-y-5">
           {/* === PLATFORM SELECTOR === */}
           <div>
