@@ -29,6 +29,7 @@ const boards: { id: NavBoard; section: string; name: string; icon: typeof Home; 
   { id: "autopilot", section: "boards", name: "AutoPilot", icon: Zap, color: "text-purple-400" },
   { id: "ideagen", section: "boards", name: "IdeaGen", icon: Lightbulb, color: "text-yellow-400" },
   { id: "standards", section: "boards", name: "Standards", icon: FileText, color: "text-indigo-400" },
+  { id: "aichat", section: "workspace", name: "AI Chat", icon: Zap, color: "text-[#C8E6C9]" },
   { id: "review", section: "workspace", name: "Review Queue", icon: ClipboardCheck, color: "text-yellow-400" },
   { id: "social", section: "workspace", name: "Social", icon: Share2, color: "text-blue-400" },
   { id: "content", section: "workspace", name: "Content", icon: PenLine, color: "text-green-400" },

@@ -13,6 +13,7 @@ import ContentStudio from "@/components/ContentStudio";
 import SettingsPanel from "@/components/SettingsPanel";
 import LiveMonitor from "@/components/LiveMonitor";
 import IdeaGen from "@/components/IdeaGen";
+import AIChat from "@/components/AIChat";
 import NotificationCenter from "@/components/NotificationCenter";
 import BillingModule from "@/components/BillingModule";
 import DailyBriefing from "@/components/DailyBriefing";
@@ -241,6 +242,7 @@ export default function Dashboard() {
           <span className="text-sm font-semibold text-gray-800 hidden sm:block">
             {activeBoard === "briefing" && "☀️ Daily Briefing"}
             {activeBoard === "dashboard" && "📋 Dashboard"}
+            {activeBoard === "aichat" && "🤖 AI Chat"}
             {activeBoard === "setup" && "⚡ Hermes Setup"}
             {activeBoard === "sitebuilder" && "🌐 Site Builder"}
             {activeBoard === "videostudio" && "🎬 Video Studio"}
@@ -347,6 +349,8 @@ export default function Dashboard() {
           )}
 
           {activeBoard === "settings" && <SettingsPanel />}
+
+          {activeBoard === "aichat" && <AIChat />}
 
           {activeBoard === "affiliates" && <AffiliateHub />}
 
