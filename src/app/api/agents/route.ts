@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { Redis } from "@upstash/redis";
+import { sampleAgents } from "@/lib/data";
 
 const redis = Redis.fromEnv();
 
@@ -63,7 +64,6 @@ export async function GET() {
     const raw = await redis.lrange("taskforce:agents", 0, -1);
 
     if (!raw || raw.length === 0) {
-      const { sampleAgents } = await import("@/lib/data");
       return NextResponse.json({ agents: sampleAgents });
     }
 

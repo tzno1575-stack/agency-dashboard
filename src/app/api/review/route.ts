@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { Redis } from "@upstash/redis";
+import { sampleReviews } from "@/lib/data";
 
 const redis = Redis.fromEnv();
 
@@ -8,7 +9,6 @@ export async function GET() {
   try {
     const raw = await redis.lrange("review:queue", 0, -1);
     if (!raw || raw.length === 0) {
-      const { sampleReviews } = await import("@/lib/data");
       return NextResponse.json({ items: sampleReviews });
     }
 
