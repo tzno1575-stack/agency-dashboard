@@ -13,6 +13,8 @@ export const viewport: Viewport = {
   themeColor: "#0a0e17",
 };
 
+import ClientProviders from "@/components/ClientProviders";
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className="dark">
@@ -25,7 +27,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="apple-touch-icon" href="/icon-192.png" />
       </head>
       <body className="antialiased">
-        {children}
+        <ClientProviders>{children}</ClientProviders>
         <script
           dangerouslySetInnerHTML={{
             __html: `

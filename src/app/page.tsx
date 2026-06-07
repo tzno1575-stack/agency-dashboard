@@ -20,12 +20,15 @@ import VideoStudio from "@/components/VideoStudio";
 import AffiliateHub from "@/components/AffiliateHub";
 import KdpHub from "@/components/KdpHub";
 import StandardsPanel from "@/components/StandardsPanel";
+import SetupBoard from "@/components/SetupBoard";
+import WebsiteBuilder from "@/components/WebsiteBuilder";
+import HelpTips, { HelpToggle } from "@/components/HelpTips";
 import BottomNav from "@/components/BottomNav";
 import { sampleClients, sampleTasks, sampleSocialAccounts, sampleAgents, samplePosts, normalizeClient, normalizeClients } from "@/lib/data";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import type { Client, Task, Agent, SocialAccount, ScheduledPost } from "@/lib/data";
 
-type NavBoard = "briefing" | "dashboard" | "videostudio" | "taskforce" | "autopilot" | "ideagen" | "standards" | "review" | "social" | "content" | "affiliates" | "kdp" | "clients" | "billing" | "notifications" | "messages" | "settings";
+type NavBoard = "briefing" | "dashboard" | "setup" | "sitebuilder" | "videostudio" | "taskforce" | "autopilot" | "ideagen" | "standards" | "review" | "social" | "content" | "affiliates" | "kdp" | "clients" | "billing" | "notifications" | "messages" | "settings";
 
 export default function Dashboard() {
   const [clientsRaw, setClientsRaw, clientsLoaded] = useLocalStorage<Client[]>("aqd_clients", sampleClients);
@@ -238,6 +241,8 @@ export default function Dashboard() {
           <span className="text-sm font-semibold text-gray-300 hidden sm:block">
             {activeBoard === "briefing" && "☀️ Daily Briefing"}
             {activeBoard === "dashboard" && "📋 Dashboard"}
+            {activeBoard === "setup" && "⚡ Hermes Setup"}
+            {activeBoard === "sitebuilder" && "🌐 Site Builder"}
             {activeBoard === "videostudio" && "🎬 Video Studio"}
             {activeBoard === "taskforce" && "📎 TaskForce"}
             {activeBoard === "autopilot" && "🤖 AutoPilot"}
@@ -256,6 +261,7 @@ export default function Dashboard() {
           </span>
 
           <div className="flex gap-1 ml-auto tabs-scroll">
+            <HelpToggle />
             <button onClick={() => setChatOpen(!chatOpen)}
               className={`px-3 py-1.5 text-xs rounded-md flex items-center gap-1 ${chatOpen ? "bg-[#3b82f6] text-white" : "text-gray-500 hover:text-gray-300"}`}>
               <MessageCircle size={14} />Chat
@@ -264,8 +270,13 @@ export default function Dashboard() {
         </header>
 
         {/* Content area */}
+        <HelpTips board={activeBoard} />
         <div className="flex-1 min-h-0 overflow-hidden flex">
           {activeBoard === "briefing" && <DailyBriefing />}
+
+          {activeBoard === "setup" && <SetupBoard />}
+
+          {activeBoard === "sitebuilder" && <WebsiteBuilder />}
 
           {activeBoard === "dashboard" && (
             <KanbanBoard tasks={tasks} onTasksChange={setTasks} clients={clientOptions} />

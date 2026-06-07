@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { Send, Calendar, Hash, Sparkles, Clock, Trash2, Plus, X, ChevronDown } from "lucide-react";
+import { Send, Calendar, Hash, Sparkles, Clock, Trash2, Plus, X, ChevronDown, CheckCircle2 } from "lucide-react";
 import { socialPlatforms, hashtagGroups } from "@/lib/data";
 import type { ScheduledPost, SocialAccount, SocialPlatform } from "@/lib/data";
+import ApprovalPipeline from "@/components/ApprovalPipeline";
 
 interface ContentStudioProps {
   posts: ScheduledPost[];
@@ -24,7 +25,7 @@ export default function ContentStudio({ posts, accounts, clientId, onSave, onDel
   const [scheduleTime, setScheduleTime] = useState("09:00");
   const [showHashtagPicker, setShowHashtagPicker] = useState(false);
   const [showPosts, setShowPosts] = useState(false);
-  const [activeTab, setActiveTab] = useState<"composer" | "higgsfield">("composer");
+  const [activeTab, setActiveTab] = useState<"composer" | "higgsfield" | "approvals">("composer");
 
   const clientPosts = posts
     .filter((p) => p.clientId === clientId)
@@ -138,6 +139,10 @@ export default function ContentStudio({ posts, accounts, clientId, onSave, onDel
           <button onClick={() => setActiveTab("higgsfield")}
             className={`px-2.5 py-1 text-[10px] rounded-md transition-colors ${activeTab === "higgsfield" ? "bg-[#1a1f2e] text-white" : "text-gray-500 hover:text-gray-300"}`}>
             🎬 Higgsfield
+          </button>
+          <button onClick={() => setActiveTab("approvals")}
+            className={`px-2.5 py-1 text-[10px] rounded-md transition-colors ${activeTab === "approvals" ? "bg-[#1a1f2e] text-white" : "text-gray-500 hover:text-gray-300"}`}>
+            ✅ Approvals
           </button>
         </div>
       </div>
@@ -449,6 +454,10 @@ export default function ContentStudio({ posts, accounts, clientId, onSave, onDel
               </div>
             </div>
           </div>
+        )}
+
+        {activeTab === "approvals" && (
+          <ApprovalPipeline posts={posts} accounts={accounts} clientId={clientId} onDelete={onDelete} />
         )}
       </div>
     </div>

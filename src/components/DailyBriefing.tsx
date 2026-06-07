@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Sun, TrendingUp, CheckCircle2, Clock, AlertTriangle, MessageSquare, Send, Users, Zap, PenLine, DollarSign, Loader2 } from "lucide-react";
+import { Sun, TrendingUp, CheckCircle2, Clock, AlertTriangle, MessageSquare, Send, Users, Zap, PenLine, DollarSign, Loader2, Globe, Lightbulb, ArrowRight } from "lucide-react";
 
 interface BriefingData {
   date: string;
@@ -15,15 +15,25 @@ interface BriefingData {
   suggestion: string;
 }
 
+interface MarketIntel {
+  date: string;
+  topFind: { title: string; summary: string; action: string } | null;
+  ventures: { name: string; description: string; relevance: string }[];
+  tools: { name: string; description: string; pricing: string }[];
+  marketSignal: string;
+  idea: string;
+  stats: { sourcesScraped: number; itemsFiltered: number; halalPassed: number } | null;
+}
+
 export default function DailyBriefing() {
   const [data, setData] = useState<BriefingData | null>(null);
+  const [marketIntel, setMarketIntel] = useState<MarketIntel | null>(null);
   const [loading, setLoading] = useState(true);
   const [generating, setGenerating] = useState(false);
 
   const fetchBriefing = async () => {
     setLoading(true);
     try {
-      // Try to get live briefing from API
       const res = await fetch("/api/briefing");
       if (res.ok) {
         const json = await res.json();
@@ -32,9 +42,16 @@ export default function DailyBriefing() {
         throw new Error("API not ready");
       }
     } catch {
-      // Fallback: compute from localStorage
       computeLocalBriefing();
     }
+    // Also fetch market intel
+    try {
+      const mi = await fetch("/api/market-intel");
+      if (mi.ok) {
+        const miData = await mi.json();
+        if (miData.topFind) setMarketIntel(miData);
+      }
+    } catch {}
     setLoading(false);
   };
 
@@ -192,6 +209,91 @@ export default function DailyBriefing() {
           </button>
         </div>
       </div>
+
+      {/* Market Pulse */}
+      {marketIntel && (
+        <div className="mb-6 bg-gradient-to-br from-[#0f172a] to-[#1a1f2e] border border-[#2a3050] rounded-xl overflow-hidden">
+          <div className="flex items-center gap-2 px-4 py-3 border-b border-[#1e293b]">
+            <Globe size={14} className="text-emerald-400" />
+            <span className="text-xs font-semibold text-emerald-400 uppercase tracking-widest">Market Pulse</span>
+            {marketIntel.stats && (
+              <span className="ml-auto text-[10px] text-gray-600">
+                {marketIntel.stats.sourcesScraped} sources · {marketIntel.stats.halalPassed} halal
+              </span>
+            )}
+          </div>
+
+          {/* Top Find */}
+          {marketIntel.topFind && (
+            <div className="px-4 py-3 bg-emerald-500/5 border-b border-[#1e293b]">
+              <div className="flex items-start gap-2">
+                <TrendingUp size={14} className="text-emerald-400 mt-0.5 shrink-0" />
+                <div className="min-w-0">
+                  <p className="text-xs font-semibold text-emerald-300">{marketIntel.topFind.title}</p>
+                  <p className="text-[11px] text-gray-400 mt-0.5 leading-relaxed">{marketIntel.topFind.summary}</p>
+                  {marketIntel.topFind.action && (
+                    <p className="text-[11px] text-emerald-500/80 mt-1 flex items-center gap-1">
+                      <ArrowRight size={10} />
+                      {marketIntel.topFind.action}
+                    </p>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
+
+          <div className="px-4 py-3 space-y-3">
+            {/* Ventures */}
+            {marketIntel.ventures.length > 0 && (
+              <div>
+                <p className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider mb-1.5">New Ventures</p>
+                <ul className="space-y-1">
+                  {marketIntel.ventures.slice(0, 3).map((v, i) => (
+                    <li key={i} className="text-[11px] text-gray-300 flex items-start gap-1.5">
+                      <span className="text-emerald-500 mt-0.5 shrink-0">•</span>
+                      <span><span className="text-white font-medium">{v.name}</span> — {v.description}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* Tools */}
+            {marketIntel.tools.length > 0 && (
+              <div>
+                <p className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider mb-1.5">Tools Found</p>
+                <ul className="space-y-1">
+                  {marketIntel.tools.map((t, i) => (
+                    <li key={i} className="text-[11px] text-gray-300 flex items-start gap-1.5">
+                      <span className="text-blue-400 mt-0.5 shrink-0">•</span>
+                      <span><span className="text-white font-medium">{t.name}</span> — {t.description} <span className="text-gray-600">({t.pricing})</span></span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* Market Signal */}
+            {marketIntel.marketSignal && (
+              <div className="bg-[#1a1f2e] rounded-lg px-3 py-2">
+                <p className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider mb-0.5">Signal</p>
+                <p className="text-[11px] text-gray-400 leading-relaxed">{marketIntel.marketSignal}</p>
+              </div>
+            )}
+
+            {/* Idea */}
+            {marketIntel.idea && (
+              <div className="bg-[#1a1f2e] rounded-lg px-3 py-2 border-l-2 border-amber-500/50">
+                <div className="flex items-center gap-1.5 mb-0.5">
+                  <Lightbulb size={12} className="text-amber-400" />
+                  <p className="text-[10px] font-semibold text-amber-400 uppercase tracking-wider">Idea for Aql</p>
+                </div>
+                <p className="text-[11px] text-gray-300">{marketIntel.idea}</p>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
 
       {/* Quick actions */}
       <div className="mb-6">

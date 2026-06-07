@@ -6,6 +6,7 @@ import {
   GitBranch, Cloud, ChevronDown, ChevronRight, CheckCircle2, Stethoscope, 
   XCircle, Clock, RefreshCw, ExternalLink, Terminal, Bot
 } from "lucide-react";
+import TokenManager from "@/components/TokenManager";
 
 interface IntegrationStatus {
   id: string;
@@ -309,6 +310,11 @@ export default function SettingsPanel() {
               🕌 Al-Aql (Green/Gold)
             </button>
           </div>
+        </div>
+
+        {/* Token Manager */}
+        <div className="bg-[#1a1f2e] border border-[#1e293b] rounded-lg p-4">
+          <TokenManager />
         </div>
       </div>
     </div>
