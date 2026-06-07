@@ -59,7 +59,7 @@ const integrations: IntegrationStatus[] = [
     id: "vercel",
     name: "Vercel",
     icon: Cloud,
-    color: "text-gray-100",
+    color: "text-gray-900",
     status: "connected",
     details: "agency-dashboard-seven-psi · Last deploy: 2 min ago · Auto-deploys on push",
     fields: [

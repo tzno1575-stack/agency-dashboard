@@ -398,7 +398,7 @@ export default function ApprovalPipeline({ posts, accounts, clientId, onDelete }
           )}
 
           <div className="bg-white border border-[#1a1a1a] rounded-xl p-5">
-            <p className="text-[15px] text-gray-100 leading-relaxed whitespace-pre-wrap break-words">
+            <p className="text-[15px] text-gray-900 leading-relaxed whitespace-pre-wrap break-words">
               {expandedItem.content}
             </p>
           </div>
@@ -413,7 +413,7 @@ export default function ApprovalPipeline({ posts, accounts, clientId, onDelete }
                 <AlertTriangle size={14} className="text-red-400" />
                 <span className="text-xs font-medium text-red-400">Feedback</span>
               </div>
-              <p className="text-sm text-red-300">{expandedItem.feedback}</p>
+              <p className="text-sm text-red-600">{expandedItem.feedback}</p>
             </div>
           )}
 

@@ -298,7 +298,7 @@ export default function HelpTips({ board }: { board: NavBoard }) {
           <div className="flex items-start gap-2 max-w-3xl">
             <button
               onClick={() => setCollapsed(true)}
-              className="text-amber-400 hover:text-amber-300 shrink-0 mt-px p-0.5"
+              className="text-amber-400 hover:text-amber-700 shrink-0 mt-px p-0.5"
               title="Collapse tips"
             >
               <Lightbulb size={14} />
