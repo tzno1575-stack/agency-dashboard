@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { CheckCircle2, XCircle, Clock, Send, Eye, AlertTriangle, RefreshCw, Zap, ZapOff, Settings, ChevronLeft, ChevronDown, ChevronUp } from "lucide-react";
 import type { ScheduledPost, SocialAccount } from "@/lib/data";
 
@@ -357,8 +358,8 @@ export default function ApprovalPipeline({ posts, accounts, clientId, onDelete }
       </div>
     </div>
 
-    {/* FULL-SCREEN OVERLAY — like opening a new tab */}
-    {expandedItem && (
+    {/* FULL-SCREEN OVERLAY — portaled to body, escapes all containers */}
+    {expandedItem && createPortal(
       <div className="fixed inset-0 z-[60] bg-[#FDFBF7] flex flex-col" style={{ height: "100dvh" }}>
         {/* Top bar: back + meta */}
         <div className="px-4 py-3 border-b border-[#1a1a1a] bg-white shrink-0">
@@ -479,7 +480,7 @@ export default function ApprovalPipeline({ posts, accounts, clientId, onDelete }
           )}
         </div>
       </div>
-    )}
+    , document.body)}
   </>
   );
 }
