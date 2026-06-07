@@ -59,6 +59,7 @@ function loadAutoAuthState() {
 function loadDailyCount() {
   try {
     const raw = localStorage.getItem("aqd_auto_auth_daily");
+    if (!raw) return 0;
     const data = JSON.parse(raw);
     if (data?.date === getTodayKey()) return data.count;
   } catch {}
