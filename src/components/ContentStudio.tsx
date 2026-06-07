@@ -405,46 +405,47 @@ export default function ContentStudio({ posts, accounts, clientId, onSave, onDel
               <div className="flex items-center gap-2 mb-3">
                 <span className="text-base">🎬</span>
                 <span className="text-xs font-semibold text-gray-300">HIGGSFIELD SUPERCOMPUTER</span>
-                <span className="text-[10px] bg-green-500/10 text-green-400 px-1.5 py-0.5 rounded-full ml-auto">New</span>
+                <span className="text-[10px] bg-green-500/10 text-green-400 px-1.5 py-0.5 rounded-full ml-auto">v2</span>
               </div>
-              <p className="text-xs text-gray-500 mb-3">One-chat marketing campaign builder. Auto-switches between Claude Opus 4.7, GPT 5.5 Pro, Gemini 3.1. 50+ tools, persistent brand memory.</p>
+              <p className="text-xs text-gray-500">One-chat campaign builder + batch UGC factory. 30+ video/image models, 4K images, 15s clips, watermark-free. Run everything from your phone via Telegram.</p>
             </div>
 
             <div className="bg-[#1a1f2e] border border-[#1e293b] rounded-xl p-4">
-              <h4 className="text-xs font-semibold text-gray-300 mb-3">Workflow</h4>
+              <h4 className="text-xs font-semibold text-gray-300 mb-3">📱 Phone Workflow (Hermes + Telegram)</h4>
               <div className="space-y-2 text-xs text-gray-400">
-                <div className="flex items-start gap-2"><span className="text-green-400 shrink-0 mt-0.5">1.</span><span>Connect <span className="text-blue-400">Google Drive</span> or <span className="text-blue-400">Notion</span> — gives agent persistent brand memory</span></div>
-                <div className="flex items-start gap-2"><span className="text-green-400 shrink-0 mt-0.5">2.</span><span>Paste product link + one-shot prompt: "Create 5-image campaign for this product"</span></div>
-                <div className="flex items-start gap-2"><span className="text-green-400 shrink-0 mt-0.5">3.</span><span>Iterate: ask for UGC talking-head video (15s, 9x16 vertical)</span></div>
-                <div className="flex items-start gap-2"><span className="text-green-400 shrink-0 mt-0.5">4.</span><span>Save perfected workflow as a <span className="text-purple-400">Skill</span> — reusable, shareable with team</span></div>
-                <div className="flex items-start gap-2"><span className="text-green-400 shrink-0 mt-0.5">5.</span><span>Full campaign ready: images + video + brand voice — all from one chat</span></div>
+                <div className="flex items-start gap-2"><span className="text-green-400 shrink-0 mt-0.5">1.</span><span>Connect Telegram bot to Higgsfield — control from phone</span></div>
+                <div className="flex items-start gap-2"><span className="text-green-400 shrink-0 mt-0.5">2.</span><span>Send voice memo: "Clip my latest YouTube video, make carousels + Twitter article"</span></div>
+                <div className="flex items-start gap-2"><span className="text-green-400 shrink-0 mt-0.5">3.</span><span>AI transcribes → generates clips, carousels, articles, Google Docs</span></div>
+                <div className="flex items-start gap-2"><span className="text-green-400 shrink-0 mt-0.5">4.</span><span>Auto-saves to Google Drive, builds memory graph of your style</span></div>
               </div>
             </div>
 
             <div className="bg-[#1a1f2e] border border-[#1e293b] rounded-xl p-4">
-              <h4 className="text-xs font-semibold text-gray-300 mb-3">Model Auto-Switching</h4>
-              <div className="grid grid-cols-3 gap-2 text-center text-[10px]">
-                <div className="bg-[#0f1320] rounded-lg p-2.5"><p className="text-blue-400 font-medium mb-0.5">Claude Opus 4.7</p><p className="text-gray-600">Script writing</p></div>
-                <div className="bg-[#0f1320] rounded-lg p-2.5"><p className="text-purple-400 font-medium mb-0.5">GPT 5.5 Pro</p><p className="text-gray-600">Image generation</p></div>
-                <div className="bg-[#0f1320] rounded-lg p-2.5"><p className="text-green-400 font-medium mb-0.5">Gemini 3.1</p><p className="text-gray-600">Audio mixing</p></div>
+              <h4 className="text-xs font-semibold text-gray-300 mb-3">🏭 Batch UGC Factory (Claude MCP)</h4>
+              <div className="space-y-2 text-xs text-gray-400">
+                <div className="flex items-start gap-2"><span className="text-green-400 shrink-0 mt-0.5">1.</span><span>Create AI character in Higgsfield Marketing Studio → upload as avatar</span></div>
+                <div className="flex items-start gap-2"><span className="text-green-400 shrink-0 mt-0.5">2.</span><span>Drop folder of product images into Claude</span></div>
+                <div className="flex items-start gap-2"><span className="text-green-400 shrink-0 mt-0.5">3.</span><span>Claude auto-generates 5-20 UGC prompts — one per product image</span></div>
+                <div className="flex items-start gap-2"><span className="text-green-400 shrink-0 mt-0.5">4.</span><span>Batch fires all prompts via Higgsfield MCP — videos generate while you do other things</span></div>
+                <div className="flex items-start gap-2"><span className="text-green-400 shrink-0 mt-0.5">5.</span><span>Same character, same style across all videos — consistent brand face</span></div>
               </div>
             </div>
 
             <div className="bg-[#1a1f2e] border border-[#1e293b] rounded-xl p-4">
-              <h4 className="text-xs font-semibold text-gray-300 mb-3">Integrations (30+)</h4>
+              <h4 className="text-xs font-semibold text-gray-300 mb-3">🎯 Models Available (30+)</h4>
               <div className="flex flex-wrap gap-1.5">
-                {["Google Drive","Notion","Gmail","Figma","Slack","Obsidian","GitHub"].map(i => (
-                  <span key={i} className="text-[10px] bg-[#0f1320] text-gray-400 px-2 py-1 rounded-full border border-[#1e293b]">{i}</span>
+                {["Soul 2.0","Cance 2.0","Cinema","Studio","GPT Image 2","Seedance","Sole Character"].map(m => (
+                  <span key={m} className="text-[10px] bg-[#0f1320] text-gray-400 px-2 py-1 rounded-full border border-[#1e293b]">{m}</span>
                 ))}
               </div>
             </div>
 
             <div className="bg-gradient-to-r from-[#1a1f2e] to-[#1e2440] border border-[#2a3050] rounded-xl p-4">
-              <h4 className="text-xs font-semibold text-gray-300 mb-3">Pricing Guide</h4>
+              <h4 className="text-xs font-semibold text-gray-300 mb-3">💰 Service Packaging</h4>
               <div className="space-y-2 text-xs text-gray-400">
-                <div className="flex justify-between"><span>Ultra plan</span><span className="text-green-400">~16,000 videos/mo</span></div>
-                <div className="flex justify-between"><span>Plus plan</span><span className="text-green-400">~533 videos/mo</span></div>
-                <div className="flex justify-between"><span>5 images + 1 video</span><span className="text-gray-500">~300 credits</span></div>
+                <div className="flex justify-between"><span>Content Repurposing</span><span className="text-green-400">$500/mo</span></div>
+                <div className="flex justify-between"><span>Batch UGC Ads (20/day)</span><span className="text-green-400">$1,000/mo</span></div>
+                <div className="flex justify-between"><span>Full Marketing Campaign</span><span className="text-green-400">$2,000+/mo</span></div>
               </div>
             </div>
           </div>
