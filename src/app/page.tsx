@@ -15,12 +15,13 @@ import LiveMonitor from "@/components/LiveMonitor";
 import IdeaGen from "@/components/IdeaGen";
 import NotificationCenter from "@/components/NotificationCenter";
 import BillingModule from "@/components/BillingModule";
+import DailyBriefing from "@/components/DailyBriefing";
 import BottomNav from "@/components/BottomNav";
 import { sampleClients, sampleTasks, sampleSocialAccounts, normalizeClient, normalizeClients } from "@/lib/data";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import type { Client, Task, Agent, SocialAccount, ScheduledPost } from "@/lib/data";
 
-type NavBoard = "dashboard" | "taskforce" | "autopilot" | "ideagen" | "review" | "social" | "content" | "clients" | "billing" | "notifications" | "messages" | "settings";
+type NavBoard = "briefing" | "dashboard" | "taskforce" | "autopilot" | "ideagen" | "review" | "social" | "content" | "clients" | "billing" | "notifications" | "messages" | "settings";
 
 export default function Dashboard() {
   const [clientsRaw, setClientsRaw, clientsLoaded] = useLocalStorage<Client[]>("aqd_clients", sampleClients);
@@ -41,7 +42,7 @@ export default function Dashboard() {
   const [posts, setPosts, postsLoaded] = useLocalStorage<ScheduledPost[]>("aqd_posts", []);
   const [reviewCount, setReviewCount] = useState(0);
   const [selectedClientId, setSelectedClientId] = useState<string | null>(sampleClients[0]?.id ?? null);
-  const [activeBoard, setActiveBoard] = useState<NavBoard>("dashboard");
+  const [activeBoard, setActiveBoard] = useState<NavBoard>("briefing");
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [sidebarExpandedMobile, setSidebarExpandedMobile] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
@@ -231,6 +232,7 @@ export default function Dashboard() {
         {/* Header */}
         <header className="flex items-center gap-2 md:gap-4 px-3 md:px-4 py-3 border-b border-[#1e293b] bg-[#0f1320] shrink-0">
           <span className="text-sm font-semibold text-gray-300 hidden sm:block">
+            {activeBoard === "briefing" && "☀️ Daily Briefing"}
             {activeBoard === "dashboard" && "📋 Dashboard"}
             {activeBoard === "taskforce" && "📎 TaskForce"}
             {activeBoard === "autopilot" && "🤖 AutoPilot"}
@@ -255,6 +257,8 @@ export default function Dashboard() {
 
         {/* Content area */}
         <div className="flex-1 min-h-0 overflow-hidden flex">
+          {activeBoard === "briefing" && <DailyBriefing />}
+
           {activeBoard === "dashboard" && (
             <KanbanBoard tasks={tasks} onTasksChange={setTasks} clients={clientOptions} />
           )}

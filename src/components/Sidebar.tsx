@@ -1,9 +1,9 @@
 "use client";
 
-import { Home, Briefcase, MessageSquare, Settings, Users, Zap, ClipboardCheck, Share2, PenLine, ChevronLeft, ChevronRight, Menu, Lightbulb, Bell, DollarSign } from "lucide-react";
+import { Home, Briefcase, MessageSquare, Settings, Users, Zap, ClipboardCheck, Share2, PenLine, ChevronLeft, ChevronRight, Menu, Lightbulb, Bell, DollarSign, Sunrise } from "lucide-react";
 import type { Client } from "@/lib/data";
 
-export type NavBoard = "dashboard" | "taskforce" | "autopilot" | "ideagen" | "review" | "social" | "content" | "clients" | "billing" | "notifications" | "messages" | "settings";
+export type NavBoard = "briefing" | "dashboard" | "taskforce" | "autopilot" | "ideagen" | "review" | "social" | "content" | "clients" | "billing" | "notifications" | "messages" | "settings";
 
 interface SidebarProps {
   clients: Client[];
@@ -21,6 +21,7 @@ interface SidebarProps {
 }
 
 const boards: { id: NavBoard; section: string; name: string; icon: typeof Home; color?: string }[] = [
+  { id: "briefing", section: "boards", name: "Briefing", icon: Sunrise, color: "text-orange-400" },
   { id: "dashboard", section: "boards", name: "Dashboard", icon: Home },
   { id: "taskforce", section: "boards", name: "TaskForce", icon: Users, color: "text-amber-400" },
   { id: "autopilot", section: "boards", name: "AutoPilot", icon: Zap, color: "text-purple-400" },
