@@ -302,13 +302,14 @@ export default function ApprovalPipeline({ posts, accounts, clientId, onDelete }
           const isExpanded = expandedId === item.id;
           
           return (
-            <div key={item.id}>
+            <div key={item.id} className="px-3 py-1.5">
               <button
                 onClick={() => setExpandedId(isExpanded ? null : item.id)}
-                className="w-full text-left p-4 border-b border-[#1e293b] hover:bg-[#111827] active:bg-[#151d2b] transition-colors"
+                className="w-full text-left p-4 bg-[#111827] border-2 border-[#1e293b] rounded-xl hover:border-[#2a3050] active:bg-[#151d2b] transition-all"
               >
-                <div className="flex items-center gap-2 mb-2">
-                  <span className={`text-[10px] px-2 py-0.5 rounded-full ${
+                {/* Status + platform badges */}
+                <div className="flex items-center gap-2 mb-3">
+                  <span className={`text-[10px] px-2.5 py-1 rounded-full font-medium ${
                     item.status === "pending" ? "bg-amber-500/10 text-amber-400" :
                     item.status === "approved" ? "bg-green-500/10 text-green-400" :
                     "bg-red-500/10 text-red-400"
@@ -316,68 +317,38 @@ export default function ApprovalPipeline({ posts, accounts, clientId, onDelete }
                     {item.status}
                     {(item as any).autoApproved && " ⚡"}
                   </span>
-                  <span className={`text-[10px] px-2 py-0.5 rounded-full ${badge.bg} ${badge.text}`}>
+                  <span className={`text-[10px] px-2.5 py-1 rounded-full font-medium ${badge.bg} ${badge.text}`}>
                     {badge.label}
                   </span>
+                  <span className="ml-auto text-[10px] text-gray-600">{formatDate(item.createdAt)}</span>
                 </div>
 
-                {/* Title */}
+                {/* Title — bold and prominent */}
                 {item.title && (
-                  <h4 className="text-sm font-medium text-white mb-1">{item.title}</h4>
+                  <h4 className="text-sm font-semibold text-white mb-2 leading-snug">{item.title}</h4>
                 )}
 
-                {/* Content preview — shows first 5 lines then fades */}
+                {/* Content preview */}
                 <div className="relative">
-                  <p className={`text-sm text-gray-300 leading-relaxed whitespace-pre-wrap break-words ${
-                    !isExpanded ? "line-clamp-3" : ""
-                  }`}>
+                  <p className="text-[13px] text-gray-300 leading-relaxed whitespace-pre-wrap break-words line-clamp-3">
                     {item.content}
                   </p>
-                  {!isExpanded && item.content && item.content.length > 150 && (
-                    <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-[#0a0e17] to-transparent" />
+                  {item.content && item.content.length > 150 && (
+                    <div className="absolute bottom-0 left-0 right-0 h-10 bg-gradient-to-t from-[#111827] to-transparent" />
                   )}
                 </div>
 
-                {/* Read more indicator */}
-                {!isExpanded && item.content && item.content.length > 150 && (
-                  <div className="flex items-center gap-1 mt-1 text-[11px] text-blue-400">
-                    <span>Tap to read full post</span>
-                    <ChevronDown size={12} />
+                {/* Tap to read */}
+                {item.content && item.content.length > 150 && (
+                  <div className="flex items-center gap-1.5 mt-2 text-[12px] text-blue-400 font-medium">
+                    <span>Tap to read & review</span>
+                    <ChevronDown size={14} />
                   </div>
                 )}
 
-                {/* Agent + date */}
-                <div className="flex items-center gap-3 mt-2 text-[10px] text-gray-600">
-                  {item.agent && <span>By {item.agent}</span>}
-                  <span>{formatDate(item.createdAt)}</span>
-                </div>
-
-                {/* Inline approve/reject when expanded on mobile (quick actions in list view) */}
-                {isExpanded && item.status === "pending" && (
-                  <div className="mt-3 pt-3 border-t border-[#1e293b] space-y-2" onClick={e => e.stopPropagation()}>
-                    <div className="flex gap-2">
-                      <button
-                        onClick={(e) => { e.stopPropagation(); handleApprove(item.id); }}
-                        className="flex-1 py-2.5 text-xs font-medium bg-green-600 text-white rounded-lg hover:bg-green-700 flex items-center justify-center gap-1.5 active:scale-[0.98] transition-transform"
-                      >
-                        <CheckCircle2 size={14} /> Approve
-                      </button>
-                      <button
-                        onClick={(e) => { e.stopPropagation(); handleReject(item.id); }}
-                        className="flex-1 py-2.5 text-xs font-medium bg-red-500/10 text-red-400 border border-red-500/20 rounded-lg hover:bg-red-500/20 flex items-center justify-center gap-1.5 active:scale-[0.98] transition-transform"
-                      >
-                        <XCircle size={14} /> Reject
-                      </button>
-                    </div>
-                    <textarea
-                      value={feedback}
-                      onChange={(e) => { e.stopPropagation(); setFeedback(e.target.value); }}
-                      placeholder="Feedback (optional)..."
-                      className="w-full bg-[#0a0e17] border border-[#1e293b] rounded-lg px-3 py-2 text-xs text-gray-300 placeholder-gray-600 resize-none"
-                      rows={2}
-                      onClick={e => e.stopPropagation()}
-                    />
-                  </div>
+                {/* Agent */}
+                {item.agent && (
+                  <div className="mt-2 text-[11px] text-gray-500">Drafted by {item.agent}</div>
                 )}
               </button>
             </div>
