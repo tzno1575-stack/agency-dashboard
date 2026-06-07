@@ -94,7 +94,7 @@ export default function AffiliateHub() {
       {activeTab === "research" && (
         <div className="space-y-4">
           {/* AI Product Researcher */}
-          <div className="bg-gradient-to-r from-[#1a1f2e] to-[#1e2440] border border-[#1a1a1a] rounded-xl p-4">
+          <div className="bg-gradient-to-r from-[#ffffff] to-[#1e2440] border border-[#1a1a1a] rounded-xl p-4">
             <div className="flex items-center gap-2 mb-3">
               <Wand2 size={16} className="text-green-400" />
               <span className="text-xs font-semibold text-gray-800">CLAUDE PRODUCT RESEARCHER</span>
@@ -173,7 +173,7 @@ export default function AffiliateHub() {
           </div>
 
           {/* Multi-platform post template */}
-          <div className="bg-gradient-to-r from-[#1a1f2e] to-[#1e2440] border border-[#1a1a1a] rounded-xl p-4">
+          <div className="bg-gradient-to-r from-[#ffffff] to-[#1e2440] border border-[#1a1a1a] rounded-xl p-4">
             <div className="flex items-center gap-2 mb-3">
               <Send size={14} className="text-blue-400" />
               <span className="text-xs font-semibold text-gray-800">POSTING WORKFLOW</span>
@@ -278,7 +278,7 @@ export default function AffiliateHub() {
           </div>
 
           {/* Claude prompt templates */}
-          <div className="bg-gradient-to-r from-[#1a1f2e] to-[#1e2440] border border-[#1a1a1a] rounded-xl p-4">
+          <div className="bg-gradient-to-r from-[#ffffff] to-[#1e2440] border border-[#1a1a1a] rounded-xl p-4">
             <h4 className="text-xs font-semibold text-gray-800 mb-3">🎯 Claude Prompts</h4>
             <div className="space-y-2">
               {[

@@ -71,7 +71,7 @@ export default function KanbanBoard({ tasks, onTasksChange, clients, selectedCli
           onClick={() => setShowAddForm(!showAddForm)}
           className={`flex items-center gap-1.5 text-sm px-3 py-1.5 rounded-lg transition-colors ${
             showAddForm
-              ? "bg-[#1e293b] text-gray-800"
+              ? "bg-[#1a1a1a] text-gray-800"
               : "bg-[#3b82f6] text-white hover:bg-[#2563eb]"
           }`}
         >
@@ -131,7 +131,7 @@ export default function KanbanBoard({ tasks, onTasksChange, clients, selectedCli
             <div className="flex gap-2 justify-end">
               <button
                 onClick={() => { setShowAddForm(false); setNewTitle(""); setNewNotes(""); }}
-                className="px-4 py-2 text-sm text-gray-500 hover:text-gray-900 bg-[#1e293b] rounded-lg"
+                className="px-4 py-2 text-sm text-gray-500 hover:text-gray-900 bg-[#1a1a1a] rounded-lg"
               >
                 Cancel
               </button>

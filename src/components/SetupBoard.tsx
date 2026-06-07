@@ -200,8 +200,8 @@ hermes doctor`;
                 step === s.step
                   ? "bg-[#3b82f6] text-white"
                   : step > s.step
-                  ? "bg-[#1e293b] text-green-400"
-                  : "bg-[#1e293b] text-gray-500"
+                  ? "bg-[#1a1a1a] text-green-400"
+                  : "bg-[#1a1a1a] text-gray-500"
               }`}
             >
               <s.icon size={12} />
@@ -225,7 +225,7 @@ hermes doctor`;
               onClick={() => { setInstallType("local"); setStep(2); }}
               className={`w-full p-4 rounded-xl border-2 text-left transition-all ${
                 installType === "local"
-                  ? "border-[#3b82f6] bg-[#1e293b]"
+                  ? "border-[#3b82f6] bg-[#1a1a1a]"
                   : "border-[#1a1a1a] hover:border-[#3b82f6]/50 bg-white"
               }`}
             >
@@ -249,7 +249,7 @@ hermes doctor`;
               onClick={() => { setInstallType("vps"); setStep(2); }}
               className={`w-full p-4 rounded-xl border-2 text-left transition-all ${
                 installType === "vps"
-                  ? "border-[#3b82f6] bg-[#1e293b]"
+                  ? "border-[#3b82f6] bg-[#1a1a1a]"
                   : "border-[#1a1a1a] hover:border-[#3b82f6]/50 bg-white"
               }`}
             >
@@ -389,7 +389,7 @@ hermes doctor`;
           <div className="max-w-lg mx-auto space-y-4">
             <div className="text-center mb-6">
               <h3 className="text-lg font-semibold text-gray-800 mb-2">Your Config Files</h3>
-              <p className="text-sm text-gray-500">Download these and place them in <code className="bg-[#1e293b] px-1.5 py-0.5 rounded text-xs">~/.hermes/</code></p>
+              <p className="text-sm text-gray-500">Download these and place them in <code className="bg-[#1a1a1a] px-1.5 py-0.5 rounded text-xs">~/.hermes/</code></p>
             </div>
 
             <button
@@ -556,9 +556,9 @@ hermes doctor`;
                   <div>
                     <div className="text-sm text-gray-800">Place config files</div>
                     <div className="text-xs text-gray-500">
-                      Move <code className="bg-[#1e293b] px-1 rounded text-[10px]">config.yaml</code> and{" "}
-                      <code className="bg-[#1e293b] px-1 rounded text-[10px]">.env</code> into{" "}
-                      <code className="bg-[#1e293b] px-1 rounded text-[10px]">~/.hermes/</code>
+                      Move <code className="bg-[#1a1a1a] px-1 rounded text-[10px]">config.yaml</code> and{" "}
+                      <code className="bg-[#1a1a1a] px-1 rounded text-[10px]">.env</code> into{" "}
+                      <code className="bg-[#1a1a1a] px-1 rounded text-[10px]">~/.hermes/</code>
                     </div>
                   </div>
                 </div>
@@ -568,9 +568,9 @@ hermes doctor`;
                   <div>
                     <div className="text-sm text-gray-800">(Optional) Install Muslim SOUL</div>
                     <div className="text-xs text-gray-500">
-                      Place <code className="bg-[#1e293b] px-1 rounded text-[10px]">SOUL.md</code> in{" "}
-                      <code className="bg-[#1e293b] px-1 rounded text-[10px]">~/.hermes/</code> and run{" "}
-                      <code className="bg-[#1e293b] px-1 rounded text-[10px]">hermes setup agent</code>
+                      Place <code className="bg-[#1a1a1a] px-1 rounded text-[10px]">SOUL.md</code> in{" "}
+                      <code className="bg-[#1a1a1a] px-1 rounded text-[10px]">~/.hermes/</code> and run{" "}
+                      <code className="bg-[#1a1a1a] px-1 rounded text-[10px]">hermes setup agent</code>
                     </div>
                   </div>
                 </div>
@@ -580,7 +580,7 @@ hermes doctor`;
                   <div>
                     <div className="text-sm text-gray-800">Start Hermes</div>
                     <div className="text-xs text-gray-500">
-                      <code className="bg-[#1e293b] px-1 rounded text-[10px]">hermes gateway start</code> — this runs Hermes as a background service
+                      <code className="bg-[#1a1a1a] px-1 rounded text-[10px]">hermes gateway start</code> — this runs Hermes as a background service
                     </div>
                   </div>
                 </div>

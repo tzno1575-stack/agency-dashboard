@@ -358,7 +358,7 @@ export function HelpToggle() {
       className={`px-2.5 py-1.5 text-xs rounded-md flex items-center gap-1.5 transition-colors ${
         showTips
           ? "bg-amber-600/20 text-amber-400 border border-amber-600/30 hover:bg-amber-600/30"
-          : "text-gray-500 hover:text-gray-800 hover:bg-[#1e293b]"
+          : "text-gray-500 hover:text-gray-800 hover:bg-[#1a1a1a]"
       }`}
       title={showTips ? "Hide help tips" : "Show help tips"}
     >

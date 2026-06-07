@@ -231,13 +231,13 @@ export default function WebsiteBuilder() {
                 <div className="mt-3 flex gap-2">
                   <button
                     onClick={() => setActiveTab("hosting")}
-                    className="flex-1 py-1.5 text-xs bg-[#1e293b] text-gray-800 rounded hover:bg-[#2a3446] flex items-center justify-center gap-1"
+                    className="flex-1 py-1.5 text-xs bg-[#1a1a1a] text-gray-800 rounded hover:bg-[#2a3446] flex items-center justify-center gap-1"
                   >
                     <Server size={12} /> Deploy to Hosting →
                   </button>
                   <button
                     onClick={() => setActiveTab("domains")}
-                    className="flex-1 py-1.5 text-xs bg-[#1e293b] text-gray-800 rounded hover:bg-[#2a3446] flex items-center justify-center gap-1"
+                    className="flex-1 py-1.5 text-xs bg-[#1a1a1a] text-gray-800 rounded hover:bg-[#2a3446] flex items-center justify-center gap-1"
                   >
                     <Globe size={12} /> Buy Domain →
                   </button>

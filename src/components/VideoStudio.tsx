@@ -82,7 +82,7 @@ export default function VideoStudio() {
       </div>
 
       {/* AI Generator */}
-      <div className="bg-gradient-to-r from-[#1a1f2e] to-[#1e2440] border border-[#1a1a1a] rounded-xl p-4 mb-6">
+      <div className="bg-gradient-to-r from-[#ffffff] to-[#1e2440] border border-[#1a1a1a] rounded-xl p-4 mb-6">
         <div className="flex items-center gap-2 mb-3">
           <Wand2 size={16} className="text-purple-400" />
           <span className="text-xs font-semibold text-gray-800">AI SCRIPT GENERATOR</span>
@@ -189,7 +189,7 @@ export default function VideoStudio() {
       {/* Voice Tab — VoxCPM voice cloning */}
       {activeTab === "voice" && (
         <div className="space-y-4">
-          <div className="bg-gradient-to-r from-[#1a1f2e] to-[#1e2440] border border-[#1a1a1a] rounded-xl p-4">
+          <div className="bg-gradient-to-r from-[#ffffff] to-[#1e2440] border border-[#1a1a1a] rounded-xl p-4">
             <div className="flex items-center gap-2 mb-3">
               <span className="text-base">🎙️</span>
               <span className="text-xs font-semibold text-gray-800">VOXCPM VOICE CLONING</span>

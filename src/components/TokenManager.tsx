@@ -177,7 +177,7 @@ export default function TokenManager() {
             <div className="flex items-center gap-2 mt-2 pt-2 border-t border-[#1a1a1a]">
               <button
                 onClick={() => refreshToken(token)}
-                className="flex-1 py-1.5 text-xs bg-[#1e293b] text-gray-800 rounded hover:bg-[#2a3446] flex items-center justify-center gap-1"
+                className="flex-1 py-1.5 text-xs bg-[#1a1a1a] text-gray-800 rounded hover:bg-[#2a3446] flex items-center justify-center gap-1"
               >
                 <RefreshCw size={11} />
                 {token.status === "expired" || token.status === "expiring"

@@ -244,7 +244,7 @@ export default function ApprovalPipeline({ posts, accounts, clientId, onDelete }
                         updateAutoAuth(true, limit);
                         setShowLimitPicker(false);
                       }}
-                      className={`block w-full text-left px-3 py-2 text-xs hover:bg-[#2a3050] ${
+                      className={`block w-full text-left px-3 py-2 text-xs hover:bg-[#1a1a1a] ${
                         autoAuthLimit === limit ? "text-emerald-400" : "text-gray-500"
                       }`}
                     >
@@ -334,7 +334,7 @@ export default function ApprovalPipeline({ posts, accounts, clientId, onDelete }
                     {item.content}
                   </p>
                   {item.content && item.content.length > 150 && (
-                    <div className="absolute bottom-0 left-0 right-0 h-10 bg-gradient-to-t from-[#111827] to-transparent" />
+                    <div className="absolute bottom-0 left-0 right-0 h-10 bg-gradient-to-t from-[#ffffff] to-transparent" />
                   )}
                 </div>
 
@@ -359,7 +359,7 @@ export default function ApprovalPipeline({ posts, accounts, clientId, onDelete }
 
     {/* FULL-SCREEN OVERLAY — like opening a new tab */}
     {expandedItem && (
-      <div className="fixed inset-0 z-50 bg-[#FDFBF7] flex flex-col" style={{ height: "100dvh" }}>
+      <div className="fixed inset-0 z-[60] bg-[#FDFBF7] flex flex-col" style={{ height: "100dvh" }}>
         {/* Top bar: back + meta */}
         <div className="px-4 py-3 border-b border-[#1a1a1a] bg-white shrink-0">
           <button

@@ -191,7 +191,7 @@ export default function DailyBriefing() {
       </div>
 
       {/* AI Suggestion */}
-      <div className="bg-gradient-to-r from-[#1a1f2e] to-[#1e2440] border border-[#1a1a1a] rounded-xl p-4 mb-6">
+      <div className="bg-gradient-to-r from-[#ffffff] to-[#1e2440] border border-[#1a1a1a] rounded-xl p-4 mb-6">
         <div className="flex items-start gap-3">
           <div className="w-8 h-8 rounded-lg bg-[#3b82f6]/20 flex items-center justify-center shrink-0 mt-0.5">
             <MessageSquare size={16} className="text-[#3b82f6]" />
@@ -212,7 +212,7 @@ export default function DailyBriefing() {
 
       {/* Market Pulse */}
       {marketIntel && (
-        <div className="mb-6 bg-gradient-to-br from-[#0f172a] to-[#1a1f2e] border border-[#1a1a1a] rounded-xl overflow-hidden">
+        <div className="mb-6 bg-gradient-to-br from-[#0f172a] to-[#ffffff] border border-[#1a1a1a] rounded-xl overflow-hidden">
           <div className="flex items-center gap-2 px-4 py-3 border-b border-[#1a1a1a]">
             <Globe size={14} className="text-emerald-400" />
             <span className="text-xs font-semibold text-emerald-400 uppercase tracking-widest">Market Pulse</span>

@@ -98,7 +98,7 @@ export default function StandardsPanel() {
       {!showSaved ? (
         <>
           {/* Shape Spec Builder */}
-          <div className="bg-gradient-to-r from-[#1a1f2e] to-[#1e2440] border border-[#1a1a1a] rounded-xl p-4 mb-4">
+          <div className="bg-gradient-to-r from-[#ffffff] to-[#1e2440] border border-[#1a1a1a] rounded-xl p-4 mb-4">
             <div className="flex items-center gap-2 mb-3">
               <Lightbulb size={16} className="text-indigo-400" />
               <span className="text-xs font-semibold text-gray-800">SHAPE SPEC</span>

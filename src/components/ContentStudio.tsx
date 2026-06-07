@@ -211,7 +211,7 @@ export default function ContentStudio({ posts, accounts, clientId, onSave, onDel
           </div>
 
           {/* === AI GENERATOR === */}
-          <div className="bg-gradient-to-br from-[#1a1f2e] to-[#1a1f2e] border border-[#1a1a1a] rounded-xl p-4">
+          <div className="bg-gradient-to-br from-[#ffffff] to-[#ffffff] border border-[#1a1a1a] rounded-xl p-4">
             <div className="flex items-center gap-2 mb-3">
               <div className="w-7 h-7 rounded-lg bg-yellow-500/20 flex items-center justify-center">
                 <Sparkles size={14} className="text-yellow-400" />
@@ -409,7 +409,7 @@ export default function ContentStudio({ posts, accounts, clientId, onSave, onDel
 
         {activeTab === "higgsfield" && (
           <div className="max-w-2xl mx-auto p-4 space-y-5">
-            <div className="bg-gradient-to-r from-[#1a1f2e] to-[#1e2440] border border-[#1a1a1a] rounded-xl p-4">
+            <div className="bg-gradient-to-r from-[#ffffff] to-[#1e2440] border border-[#1a1a1a] rounded-xl p-4">
               <div className="flex items-center gap-2 mb-3">
                 <span className="text-base">🎬</span>
                 <span className="text-xs font-semibold text-gray-800">HIGGSFIELD SUPERCOMPUTER</span>
@@ -448,7 +448,7 @@ export default function ContentStudio({ posts, accounts, clientId, onSave, onDel
               </div>
             </div>
 
-            <div className="bg-gradient-to-r from-[#1a1f2e] to-[#1e2440] border border-[#1a1a1a] rounded-xl p-4">
+            <div className="bg-gradient-to-r from-[#ffffff] to-[#1e2440] border border-[#1a1a1a] rounded-xl p-4">
               <h4 className="text-xs font-semibold text-gray-800 mb-3">💰 Service Packaging</h4>
               <div className="space-y-2 text-xs text-gray-500">
                 <div className="flex justify-between"><span>Content Repurposing</span><span className="text-green-400">$500/mo</span></div>
