@@ -19,7 +19,9 @@ export default function VideoStudio() {
   const [topic, setTopic] = useState("");
   const [platform, setPlatform] = useState<"youtube" | "tiktok">("youtube");
   const [generating, setGenerating] = useState(false);
-  const [activeTab, setActiveTab] = useState<"scripts" | "schedule">("scripts");
+  const [activeTab, setActiveTab] = useState<"scripts" | "schedule" | "voice">("scripts");
+  const [voiceText, setVoiceText] = useState("");
+  const [voiceGenerating, setVoiceGenerating] = useState(false);
 
   const handleGenerate = async () => {
     if (!topic.trim()) return;
@@ -72,6 +74,10 @@ export default function VideoStudio() {
         <button onClick={() => setActiveTab("schedule")}
           className={`flex-1 py-1.5 text-xs rounded-md transition-colors ${activeTab === "schedule" ? "bg-[#1a1f2e] text-white" : "text-gray-500 hover:text-gray-300"}`}>
           📅 Schedule ({scheduled.length})
+        </button>
+        <button onClick={() => setActiveTab("voice")}
+          className={`flex-1 py-1.5 text-xs rounded-md transition-colors ${activeTab === "voice" ? "bg-[#1a1f2e] text-white" : "text-gray-500 hover:text-gray-300"}`}>
+          🎙️ Voiceover
         </button>
       </div>
 
@@ -177,6 +183,59 @@ export default function VideoStudio() {
               )}
             </div>
           ))}
+        </div>
+      )}
+
+      {/* Voice Tab — VoxCPM voice cloning */}
+      {activeTab === "voice" && (
+        <div className="space-y-4">
+          <div className="bg-gradient-to-r from-[#1a1f2e] to-[#1e2440] border border-[#2a3050] rounded-xl p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-base">🎙️</span>
+              <span className="text-xs font-semibold text-gray-300">VOXCPM VOICE CLONING</span>
+              <span className="text-[10px] bg-green-500/10 text-green-400 px-1.5 py-0.5 rounded-full ml-auto">Free · Local</span>
+            </div>
+            <p className="text-xs text-gray-500 mb-3">Clone your voice once, generate unlimited voiceovers for YouTube videos. Runs locally — no API costs.</p>
+            <textarea
+              value={voiceText}
+              onChange={(e) => setVoiceText(e.target.value)}
+              placeholder="Paste your video script here to generate voiceover..."
+              className="w-full bg-[#0f1320] border border-[#1e293b] rounded-lg p-3 text-sm text-gray-200 placeholder-gray-600 resize-none h-24 focus:outline-none focus:border-[#3b82f6]/50 mb-3"
+            />
+            <div className="flex gap-2">
+              <button
+                onClick={async () => {
+                  if (!voiceText.trim()) return;
+                  setVoiceGenerating(true);
+                  // Placeholder — will call VoxCPM API when integrated
+                  await new Promise(r => setTimeout(r, 1500));
+                  setVoiceGenerating(false);
+                  setVoiceText("");
+                }}
+                disabled={!voiceText.trim() || voiceGenerating}
+                className="flex items-center gap-2 px-4 py-2 bg-purple-600 hover:bg-purple-700 disabled:opacity-40 text-white text-xs rounded-lg transition-colors">
+                {voiceGenerating ? "Generating..." : "🎤 Generate Voiceover"}
+              </button>
+            </div>
+          </div>
+
+          <div className="bg-[#1a1f2e] border border-[#1e293b] rounded-xl p-4">
+            <h4 className="text-xs font-semibold text-gray-300 mb-3">Setup (one-time)</h4>
+            <div className="space-y-2 text-xs text-gray-400">
+              <div className="flex items-start gap-2">
+                <span className="text-green-400 shrink-0 mt-0.5">1.</span>
+                <span>Install <code className="text-[10px] bg-[#0f1320] px-1.5 py-0.5 rounded">VoxCPM.cpp</code> — <a href="https://github.com/bluryar/VoxCPM.cpp" target="_blank" className="text-[#3b82f6] hover:underline">github.com/bluryar/VoxCPM.cpp</a> (CPU-only, no GPU)</span>
+              </div>
+              <div className="flex items-start gap-2">
+                <span className="text-green-400 shrink-0 mt-0.5">2.</span>
+                <span>Record 30 seconds of your voice → clone with VoxCPM zero-shot</span>
+              </div>
+              <div className="flex items-start gap-2">
+                <span className="text-green-400 shrink-0 mt-0.5">3.</span>
+                <span>For better quality: fine-tune with <code className="text-[10px] bg-[#0f1320] px-1.5 py-0.5 rounded">ComfyUI-VoxCPM2</code> + LoRA training (30 languages, 48kHz)</span>
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </div>
