@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { CheckCircle2, XCircle, Clock, Send, Eye, Image, HardDrive, AlertTriangle, MessageCircle, RefreshCw } from "lucide-react";
+import { CheckCircle2, XCircle, Clock, Send, Eye, Image, HardDrive, AlertTriangle, MessageCircle, RefreshCw, Zap, ZapOff, Settings } from "lucide-react";
 import type { ScheduledPost, SocialAccount } from "@/lib/data";
 
 interface ApprovalItem {
@@ -40,6 +40,35 @@ const SAMPLE_APPROVALS: ApprovalItem[] = [
   },
 ];
 
+const AUTO_AUTH_LIMITS = [5, 10, 15] as const;
+
+function getTodayKey() {
+  return new Date().toISOString().split("T")[0];
+}
+
+function loadAutoAuthState() {
+  try {
+    const raw = localStorage.getItem("aqd_auto_auth");
+    if (!raw) return { enabled: false, limit: 5 as typeof AUTO_AUTH_LIMITS[number] };
+    return JSON.parse(raw);
+  } catch {
+    return { enabled: false, limit: 5 as typeof AUTO_AUTH_LIMITS[number] };
+  }
+}
+
+function loadDailyCount() {
+  try {
+    const raw = localStorage.getItem("aqd_auto_auth_daily");
+    const data = JSON.parse(raw);
+    if (data?.date === getTodayKey()) return data.count;
+  } catch {}
+  return 0;
+}
+
+function saveDailyCount(count: number) {
+  localStorage.setItem("aqd_auto_auth_daily", JSON.stringify({ date: getTodayKey(), count }));
+}
+
 export default function ApprovalPipeline({ posts, accounts, clientId, onDelete }: ApprovalPipelineProps) {
   const [approvals, setApprovals] = useState<ApprovalItem[]>([]);
   const [loading, setLoading] = useState(true);
@@ -47,6 +76,26 @@ export default function ApprovalPipeline({ posts, accounts, clientId, onDelete }
   const [feedback, setFeedback] = useState("");
   const [showPreview, setShowPreview] = useState(false);
   const [publishing, setPublishing] = useState<string | null>(null);
+  const [autoAuth, setAutoAuth] = useState(false);
+  const [autoAuthLimit, setAutoAuthLimit] = useState<typeof AUTO_AUTH_LIMITS[number]>(5);
+  const [dailyAutoCount, setDailyAutoCount] = useState(0);
+  const [showLimitPicker, setShowLimitPicker] = useState(false);
+
+  // Load auto-auth state on mount
+  useEffect(() => {
+    const saved = loadAutoAuthState();
+    setAutoAuth(saved.enabled);
+    setAutoAuthLimit(saved.limit);
+    setDailyAutoCount(loadDailyCount());
+  }, []);
+
+  // Persist auto-auth state
+  const updateAutoAuth = (enabled: boolean, limit?: typeof AUTO_AUTH_LIMITS[number]) => {
+    const newLimit = limit || autoAuthLimit;
+    setAutoAuth(enabled);
+    if (limit) setAutoAuthLimit(newLimit);
+    localStorage.setItem("aqd_auto_auth", JSON.stringify({ enabled, limit: newLimit }));
+  };
 
   // Fetch live approvals from Redis
   useEffect(() => {
@@ -54,10 +103,28 @@ export default function ApprovalPipeline({ posts, accounts, clientId, onDelete }
       .then(r => r.json())
       .then(data => {
         if (data.items && data.items.length > 0) {
-          setApprovals(data.items.map((item: any) => ({
+          const loaded = data.items.map((item: any) => ({
             ...item,
             status: item.status || "pending",
-          })));
+          }));
+          
+          // Auto-authorize if enabled and under limit
+          const saved = loadAutoAuthState();
+          if (saved.enabled) {
+            let count = loadDailyCount();
+            const updated = loaded.map((item: ApprovalItem) => {
+              if (item.status === "pending" && count < saved.limit) {
+                count++;
+                return { ...item, status: "approved" as const, autoApproved: true };
+              }
+              return item;
+            });
+            saveDailyCount(count);
+            setDailyAutoCount(count);
+            setApprovals(updated);
+          } else {
+            setApprovals(loaded);
+          }
         } else {
           setApprovals(SAMPLE_APPROVALS);
         }
@@ -102,6 +169,62 @@ export default function ApprovalPipeline({ posts, accounts, clientId, onDelete }
     <div className="flex-1 flex overflow-hidden">
       {/* Left: Approval Queue */}
       <div className="w-72 border-r border-[#1e293b] flex flex-col shrink-0">
+        {/* Auto-Authorize Controls */}
+        <div className="px-3 py-2 border-b border-[#1e293b] bg-[#0a0e17]">
+          <div className="flex items-center justify-between">
+            <button
+              onClick={() => updateAutoAuth(!autoAuth)}
+              className={`flex items-center gap-1.5 text-[10px] px-2 py-1 rounded-lg transition-colors ${
+                autoAuth 
+                  ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20" 
+                  : "bg-gray-500/10 text-gray-500 border border-gray-500/10 hover:text-gray-400"
+              }`}
+            >
+              {autoAuth ? <Zap size={12} /> : <ZapOff size={12} />}
+              Auto {autoAuth && `(${dailyAutoCount}/${autoAuthLimit})`}
+            </button>
+            
+            {autoAuth && (
+              <div className="relative">
+                <button
+                  onClick={() => setShowLimitPicker(!showLimitPicker)}
+                  className="flex items-center gap-1 text-[10px] text-gray-500 hover:text-gray-300 px-1.5 py-1 rounded"
+                >
+                  <Settings size={11} />
+                  {autoAuthLimit}x
+                </button>
+                {showLimitPicker && (
+                  <div className="absolute right-0 top-7 bg-[#1a1f2e] border border-[#2a3050] rounded-lg py-1 z-20 shadow-xl">
+                    {AUTO_AUTH_LIMITS.map(limit => (
+                      <button
+                        key={limit}
+                        onClick={() => {
+                          updateAutoAuth(true, limit);
+                          setShowLimitPicker(false);
+                        }}
+                        className={`block w-full text-left px-3 py-1.5 text-[10px] hover:bg-[#2a3050] ${
+                          autoAuthLimit === limit ? "text-emerald-400" : "text-gray-400"
+                        }`}
+                      >
+                        {limit}x daily
+                        {autoAuthLimit === limit && " ✓"}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+          {autoAuth && (
+            <div className="mt-1.5 text-[9px] text-gray-600 leading-tight">
+              {dailyAutoCount >= autoAuthLimit 
+                ? `⚠️ Limit reached (${autoAuthLimit}/${autoAuthLimit}). New posts need manual approval.`
+                : `Next ${autoAuthLimit - dailyAutoCount} posts auto-approved.`
+              }
+            </div>
+          )}
+        </div>
+
         {/* Tabs */}
         <div className="flex border-b border-[#1e293b]">
           {[
@@ -145,6 +268,7 @@ export default function ApprovalPipeline({ posts, accounts, clientId, onDelete }
                   "bg-red-500/10 text-red-400"
                 }`}>
                   {item.status}
+                  {(item as any).autoApproved && " ⚡"}
                 </span>
                 <span className="text-[10px] text-gray-600">{item.platform}</span>
               </div>
