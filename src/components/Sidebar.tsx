@@ -59,14 +59,14 @@ export default function Sidebar({
   return (
     <>
       {/* Logo */}
-      <div className="p-3 border-b border-[#1e293b] flex items-center gap-2 shrink-0">
+      <div className="p-3 md:p-3 py-3.5 border-b border-[#1e293b] flex items-center gap-2.5 shrink-0 min-h-[52px]">
         {/* Mobile: menu icon to expand */}
         <button
           onClick={onMobileExpand}
-          className="md:hidden text-gray-400 hover:text-white p-0.5"
+          className="md:hidden text-gray-400 hover:text-white p-1 -ml-0.5"
           title="Expand menu"
         >
-          <Menu size={18} />
+          <Menu size={22} />
         </button>
 
         {/* Desktop: collapse toggle */}
@@ -102,13 +102,13 @@ export default function Sidebar({
                 <button
                   key={board.id}
                   onClick={() => onNavigate(board.id)}
-                  className={`flex items-center gap-2.5 w-full px-3 py-2 text-sm transition-colors ${
+                  className={`flex items-center gap-3 w-full px-3 py-2.5 text-sm transition-colors ${
                     isActive
                       ? "bg-[#1a1f2e] text-white border-r-2 border-[#3b82f6]"
                       : "text-gray-400 hover:text-white hover:bg-[#1a1f2e] border-r-2 border-transparent"
                   }`}
                 >
-                  <Icon size={16} className={`shrink-0 ${isActive ? board.color || "" : ""}`} />
+                  <Icon size={20} className={`shrink-0 ${isActive ? board.color || "text-white" : ""}`} />
                   <span className="sidebar-label text-xs font-medium truncate flex items-center gap-1.5">
                     {board.name}
                     {board.id === "taskforce" && agentCount > 0 && (
@@ -142,7 +142,7 @@ export default function Sidebar({
             <button
               key={client.id}
               onClick={() => onSelectClient(client.id)}
-              className={`w-full text-left px-3 py-2 text-xs transition-colors border-r-2 ${
+              className={`w-full text-left px-3 py-2.5 text-[13px] transition-colors border-r-2 ${
                 selectedClientId === client.id
                   ? "bg-[#1a1f2e] text-white border-[#3b82f6]"
                   : "text-gray-400 hover:text-white hover:bg-[#1a1f2e] border-transparent"

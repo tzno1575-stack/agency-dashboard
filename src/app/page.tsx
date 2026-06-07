@@ -84,7 +84,7 @@ export default function Dashboard() {
   };
 
   const handleBottomNav = (id: string) => {
-    if (id === "chat") { setChatOpen(true); return; }
+    if (id === "messages") { setChatOpen(true); return; }
     setActiveBoard(id as NavBoard);
   };
 
@@ -344,8 +344,8 @@ export default function Dashboard() {
       </main>
 
       {/* Bottom Navigation (mobile) */}
-      <BottomNav activeView={chatOpen ? "chat" : activeBoard}
-        agentCount={agentCount} onNavigate={handleBottomNav} />
+      <BottomNav activeView={chatOpen ? "messages" : activeBoard}
+        agentCount={agentCount} reviewCount={reviewCount} onNavigate={handleBottomNav} />
 
       {/* Chat panel */}
       {chatOpen && (
