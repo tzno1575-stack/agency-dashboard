@@ -186,7 +186,11 @@ export default function KanbanBoard({ tasks, onTasksChange, clients, selectedCli
                                 {task.agentNotes && (
                                   <p className="text-xs text-gray-500 mt-1 truncate">{task.agentNotes}</p>
                                 )}
-                                <p className="text-[10px] text-gray-500 mt-2">{task.createdAt?.slice(0, 10)}</p>
+                                <p className="text-xs text-gray-500 mt-2">
+                                          {task.createdAt
+                                            ? new Date(task.createdAt).toLocaleDateString("en-GB", { day: "numeric", month: "short" })
+                                            : ""}
+                                        </p>
                               </div>
                               <button className="mt-1">
                                 <MoreHorizontal size={14} className="text-gray-500" />

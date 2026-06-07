@@ -217,7 +217,7 @@ export default function DailyBriefing() {
             <Globe size={14} className="text-emerald-400" />
             <span className="text-xs font-semibold text-emerald-400 uppercase tracking-widest">Market Pulse</span>
             {marketIntel.stats && (
-              <span className="ml-auto text-[10px] text-gray-500">
+              <span className="ml-auto text-xs text-slate-400">
                 {marketIntel.stats.sourcesScraped} sources · {marketIntel.stats.halalPassed} halal
               </span>
             )}
@@ -230,7 +230,7 @@ export default function DailyBriefing() {
                 <TrendingUp size={14} className="text-emerald-400 mt-0.5 shrink-0" />
                 <div className="min-w-0">
                   <p className="text-xs font-semibold text-emerald-300">{marketIntel.topFind.title}</p>
-                  <p className="text-[11px] text-gray-500 mt-0.5 leading-relaxed">{marketIntel.topFind.summary}</p>
+                  <p className="text-xs text-slate-300 mt-0.5 leading-relaxed">{marketIntel.topFind.summary}</p>
                   {marketIntel.topFind.action && (
                     <p className="text-[11px] text-emerald-500/80 mt-1 flex items-center gap-1">
                       <ArrowRight size={10} />
@@ -246,12 +246,12 @@ export default function DailyBriefing() {
             {/* Ventures */}
             {marketIntel.ventures.length > 0 && (
               <div>
-                <p className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider mb-1.5">New Ventures</p>
+                <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">New Ventures</p>
                 <ul className="space-y-1">
                   {marketIntel.ventures.slice(0, 3).map((v, i) => (
-                    <li key={i} className="text-[11px] text-gray-800 flex items-start gap-1.5">
-                      <span className="text-emerald-500 mt-0.5 shrink-0">•</span>
-                      <span><span className="text-black font-medium">{v.name}</span> — {v.description}</span>
+                    <li key={i} className="text-xs text-slate-300 flex items-start gap-1.5">
+                      <span className="text-emerald-400 mt-0.5 shrink-0">•</span>
+                      <span><span className="text-white font-medium">{v.name}</span> — {v.description}</span>
                     </li>
                   ))}
                 </ul>
@@ -261,12 +261,12 @@ export default function DailyBriefing() {
             {/* Tools */}
             {marketIntel.tools.length > 0 && (
               <div>
-                <p className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider mb-1.5">Tools Found</p>
+                <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">Tools Found</p>
                 <ul className="space-y-1">
                   {marketIntel.tools.map((t, i) => (
-                    <li key={i} className="text-[11px] text-gray-800 flex items-start gap-1.5">
+                    <li key={i} className="text-xs text-slate-300 flex items-start gap-1.5">
                       <span className="text-blue-400 mt-0.5 shrink-0">•</span>
-                      <span><span className="text-black font-medium">{t.name}</span> — {t.description} <span className="text-gray-500">({t.pricing})</span></span>
+                      <span><span className="text-white font-medium">{t.name}</span> — {t.description} <span className="text-slate-500">({t.pricing})</span></span>
                     </li>
                   ))}
                 </ul>
@@ -275,20 +275,20 @@ export default function DailyBriefing() {
 
             {/* Market Signal */}
             {marketIntel.marketSignal && (
-              <div className="bg-white rounded-lg px-3 py-2">
-                <p className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider mb-0.5">Signal</p>
-                <p className="text-[11px] text-gray-500 leading-relaxed">{marketIntel.marketSignal}</p>
+              <div className="bg-white/5 rounded-lg px-3 py-2">
+                <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-0.5">Signal</p>
+                <p className="text-xs text-slate-300 leading-relaxed">{marketIntel.marketSignal}</p>
               </div>
             )}
 
             {/* Idea */}
             {marketIntel.idea && (
-              <div className="bg-white rounded-lg px-3 py-2 border-l-2 border-amber-500/50">
+              <div className="bg-white/5 rounded-lg px-3 py-2 border-l-2 border-amber-500/50">
                 <div className="flex items-center gap-1.5 mb-0.5">
                   <Lightbulb size={12} className="text-amber-400" />
-                  <p className="text-[10px] font-semibold text-amber-400 uppercase tracking-wider">Idea for Aql</p>
+                  <p className="text-xs font-semibold text-amber-400 uppercase tracking-wider">Idea for Aql</p>
                 </div>
-                <p className="text-[11px] text-gray-800">{marketIntel.idea}</p>
+                <p className="text-xs text-slate-200">{marketIntel.idea}</p>
               </div>
             )}
           </div>
@@ -326,11 +326,11 @@ function MetricCard({ icon, label, value, sub, color, bg }: {
   bg: string;
 }) {
   return (
-    <div className={`${bg} rounded-xl p-3 border border-[#1a1a1a]`}>
-      <div className={`${color} mb-1.5`}>{icon}</div>
-      <p className="text-[10px] text-gray-500 uppercase tracking-wider mb-0.5">{label}</p>
-      <p className="text-sm font-semibold text-black">{value}</p>
-      <p className="text-[10px] text-gray-500">{sub}</p>
+    <div className={`${bg} rounded-xl p-4 border border-[#1a1a1a]`}>
+      <div className={`${color} mb-2`}>{icon}</div>
+      <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">{label}</p>
+      <p className="text-base font-bold text-black">{value}</p>
+      <p className="text-xs text-gray-500 mt-0.5">{sub}</p>
     </div>
   );
 }

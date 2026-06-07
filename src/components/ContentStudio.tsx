@@ -142,7 +142,7 @@ export default function ContentStudio({ posts, accounts, clientId, onSave, onDel
         </div>
 
         {/* Row 2: Tab buttons — all 3 visible */}
-        <div className="flex gap-1 bg-[#FDFBF7] rounded-lg p-0.5 border border-[#1a1a1a] w-full">
+        <div className="content-studio-tabs flex gap-1 bg-[#FDFBF7] rounded-lg p-0.5 border border-[#1a1a1a] w-full">
           <button onClick={() => setActiveTab("composer")}
             className={`flex-1 px-2 py-1.5 text-[11px] rounded-md transition-colors text-center ${activeTab === "composer" ? "bg-white text-black" : "text-gray-500 hover:text-gray-800"}`}>
             ✍️ Composer

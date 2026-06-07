@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { X, MessageCircle } from "lucide-react";
+import { X, MessageCircle, Menu } from "lucide-react";
 import Sidebar from "@/components/Sidebar";
 import KanbanBoard from "@/components/KanbanBoard";
 import ChatWidget from "@/components/ChatWidget";
@@ -238,38 +238,48 @@ export default function Dashboard() {
       {/* === MAIN CONTENT === */}
       <main className={mainClasses}>
         {/* Header */}
-        <header className="flex items-center gap-2 md:gap-4 px-3 md:px-4 py-3 border-b border-[#1a1a1a] bg-white shrink-0">
-          <span className="text-sm font-semibold text-gray-800 hidden sm:block">
-            {activeBoard === "briefing" && "☀️ Daily Briefing"}
-            {activeBoard === "dashboard" && "📋 Dashboard"}
-            {activeBoard === "aichat" && "🤖 AI Chat"}
-            {activeBoard === "setup" && "⚡ Hermes Setup"}
-            {activeBoard === "sitebuilder" && "🌐 Site Builder"}
-            {activeBoard === "videostudio" && "🎬 Video Studio"}
-            {activeBoard === "taskforce" && "📎 TaskForce"}
-            {activeBoard === "autopilot" && "🤖 AutoPilot"}
-            {activeBoard === "ideagen" && "💡 IdeaGen"}
-            {activeBoard === "standards" && "📐 Standards & Specs"}
-            {activeBoard === "review" && "✅ Review Queue"}
-            {activeBoard === "social" && "📱 Social Accounts"}
-            {activeBoard === "content" && "✍️ Content Studio"}
-            {activeBoard === "clients" && "💼 Clients"}
-            {activeBoard === "billing" && "💰 Billing"}
-            {activeBoard === "affiliates" && "🔗 Affiliate Hub"}
-            {activeBoard === "kdp" && "📚 KDP Books"}
-            {activeBoard === "notifications" && "🔔 Notifications"}
-            {activeBoard === "messages" && "💬 Messages"}
-            {activeBoard === "settings" && "⚙️ Settings"}
-          </span>
+      <header className="flex items-center gap-3 px-4 py-3 border-b border-[#1a1a1a] bg-white shrink-0 min-h-[52px]">
+        {/* Mobile: hamburger to open sidebar */}
+        <button
+          onClick={() => setSidebarExpandedMobile(prev => !prev)}
+          className="md:hidden p-2 -ml-2 text-gray-500 hover:text-gray-900 min-w-[44px] min-h-[44px] flex items-center justify-center shrink-0"
+          title="Open menu"
+        >
+          <Menu size={22} />
+        </button>
 
-          <div className="flex gap-1 ml-auto tabs-scroll">
-            <HelpToggle />
-            <button onClick={() => setChatOpen(!chatOpen)}
-              className={`px-3 py-1.5 text-xs rounded-md flex items-center gap-1 ${chatOpen ? "bg-[#3b82f6] text-white" : "text-gray-500 hover:text-gray-800"}`}>
-              <MessageCircle size={14} />Chat
-            </button>
-          </div>
-        </header>
+        {/* Board name — always visible */}
+        <span className="text-sm font-semibold text-gray-800 flex-1 text-center md:text-left">
+          {activeBoard === "briefing" && "☀️ Daily Briefing"}
+          {activeBoard === "dashboard" && "📋 Tasks"}
+          {activeBoard === "aichat" && "🤖 AI Chat"}
+          {activeBoard === "setup" && "⚡ Hermes Setup"}
+          {activeBoard === "sitebuilder" && "🌐 Site Builder"}
+          {activeBoard === "videostudio" && "🎬 Video Studio"}
+          {activeBoard === "taskforce" && "📎 Team"}
+          {activeBoard === "autopilot" && "🤖 AutoPilot"}
+          {activeBoard === "ideagen" && "💡 IdeaGen"}
+          {activeBoard === "standards" && "📐 Standards"}
+          {activeBoard === "review" && "✅ Review"}
+          {activeBoard === "social" && "📱 Social"}
+          {activeBoard === "content" && "✍️ Content Studio"}
+          {activeBoard === "clients" && "💼 Clients"}
+          {activeBoard === "billing" && "💰 Billing"}
+          {activeBoard === "affiliates" && "🔗 Affiliates"}
+          {activeBoard === "kdp" && "📚 KDP"}
+          {activeBoard === "notifications" && "🔔 Notifications"}
+          {activeBoard === "messages" && "💬 Messages"}
+          {activeBoard === "settings" && "⚙️ Settings"}
+        </span>
+
+        <div className="flex gap-1 tabs-scroll ml-auto">
+          <HelpToggle />
+          <button onClick={() => setChatOpen(!chatOpen)}
+            className={`px-3 py-1.5 text-xs rounded-md flex items-center gap-1 ${chatOpen ? "bg-[#3b82f6] text-white" : "text-gray-500 hover:text-gray-800"} min-h-[36px]`}>
+            <MessageCircle size={14} />Chat
+          </button>
+        </div>
+      </header>
 
         {/* Content area */}
         <HelpTips board={activeBoard} />

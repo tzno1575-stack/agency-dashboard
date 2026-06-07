@@ -241,7 +241,68 @@ body {
     margin-bottom: 12px;
   }
 
-  /* Typography: bigger on mobile */
+  /* Typography: bigger on mobile — enforce minimum readable sizes */
+  .text-\[9px\] { font-size: 11px !important; }
+  .text-\[10px\] { font-size: 12px !important; }
   .text-xs { font-size: 13px !important; }
   .text-sm { font-size: 15px !important; }
+  .text-base { font-size: 17px !important; }
+
+  /* Touch targets: minimum 44px for all interactive elements */
+  button,
+  a,
+  [role="button"],
+  .app-sidebar button,
+  .app-main button {
+    min-height: 44px !important;
+    min-width: 44px !important;
+  }
+
+  /* Sidebar labels when expanded — readable on mobile */
+  .app-sidebar.expanded-mobile .sidebar-label {
+    font-size: 14px !important;
+  }
+  .app-sidebar.expanded-mobile .sidebar-section-label {
+    font-size: 12px !important;
+  }
+  .app-sidebar.expanded-mobile .sidebar-footer-text {
+    font-size: 12px !important;
+  }
+
+  /* Kanban: stack columns vertically on mobile, not horizontal scroll */
+  .kanban-mobile {
+    flex-direction: column !important;
+    overflow-x: hidden !important;
+    gap: 16px !important;
+    padding-bottom: 80px !important;
+  }
+  .kanban-mobile > * {
+    min-width: 100% !important;
+    max-width: 100% !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* Daily Briefing cards: stack to single column on small phones */
+  @media (max-width: 480px) {
+    .grid-cols-2 { grid-template-columns: 1fr !important; }
+    .grid-cols-2 > * { min-width: 0; }
+  }
+
+  /* Market Pulse: ensure text is readable on dark background */
+  [class*="from-\[#0f172a"] .text-gray-500,
+  [class*="from-\[#0f172a"] .text-gray-400 {
+    color: #94a3b8 !important;
+  }
+
+  /* Content Studio: tab buttons taller and bigger text */
+  .content-studio-tabs button {
+    min-height: 48px !important;
+    font-size: 13px !important;
+    padding: 12px 8px !important;
+  }
+
+  /* Ensure bottom nav stays above everything */
+  .bottom-nav-bar {
+    z-index: 9999 !important;
+  }
 }
