@@ -7,8 +7,22 @@ const redis = Redis.fromEnv();
 // GET: List review items — falls back to sample data when Redis empty
 export async function GET() {
   try {
-    // Return sample data directly for testing
-    return NextResponse.json({ items: sampleReviews });
+    const raw = await redis.lrange("review:queue", 0, -1);
+
+    // Parse items, filter nulls/empties
+    const items = ((raw || []) as string[])
+      .filter((item: string) => item && item.trim().startsWith("{"))
+      .map((item: string) => {
+        try { return JSON.parse(item); } catch { return null; }
+      })
+      .filter(Boolean);
+
+    // Fall back to sample data if nothing in Redis
+    if (items.length === 0) {
+      return NextResponse.json({ items: sampleReviews });
+    }
+
+    return NextResponse.json({ items });
   } catch (e) {
     return NextResponse.json({ items: [] });
   }
