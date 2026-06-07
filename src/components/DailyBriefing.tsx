@@ -133,7 +133,7 @@ export default function DailyBriefing() {
           <Sun size={20} />
           <span className="text-xs font-semibold uppercase tracking-widest">Daily Briefing</span>
         </div>
-        <h2 className="text-xl font-bold text-white">{data.greeting}, Eijaz</h2>
+        <h2 className="text-xl font-bold text-white">{data.greeting}</h2>
         <p className="text-sm text-gray-500 mt-0.5">{data.date}</p>
       </div>
 

@@ -161,10 +161,13 @@ export default function Sidebar({
       </nav>
 
       {/* Footer */}
-      <div className="p-2.5 border-t border-[#1e293b] shrink-0">
+      <div className="p-2.5 border-t border-[#1e293b] shrink-0 space-y-1">
         <div className="sidebar-footer-text text-[10px] text-gray-600 flex items-center gap-1.5">
           <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse shrink-0" />
           Hermes
+        </div>
+        <div className="sidebar-footer-text text-[9px] text-amber-500/70 italic">
+          Demo Mode — sample data
         </div>
       </div>
     </>
