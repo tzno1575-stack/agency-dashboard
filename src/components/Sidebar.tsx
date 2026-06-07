@@ -3,7 +3,7 @@
 import { Home, Briefcase, MessageSquare, Settings, Users, Zap, ClipboardCheck, Share2, PenLine, ChevronLeft, ChevronRight, Menu, Lightbulb, Bell, DollarSign, Sunrise, Film, Link, BookOpen, FileText, Sparkles, Globe } from "lucide-react";
 import type { Client } from "@/lib/data";
 
-export type NavBoard = "briefing" | "dashboard" | "setup" | "sitebuilder" | "videostudio" | "taskforce" | "autopilot" | "ideagen" | "standards" | "review" | "social" | "content" | "affiliates" | "kdp" | "clients" | "billing" | "notifications" | "messages" | "settings";
+export type NavBoard = "briefing" | "dashboard" | "aichat" | "setup" | "sitebuilder" | "videostudio" | "taskforce" | "autopilot" | "ideagen" | "standards" | "review" | "social" | "content" | "affiliates" | "kdp" | "clients" | "billing" | "notifications" | "messages" | "settings";
 
 interface SidebarProps {
   clients: Client[];

@@ -5,7 +5,7 @@ import { Lightbulb, X } from "lucide-react";
 import { useState } from "react";
 
 export type NavBoard =
-  | "briefing" | "dashboard" | "setup" | "sitebuilder" | "videostudio" | "taskforce"
+  | "briefing" | "dashboard" | "aichat" | "setup" | "sitebuilder" | "videostudio" | "taskforce"
   | "autopilot" | "ideagen" | "standards" | "review" | "social"
   | "content" | "affiliates" | "kdp" | "clients" | "billing"
   | "notifications" | "messages" | "settings";
@@ -17,6 +17,11 @@ interface Tip {
 
 // ── TIP REGISTRY ── every tip is crafted from real Hermes/dashboard knowledge
 const TIPS: Record<NavBoard, Tip[]> = {
+  aichat: [
+    {
+      text: "Free AI chat with 500+ models via Puter.js — select GPT, Claude, DeepSeek, or Gemini from the dropdown. Zero cost to Aql Digital.",
+    },
+  ],
   briefing: [
     {
       text: "Your daily briefing shows prayer times (Tipton, UK UoIS method), top 3 tasks, agent status, and upcoming deadlines — all in one glance.",
