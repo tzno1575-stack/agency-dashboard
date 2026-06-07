@@ -57,13 +57,14 @@ export async function POST(request: Request) {
   }
 }
 
-// GET: List all agents
+// GET: List all agents — falls back to sample data when Redis empty
 export async function GET() {
   try {
     const raw = await redis.lrange("taskforce:agents", 0, -1);
 
     if (!raw || raw.length === 0) {
-      return NextResponse.json({ agents: [] });
+      const { sampleAgents } = await import("@/lib/data");
+      return NextResponse.json({ agents: sampleAgents });
     }
 
     const agents = (raw as string[])

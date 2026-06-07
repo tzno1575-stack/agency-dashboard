@@ -21,7 +21,7 @@ import AffiliateHub from "@/components/AffiliateHub";
 import KdpHub from "@/components/KdpHub";
 import StandardsPanel from "@/components/StandardsPanel";
 import BottomNav from "@/components/BottomNav";
-import { sampleClients, sampleTasks, sampleSocialAccounts, normalizeClient, normalizeClients } from "@/lib/data";
+import { sampleClients, sampleTasks, sampleSocialAccounts, sampleAgents, samplePosts, normalizeClient, normalizeClients } from "@/lib/data";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import type { Client, Task, Agent, SocialAccount, ScheduledPost } from "@/lib/data";
 
@@ -41,9 +41,9 @@ export default function Dashboard() {
     }
   };
   const [tasks, setTasks, tasksLoaded] = useLocalStorage<Task[]>("aqd_tasks", sampleTasks);
-  const [agents, setAgents, agentsLoaded] = useLocalStorage<Agent[]>("aqd_agents", []);
+  const [agents, setAgents, agentsLoaded] = useLocalStorage<Agent[]>("aqd_agents", sampleAgents);
   const [socialAccounts, setSocialAccounts, socialLoaded] = useLocalStorage<SocialAccount[]>("aqd_social", sampleSocialAccounts);
-  const [posts, setPosts, postsLoaded] = useLocalStorage<ScheduledPost[]>("aqd_posts", []);
+  const [posts, setPosts, postsLoaded] = useLocalStorage<ScheduledPost[]>("aqd_posts", samplePosts);
   const [reviewCount, setReviewCount] = useState(0);
   const [selectedClientId, setSelectedClientId] = useState<string | null>(sampleClients[0]?.id ?? null);
   const [activeBoard, setActiveBoard] = useState<NavBoard>("briefing");
