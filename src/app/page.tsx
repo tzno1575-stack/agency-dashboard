@@ -28,7 +28,7 @@ import { sampleClients, sampleTasks, sampleSocialAccounts, sampleAgents, sampleP
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import type { Client, Task, Agent, SocialAccount, ScheduledPost } from "@/lib/data";
 
-type NavBoard = "briefing" | "dashboard" | "setup" | "sitebuilder" | "videostudio" | "taskforce" | "autopilot" | "ideagen" | "standards" | "review" | "social" | "content" | "affiliates" | "kdp" | "clients" | "billing" | "notifications" | "messages" | "settings";
+type NavBoard = "briefing" | "dashboard" | "aichat" | "setup" | "sitebuilder" | "videostudio" | "taskforce" | "autopilot" | "ideagen" | "standards" | "review" | "social" | "content" | "affiliates" | "kdp" | "clients" | "billing" | "notifications" | "messages" | "settings";
 
 export default function Dashboard() {
   const [clientsRaw, setClientsRaw, clientsLoaded] = useLocalStorage<Client[]>("aqd_clients", sampleClients);
@@ -358,8 +358,8 @@ export default function Dashboard() {
       <BottomNav activeView={chatOpen ? "messages" : activeBoard}
         agentCount={agentCount} reviewCount={reviewCount} onNavigate={handleBottomNav} />
 
-      {/* Chat panel */}
-      {chatOpen && (
+      {/* Chat panel — only show slide-out when NOT already on Messages board */}
+      {chatOpen && activeBoard !== "messages" && (
         <>
           <div className="fixed inset-0 bg-black/50 z-30 md:hidden" onClick={() => setChatOpen(false)} />
           <div className="fixed md:relative md:h-full inset-y-0 right-0 w-80 max-w-[85vw] z-50 md:z-auto animate-slide-in md:animate-none">
