@@ -123,36 +123,39 @@ export default function ContentStudio({ posts, accounts, clientId, onSave, onDel
   return (
     <div className="flex-1 flex flex-col min-h-0 overflow-hidden bg-[#0a0e17]">
       {/* Header */}
-      <div className="flex items-center gap-3 px-4 py-3 border-b border-[#1e293b] bg-[#0f1320] shrink-0">
-        {onBack && (
-          <button onClick={onBack} className="p-1 text-gray-400 hover:text-white md:hidden">
-            <X size={20} />
+      <div className="flex flex-col gap-2 px-4 py-3 border-b border-[#1e293b] bg-[#0f1320] shrink-0">
+        {/* Row 1: Title + Posts button */}
+        <div className="flex items-center gap-3">
+          {onBack && (
+            <button onClick={onBack} className="p-1 text-gray-400 hover:text-white md:hidden">
+              <X size={20} />
+            </button>
+          )}
+          <h2 className="text-sm font-semibold text-gray-300">Content Studio</h2>
+          <button
+            onClick={() => setShowPosts(!showPosts)}
+            className="ml-auto flex items-center gap-1.5 text-xs text-gray-400 hover:text-white bg-[#1a1f2e] px-3 py-1.5 rounded-lg border border-[#1e293b]"
+          >
+            Posts ({clientPosts.length})
+            <ChevronDown size={12} className={showPosts ? "rotate-180" : ""} />
           </button>
-        )}
-        <div className="flex items-center gap-2 flex-1 min-w-0">
-        <h2 className="text-sm font-semibold text-gray-300">Content Studio</h2>
-        <div className="flex gap-1 ml-3 bg-[#0a0e17] rounded-lg p-0.5 border border-[#1e293b]">
+        </div>
+
+        {/* Row 2: Tab buttons — all 3 visible */}
+        <div className="flex gap-1 bg-[#0a0e17] rounded-lg p-0.5 border border-[#1e293b] w-full">
           <button onClick={() => setActiveTab("composer")}
-            className={`px-2.5 py-1 text-[10px] rounded-md transition-colors ${activeTab === "composer" ? "bg-[#1a1f2e] text-white" : "text-gray-500 hover:text-gray-300"}`}>
+            className={`flex-1 px-2 py-1.5 text-[11px] rounded-md transition-colors text-center ${activeTab === "composer" ? "bg-[#1a1f2e] text-white" : "text-gray-500 hover:text-gray-300"}`}>
             ✍️ Composer
           </button>
           <button onClick={() => setActiveTab("higgsfield")}
-            className={`px-2.5 py-1 text-[10px] rounded-md transition-colors ${activeTab === "higgsfield" ? "bg-[#1a1f2e] text-white" : "text-gray-500 hover:text-gray-300"}`}>
+            className={`flex-1 px-2 py-1.5 text-[11px] rounded-md transition-colors text-center ${activeTab === "higgsfield" ? "bg-[#1a1f2e] text-white" : "text-gray-500 hover:text-gray-300"}`}>
             🎬 Higgsfield
           </button>
           <button onClick={() => setActiveTab("approvals")}
-            className={`px-2.5 py-1 text-[10px] rounded-md transition-colors ${activeTab === "approvals" ? "bg-[#1a1f2e] text-white" : "text-gray-500 hover:text-gray-300"}`}>
+            className={`flex-1 px-2 py-1.5 text-[11px] rounded-md transition-colors text-center ${activeTab === "approvals" ? "bg-[#1a1f2e] text-white" : "text-gray-500 hover:text-gray-300"}`}>
             ✅ Approvals
           </button>
         </div>
-      </div>
-        <button
-          onClick={() => setShowPosts(!showPosts)}
-          className="ml-auto flex items-center gap-1.5 text-xs text-gray-400 hover:text-white bg-[#1a1f2e] px-3 py-1.5 rounded-lg border border-[#1e293b]"
-        >
-          Posts ({clientPosts.length})
-          <ChevronDown size={12} className={showPosts ? "rotate-180" : ""} />
-        </button>
       </div>
 
       <div className="flex-1 overflow-y-auto pb-20">
