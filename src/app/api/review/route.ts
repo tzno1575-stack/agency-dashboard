@@ -1,12 +1,15 @@
 import { NextResponse } from "next/server";
+import { Redis } from "@upstash/redis";
 import { sampleReviews } from "@/lib/data";
 
-// GET: List review items using Upstash REST API directly
+const redis = Redis.fromEnv();
+
+// GET: List review items using Upstash REST API directly (avoids SDK lrange issue)
 export async function GET() {
   try {
-    const url = `${process.env.UPSTASH_REDIS_REST_URL}/lrange/review:queue/0/-1`;
+    const url = `${process.env.UPSTASH_REDIS_REST_URL || ""}/lrange/review:queue/0/-1`;
     const res = await fetch(url, {
-      headers: { Authorization: `Bearer ${process.env.UPSTASH_REDIS_REST_TOKEN}` },
+      headers: { Authorization: `Bearer ${process.env.UPSTASH_REDIS_REST_TOKEN || ""}` },
     });
     const json = await res.json();
     const raw = json.result || [];
@@ -23,7 +26,7 @@ export async function GET() {
     }
     return NextResponse.json({ items });
   } catch (e) {
-    return NextResponse.json({ items: [] });
+    return NextResponse.json({ items: sampleReviews });
   }
 }
 
