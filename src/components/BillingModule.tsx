@@ -67,11 +67,11 @@ export default function BillingModule({ clients, onUpdate }: BillingModuleProps)
   };
 
   return (
-    <div className="flex-1 flex flex-col overflow-hidden bg-[#0a0e17]">
-      <div className="px-4 py-4 border-b border-[#1e293b] bg-[#0f1320] shrink-0 flex items-center gap-2">
+    <div className="flex-1 flex flex-col overflow-hidden bg-[#FDFBF7]">
+      <div className="px-4 py-4 border-b border-[#1a1a1a] bg-white shrink-0 flex items-center gap-2">
         <DollarSign size={18} className="text-green-400" />
         <div>
-          <h2 className="text-sm font-semibold text-gray-300">Billing</h2>
+          <h2 className="text-sm font-semibold text-gray-800">Billing</h2>
           <p className="text-[10px] text-gray-500">{clients.length} clients</p>
         </div>
       </div>
@@ -85,16 +85,16 @@ export default function BillingModule({ clients, onUpdate }: BillingModuleProps)
               { label: "Total Paid", value: totals.paid, color: "border-t-green-500" },
               { label: "Outstanding", value: totals.outstanding, color: "border-t-yellow-500" },
             ].map((stat) => (
-              <div key={stat.label} className={`bg-[#1a1f2e] border border-[#1e293b] rounded-xl p-3 ${stat.color} border-t-2`}>
+              <div key={stat.label} className={`bg-white border border-[#1a1a1a] rounded-xl p-3 ${stat.color} border-t-2`}>
                 <p className="text-[10px] text-gray-500 uppercase tracking-wider">{stat.label}</p>
-                <p className="text-lg font-bold text-white mt-1">{fmt(stat.value)}</p>
+                <p className="text-lg font-bold text-black mt-1">{fmt(stat.value)}</p>
               </div>
             ))}
           </div>
 
           {/* Client list */}
           {clients.length === 0 ? (
-            <div className="text-center text-gray-600 py-12">
+            <div className="text-center text-gray-500 py-12">
               <DollarSign size={32} className="mx-auto mb-3 opacity-30" />
               <p className="text-sm">No clients yet</p>
             </div>
@@ -107,16 +107,16 @@ export default function BillingModule({ clients, onUpdate }: BillingModuleProps)
                 const isAdding = showAddForm === client.id;
 
                 return (
-                  <div key={client.id} className="bg-[#1a1f2e] border border-[#1e293b] rounded-xl overflow-hidden">
+                  <div key={client.id} className="bg-white border border-[#1a1a1a] rounded-xl overflow-hidden">
                     {/* Row header */}
                     <button
                       onClick={() => setExpandedId(isExpanded ? null : client.id)}
-                      className="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-[#0f1320]/50 transition-colors"
+                      className="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-white/50 transition-colors"
                     >
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-gray-200 truncate">{client.name}</p>
+                        <p className="text-sm font-medium text-gray-800 truncate">{client.name}</p>
                       </div>
-                      <span className="text-sm text-gray-300 font-medium">{fmt(total)}</span>
+                      <span className="text-sm text-gray-800 font-medium">{fmt(total)}</span>
                       <span className={`text-[10px] px-2 py-0.5 rounded-full border ${statusBadge(client.billing?.status || "pending")}`}>
                         {client.billing?.status || "pending"}
                       </span>
@@ -125,29 +125,29 @@ export default function BillingModule({ clients, onUpdate }: BillingModuleProps)
 
                     {/* Expanded detail */}
                     {isExpanded && (
-                      <div className="border-t border-[#1e293b] px-4 py-3 space-y-2">
+                      <div className="border-t border-[#1a1a1a] px-4 py-3 space-y-2">
                         {items.length > 0 ? (
                           <div className="space-y-1">
                             {items.map((item, i) => (
-                              <div key={i} className="flex items-center justify-between text-xs text-gray-400 py-1">
+                              <div key={i} className="flex items-center justify-between text-xs text-gray-500 py-1">
                                 <span>{item.description}</span>
-                                <span className="text-gray-300 font-medium">{fmt(item.amount)}</span>
+                                <span className="text-gray-800 font-medium">{fmt(item.amount)}</span>
                               </div>
                             ))}
                           </div>
                         ) : (
-                          <p className="text-xs text-gray-600">No line items</p>
+                          <p className="text-xs text-gray-500">No line items</p>
                         )}
 
                         {/* Add item form */}
                         {isAdding ? (
-                          <div className="flex gap-2 items-end bg-[#0f1320] rounded-lg p-2">
+                          <div className="flex gap-2 items-end bg-white rounded-lg p-2">
                             <div className="flex-1">
                               <input
                                 value={newDesc}
                                 onChange={(e) => setNewDesc(e.target.value)}
                                 placeholder="Description"
-                                className="w-full bg-[#1a1f2e] border border-[#1e293b] rounded px-3 py-1.5 text-xs text-gray-200"
+                                className="w-full bg-white border border-[#1a1a1a] rounded px-3 py-1.5 text-xs text-gray-800"
                               />
                             </div>
                             <div className="w-24">
@@ -156,13 +156,13 @@ export default function BillingModule({ clients, onUpdate }: BillingModuleProps)
                                 value={newAmount}
                                 onChange={(e) => setNewAmount(e.target.value)}
                                 placeholder="£"
-                                className="w-full bg-[#1a1f2e] border border-[#1e293b] rounded px-3 py-1.5 text-xs text-gray-200"
+                                className="w-full bg-white border border-[#1a1a1a] rounded px-3 py-1.5 text-xs text-gray-800"
                               />
                             </div>
                             <button onClick={() => handleAddItem(client.id)} className="p-1.5 text-green-400 hover:bg-green-500/10 rounded">
                               <Check size={14} />
                             </button>
-                            <button onClick={() => setShowAddForm(null)} className="p-1.5 text-gray-500 hover:text-white rounded">
+                            <button onClick={() => setShowAddForm(null)} className="p-1.5 text-gray-500 hover:text-gray-900 rounded">
                               <X size={14} />
                             </button>
                           </div>

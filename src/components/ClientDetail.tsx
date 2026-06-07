@@ -77,10 +77,10 @@ export default function ClientDetail({ client, onSave, onDelete, onClose }: Clie
     <div className="flex-1 overflow-y-auto p-4">
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-sm font-semibold text-gray-300 uppercase tracking-wider">
+        <h2 className="text-sm font-semibold text-gray-800 uppercase tracking-wider">
           Client Details
         </h2>
-        <button onClick={onClose} className="text-gray-500 hover:text-gray-300">
+        <button onClick={onClose} className="text-gray-500 hover:text-gray-800">
           <X size={18} />
         </button>
       </div>
@@ -93,7 +93,7 @@ export default function ClientDetail({ client, onSave, onDelete, onClose }: Clie
             type="text"
             value={editing.name}
             onChange={(e) => setEditing({ ...editing, name: e.target.value })}
-            className="w-full bg-[#0f1320] border border-[#1e293b] rounded-lg px-3 py-2 text-sm text-gray-200 focus:outline-none focus:border-[#3b82f6]"
+            className="w-full bg-white border border-[#1a1a1a] rounded-lg px-3 py-2 text-sm text-gray-800 focus:outline-none focus:border-[#3b82f6]"
             placeholder="Client name"
           />
         </div>
@@ -107,7 +107,7 @@ export default function ClientDetail({ client, onSave, onDelete, onClose }: Clie
             type="text"
             value={editing.website}
             onChange={(e) => setEditing({ ...editing, website: e.target.value })}
-            className="w-full bg-[#0f1320] border border-[#1e293b] rounded-lg px-3 py-2 text-sm text-gray-200 focus:outline-none focus:border-[#3b82f6]"
+            className="w-full bg-white border border-[#1a1a1a] rounded-lg px-3 py-2 text-sm text-gray-800 focus:outline-none focus:border-[#3b82f6]"
             placeholder="example.com"
           />
         </div>
@@ -121,7 +121,7 @@ export default function ClientDetail({ client, onSave, onDelete, onClose }: Clie
             type="email"
             value={editing.email}
             onChange={(e) => setEditing({ ...editing, email: e.target.value })}
-            className="w-full bg-[#0f1320] border border-[#1e293b] rounded-lg px-3 py-2 text-sm text-gray-200 focus:outline-none focus:border-[#3b82f6]"
+            className="w-full bg-white border border-[#1a1a1a] rounded-lg px-3 py-2 text-sm text-gray-800 focus:outline-none focus:border-[#3b82f6]"
             placeholder="client@example.com"
           />
         </div>
@@ -150,7 +150,7 @@ export default function ClientDetail({ client, onSave, onDelete, onClose }: Clie
 
           {/* Line items */}
           {editing.billing.lineItems.length === 0 ? (
-            <p className="text-xs text-gray-600 py-2">No billing items yet</p>
+            <p className="text-xs text-gray-500 py-2">No billing items yet</p>
           ) : (
             <div className="space-y-1.5 mb-2">
               {editing.billing.lineItems.map((item, i) => (
@@ -166,7 +166,7 @@ export default function ClientDetail({ client, onSave, onDelete, onClose }: Clie
                         billing: { ...editing.billing, lineItems: items },
                       });
                     }}
-                    className="flex-1 bg-[#0f1320] border border-[#1e293b] rounded px-2 py-1.5 text-xs text-gray-200 focus:outline-none focus:border-[#3b82f6]"
+                    className="flex-1 bg-white border border-[#1a1a1a] rounded px-2 py-1.5 text-xs text-gray-800 focus:outline-none focus:border-[#3b82f6]"
                     placeholder="Website design"
                   />
                   <input
@@ -180,7 +180,7 @@ export default function ClientDetail({ client, onSave, onDelete, onClose }: Clie
                         billing: { ...editing.billing, lineItems: items },
                       });
                     }}
-                    className="w-20 bg-[#0f1320] border border-[#1e293b] rounded px-2 py-1.5 text-xs text-gray-200 focus:outline-none focus:border-[#3b82f6]"
+                    className="w-20 bg-white border border-[#1a1a1a] rounded px-2 py-1.5 text-xs text-gray-800 focus:outline-none focus:border-[#3b82f6]"
                     placeholder="0"
                   />
                   <button
@@ -191,7 +191,7 @@ export default function ClientDetail({ client, onSave, onDelete, onClose }: Clie
                         billing: { ...editing.billing, lineItems: items },
                       });
                     }}
-                    className="text-gray-600 hover:text-red-400 p-1"
+                    className="text-gray-500 hover:text-red-400 p-1"
                   >
                     <X size={12} />
                   </button>
@@ -202,9 +202,9 @@ export default function ClientDetail({ client, onSave, onDelete, onClose }: Clie
 
           {/* Total + Status */}
           <div className="flex gap-2 items-center">
-            <div className="flex-1 bg-[#1a1f2e] border border-[#1e293b] rounded-lg px-3 py-2 flex items-center justify-between">
+            <div className="flex-1 bg-white border border-[#1a1a1a] rounded-lg px-3 py-2 flex items-center justify-between">
               <span className="text-xs text-gray-500">Total</span>
-              <span className="text-sm font-bold text-white">
+              <span className="text-sm font-bold text-black">
                 £
                 {editing.billing.lineItems
                   .reduce((sum, item) => sum + (item.amount || 0), 0)
@@ -219,7 +219,7 @@ export default function ClientDetail({ client, onSave, onDelete, onClose }: Clie
                   billing: { ...editing.billing, status: e.target.value as Client["billing"]["status"] },
                 })
               }
-              className="w-28 bg-[#0f1320] border border-[#1e293b] rounded-lg px-3 py-2 text-sm text-gray-200 focus:outline-none focus:border-[#3b82f6]"
+              className="w-28 bg-white border border-[#1a1a1a] rounded-lg px-3 py-2 text-sm text-gray-800 focus:outline-none focus:border-[#3b82f6]"
             >
               <option value="paid">Paid</option>
               <option value="pending">Pending</option>
@@ -245,19 +245,19 @@ export default function ClientDetail({ client, onSave, onDelete, onClose }: Clie
                 type="text"
                 value={s.platform}
                 onChange={(e) => handleSocialChange(i, "platform", e.target.value)}
-                className="w-24 bg-[#0f1320] border border-[#1e293b] rounded-lg px-3 py-2 text-sm text-gray-200 focus:outline-none focus:border-[#3b82f6]"
+                className="w-24 bg-white border border-[#1a1a1a] rounded-lg px-3 py-2 text-sm text-gray-800 focus:outline-none focus:border-[#3b82f6]"
                 placeholder="facebook"
               />
               <input
                 type="text"
                 value={s.url}
                 onChange={(e) => handleSocialChange(i, "url", e.target.value)}
-                className="flex-1 bg-[#0f1320] border border-[#1e293b] rounded-lg px-3 py-2 text-sm text-gray-200 focus:outline-none focus:border-[#3b82f6]"
+                className="flex-1 bg-white border border-[#1a1a1a] rounded-lg px-3 py-2 text-sm text-gray-800 focus:outline-none focus:border-[#3b82f6]"
                 placeholder="https://..."
               />
               <button
                 onClick={() => handleRemoveSocial(i)}
-                className="text-gray-600 hover:text-red-400 p-1"
+                className="text-gray-500 hover:text-red-400 p-1"
               >
                 <X size={14} />
               </button>
@@ -273,7 +273,7 @@ export default function ClientDetail({ client, onSave, onDelete, onClose }: Clie
           <textarea
             value={editing.notes}
             onChange={(e) => setEditing({ ...editing, notes: e.target.value })}
-            className="w-full bg-[#0f1320] border border-[#1e293b] rounded-lg px-3 py-2 text-sm text-gray-200 focus:outline-none focus:border-[#3b82f6] h-24 resize-none"
+            className="w-full bg-white border border-[#1a1a1a] rounded-lg px-3 py-2 text-sm text-gray-800 focus:outline-none focus:border-[#3b82f6] h-24 resize-none"
             placeholder="Project notes, preferences, key contacts..."
           />
         </div>

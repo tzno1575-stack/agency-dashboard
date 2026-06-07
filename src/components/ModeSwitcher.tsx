@@ -36,7 +36,7 @@ const modes: { id: Mode; label: string; icon: typeof Users; desc: string; newTab
 
 export default function ModeSwitcher({ mode, onChange }: ModeSwitcherProps) {
   return (
-    <div className="flex items-center gap-1 bg-[#0f1320] rounded-lg p-1 border border-[#1e293b]">
+    <div className="flex items-center gap-1 bg-white rounded-lg p-1 border border-[#1a1a1a]">
       {modes.map((m) => {
         const isActive = mode === m.id;
 
@@ -51,7 +51,7 @@ export default function ModeSwitcher({ mode, onChange }: ModeSwitcherProps) {
               className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${
                 isActive
                   ? "bg-[#3b82f6] text-white"
-                  : "text-gray-500 hover:text-gray-300"
+                  : "text-gray-500 hover:text-gray-800"
               }`}
               title={`${m.desc} (opens in new tab)`}
             >
@@ -69,7 +69,7 @@ export default function ModeSwitcher({ mode, onChange }: ModeSwitcherProps) {
             className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${
               isActive
                 ? "bg-[#3b82f6] text-white"
-                : "text-gray-500 hover:text-gray-300"
+                : "text-gray-500 hover:text-gray-800"
             }`}
             title={m.desc}
           >

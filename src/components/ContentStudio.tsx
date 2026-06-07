@@ -115,26 +115,26 @@ export default function ContentStudio({ posts, accounts, clientId, onSave, onDel
       scheduled: "bg-yellow-500/10 text-yellow-400 border-yellow-500/20",
       posted: "bg-green-500/10 text-green-400 border-green-500/20",
       failed: "bg-red-500/10 text-red-400 border-red-500/20",
-      draft: "bg-gray-500/10 text-gray-400 border-gray-500/20",
+      draft: "bg-gray-500/10 text-gray-500 border-gray-500/20",
     };
     return map[status] || map.draft;
   };
 
   return (
-    <div className="flex-1 flex flex-col min-h-0 overflow-hidden bg-[#0a0e17]">
+    <div className="flex-1 flex flex-col min-h-0 overflow-hidden bg-[#FDFBF7]">
       {/* Header */}
-      <div className="flex flex-col gap-2 px-4 py-3 border-b border-[#1e293b] bg-[#0f1320] shrink-0">
+      <div className="flex flex-col gap-2 px-4 py-3 border-b border-[#1a1a1a] bg-white shrink-0">
         {/* Row 1: Title + Posts button */}
         <div className="flex items-center gap-3">
           {onBack && (
-            <button onClick={onBack} className="p-1 text-gray-400 hover:text-white md:hidden">
+            <button onClick={onBack} className="p-1 text-gray-500 hover:text-gray-900 md:hidden">
               <X size={20} />
             </button>
           )}
-          <h2 className="text-sm font-semibold text-gray-300">Content Studio</h2>
+          <h2 className="text-sm font-semibold text-gray-800">Content Studio</h2>
           <button
             onClick={() => setShowPosts(!showPosts)}
-            className="ml-auto flex items-center gap-1.5 text-xs text-gray-400 hover:text-white bg-[#1a1f2e] px-3 py-1.5 rounded-lg border border-[#1e293b]"
+            className="ml-auto flex items-center gap-1.5 text-xs text-gray-500 hover:text-gray-900 bg-white px-3 py-1.5 rounded-lg border border-[#1a1a1a]"
           >
             Posts ({clientPosts.length})
             <ChevronDown size={12} className={showPosts ? "rotate-180" : ""} />
@@ -142,17 +142,17 @@ export default function ContentStudio({ posts, accounts, clientId, onSave, onDel
         </div>
 
         {/* Row 2: Tab buttons — all 3 visible */}
-        <div className="flex gap-1 bg-[#0a0e17] rounded-lg p-0.5 border border-[#1e293b] w-full">
+        <div className="flex gap-1 bg-[#FDFBF7] rounded-lg p-0.5 border border-[#1a1a1a] w-full">
           <button onClick={() => setActiveTab("composer")}
-            className={`flex-1 px-2 py-1.5 text-[11px] rounded-md transition-colors text-center ${activeTab === "composer" ? "bg-[#1a1f2e] text-white" : "text-gray-500 hover:text-gray-300"}`}>
+            className={`flex-1 px-2 py-1.5 text-[11px] rounded-md transition-colors text-center ${activeTab === "composer" ? "bg-white text-black" : "text-gray-500 hover:text-gray-800"}`}>
             ✍️ Composer
           </button>
           <button onClick={() => setActiveTab("higgsfield")}
-            className={`flex-1 px-2 py-1.5 text-[11px] rounded-md transition-colors text-center ${activeTab === "higgsfield" ? "bg-[#1a1f2e] text-white" : "text-gray-500 hover:text-gray-300"}`}>
+            className={`flex-1 px-2 py-1.5 text-[11px] rounded-md transition-colors text-center ${activeTab === "higgsfield" ? "bg-white text-black" : "text-gray-500 hover:text-gray-800"}`}>
             🎬 Higgsfield
           </button>
           <button onClick={() => setActiveTab("approvals")}
-            className={`flex-1 px-2 py-1.5 text-[11px] rounded-md transition-colors text-center ${activeTab === "approvals" ? "bg-[#1a1f2e] text-white" : "text-gray-500 hover:text-gray-300"}`}>
+            className={`flex-1 px-2 py-1.5 text-[11px] rounded-md transition-colors text-center ${activeTab === "approvals" ? "bg-white text-black" : "text-gray-500 hover:text-gray-800"}`}>
             ✅ Approvals
           </button>
         </div>
@@ -178,7 +178,7 @@ export default function ContentStudio({ posts, accounts, clientId, onSave, onDel
                     className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${
                       isActive
                         ? "bg-[#3b82f6] text-white shadow-lg shadow-[#3b82f6]/20"
-                        : "bg-[#1a1f2e] border border-[#1e293b] text-gray-400 hover:border-[#3b82f6]/50 hover:text-gray-200"
+                        : "bg-white border border-[#1a1a1a] text-gray-500 hover:border-[#3b82f6]/50 hover:text-gray-800"
                     } ${!hasAccount ? "opacity-40" : ""}`}
                     disabled={!hasAccount}
                   >
@@ -190,7 +190,7 @@ export default function ContentStudio({ posts, accounts, clientId, onSave, onDel
               })}
             </div>
             {allAccounts.length === 0 && (
-              <p className="text-xs text-gray-600 mt-2">Add a social account in Social Accounts first</p>
+              <p className="text-xs text-gray-500 mt-2">Add a social account in Social Accounts first</p>
             )}
           </div>
 
@@ -203,21 +203,21 @@ export default function ContentStudio({ posts, accounts, clientId, onSave, onDel
               value={content}
               onChange={(e) => setContent(e.target.value)}
               placeholder="What do you want to share? Include emojis, hashtags, and a call to action..."
-              className="w-full bg-[#1a1f2e] border border-[#1e293b] rounded-xl px-5 py-4 text-sm text-gray-200 h-40 resize-none focus:outline-none focus:border-[#3b82f6] focus:ring-1 focus:ring-[#3b82f6]/30 placeholder:text-gray-600 transition-all"
+              className="w-full bg-white border border-[#1a1a1a] rounded-xl px-5 py-4 text-sm text-gray-800 h-40 resize-none focus:outline-none focus:border-[#3b82f6] focus:ring-1 focus:ring-[#3b82f6]/30 placeholder:text-gray-500 transition-all"
             />
             <div className="flex items-center justify-between mt-1.5">
-              <span className="text-[10px] text-gray-600">{content.length} characters</span>
+              <span className="text-[10px] text-gray-500">{content.length} characters</span>
             </div>
           </div>
 
           {/* === AI GENERATOR === */}
-          <div className="bg-gradient-to-br from-[#1a1f2e] to-[#1a1f2e] border border-[#1e293b] rounded-xl p-4">
+          <div className="bg-gradient-to-br from-[#1a1f2e] to-[#1a1f2e] border border-[#1a1a1a] rounded-xl p-4">
             <div className="flex items-center gap-2 mb-3">
               <div className="w-7 h-7 rounded-lg bg-yellow-500/20 flex items-center justify-center">
                 <Sparkles size={14} className="text-yellow-400" />
               </div>
               <div>
-                <span className="text-sm font-medium text-gray-200">AI Generator</span>
+                <span className="text-sm font-medium text-gray-800">AI Generator</span>
                 <p className="text-[10px] text-gray-500">Describe what to write — agent does the rest</p>
               </div>
             </div>
@@ -228,7 +228,7 @@ export default function ContentStudio({ posts, accounts, clientId, onSave, onDel
                 onChange={(e) => setAiPrompt(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleAIGenerate()}
                 placeholder='e.g. "Write a warm post about our sensory-friendly taxi service..."'
-                className="flex-1 bg-[#0f1320] border border-[#1e293b] rounded-lg px-4 py-2.5 text-sm text-gray-200 focus:outline-none focus:border-yellow-500/50 placeholder:text-gray-600"
+                className="flex-1 bg-white border border-[#1a1a1a] rounded-lg px-4 py-2.5 text-sm text-gray-800 focus:outline-none focus:border-yellow-500/50 placeholder:text-gray-500"
               />
               <button
                 onClick={handleAIGenerate}
@@ -244,7 +244,7 @@ export default function ContentStudio({ posts, accounts, clientId, onSave, onDel
           <div>
             <button
               onClick={() => setShowHashtagPicker(!showHashtagPicker)}
-              className="flex items-center gap-2 text-sm text-gray-400 hover:text-white mb-2"
+              className="flex items-center gap-2 text-sm text-gray-500 hover:text-gray-900 mb-2"
             >
               <Hash size={14} />
               Hashtags
@@ -271,24 +271,24 @@ export default function ContentStudio({ posts, accounts, clientId, onSave, onDel
             )}
 
             {showHashtagPicker && (
-              <div className="bg-[#1a1f2e] border border-[#1e293b] rounded-xl p-4 space-y-2">
+              <div className="bg-white border border-[#1a1a1a] rounded-xl p-4 space-y-2">
                 <p className="text-[10px] text-gray-500 uppercase tracking-wider mb-1">Quick Add</p>
                 {hashtagGroups.map((group) => (
                   <button
                     key={group.name}
                     onClick={() => addHashtagGroup(group.tags)}
-                    className="w-full text-left text-sm text-gray-400 hover:text-white py-2 px-3 rounded-lg hover:bg-[#0f1320] transition-colors flex items-center gap-2"
+                    className="w-full text-left text-sm text-gray-500 hover:text-gray-900 py-2 px-3 rounded-lg hover:bg-white transition-colors flex items-center gap-2"
                   >
                     <Plus size={12} className="text-[#3b82f6]" />
                     {group.name}
-                    <span className="text-[10px] text-gray-600 ml-auto">{group.tags.length} tags</span>
+                    <span className="text-[10px] text-gray-500 ml-auto">{group.tags.length} tags</span>
                   </button>
                 ))}
-                <div className="border-t border-[#1e293b] pt-2 mt-2">
+                <div className="border-t border-[#1a1a1a] pt-2 mt-2">
                   <input
                     type="text"
                     placeholder="Type a custom hashtag and press Enter..."
-                    className="w-full bg-[#0f1320] border border-[#1e293b] rounded-lg px-3 py-2 text-sm text-gray-200 focus:outline-none focus:border-[#3b82f6] placeholder:text-gray-600"
+                    className="w-full bg-white border border-[#1a1a1a] rounded-lg px-3 py-2 text-sm text-gray-800 focus:outline-none focus:border-[#3b82f6] placeholder:text-gray-500"
                     onKeyDown={(e) => {
                       if (e.key === "Enter") {
                         const val = (e.target as HTMLInputElement).value.trim();
@@ -321,7 +321,7 @@ export default function ContentStudio({ posts, accounts, clientId, onSave, onDel
                   type="date"
                   value={scheduleDate}
                   onChange={(e) => setScheduleDate(e.target.value)}
-                  className="w-full bg-[#1a1f2e] border border-[#1e293b] rounded-lg px-4 py-2.5 text-sm text-gray-200 focus:outline-none focus:border-[#3b82f6]"
+                  className="w-full bg-white border border-[#1a1a1a] rounded-lg px-4 py-2.5 text-sm text-gray-800 focus:outline-none focus:border-[#3b82f6]"
                 />
               </div>
               <div className="w-32">
@@ -332,12 +332,12 @@ export default function ContentStudio({ posts, accounts, clientId, onSave, onDel
                   type="time"
                   value={scheduleTime}
                   onChange={(e) => setScheduleTime(e.target.value)}
-                  className="w-full bg-[#1a1f2e] border border-[#1e293b] rounded-lg px-4 py-2.5 text-sm text-gray-200 focus:outline-none focus:border-[#3b82f6]"
+                  className="w-full bg-white border border-[#1a1a1a] rounded-lg px-4 py-2.5 text-sm text-gray-800 focus:outline-none focus:border-[#3b82f6]"
                 />
               </div>
             </div>
             {!scheduleDate && (
-              <p className="text-[10px] text-gray-600 mt-1.5">Leave empty to save as draft</p>
+              <p className="text-[10px] text-gray-500 mt-1.5">Leave empty to save as draft</p>
             )}
           </div>
 
@@ -353,18 +353,18 @@ export default function ContentStudio({ posts, accounts, clientId, onSave, onDel
 
           {/* === POSTS LIST (expandable) === */}
           {showPosts && (
-            <div className="border-t border-[#1e293b] pt-4 mt-2">
-              <h3 className="text-sm font-semibold text-gray-300 mb-3">
+            <div className="border-t border-[#1a1a1a] pt-4 mt-2">
+              <h3 className="text-sm font-semibold text-gray-800 mb-3">
                 Your Posts ({clientPosts.length})
               </h3>
               {clientPosts.length === 0 ? (
-                <p className="text-sm text-gray-600 text-center py-8">No posts yet. Create your first one above.</p>
+                <p className="text-sm text-gray-500 text-center py-8">No posts yet. Create your first one above.</p>
               ) : (
                 <div className="space-y-2">
                   {clientPosts.map((post) => (
                     <div
                       key={post.id}
-                      className="bg-[#1a1f2e] border border-[#1e293b] rounded-xl p-4 hover:border-[#2a3441] transition-colors"
+                      className="bg-white border border-[#1a1a1a] rounded-xl p-4 hover:border-[#2a3441] transition-colors"
                     >
                       <div className="flex items-start justify-between mb-2">
                         <div className="flex items-center gap-2">
@@ -375,12 +375,12 @@ export default function ContentStudio({ posts, accounts, clientId, onSave, onDel
                         </div>
                         <button
                           onClick={() => onDelete(post.id)}
-                          className="p-1 text-gray-600 hover:text-red-400 rounded transition-colors"
+                          className="p-1 text-gray-500 hover:text-red-400 rounded transition-colors"
                         >
                           <Trash2 size={14} />
                         </button>
                       </div>
-                      <p className="text-sm text-gray-300 leading-relaxed whitespace-pre-wrap">
+                      <p className="text-sm text-gray-800 leading-relaxed whitespace-pre-wrap">
                         {post.content}
                       </p>
                       {post.hashtags.length > 0 && (
@@ -390,7 +390,7 @@ export default function ContentStudio({ posts, accounts, clientId, onSave, onDel
                           ))}
                         </div>
                       )}
-                      <div className="flex items-center gap-3 mt-2 text-[10px] text-gray-600">
+                      <div className="flex items-center gap-3 mt-2 text-[10px] text-gray-500">
                         <span>{new Date(post.scheduledAt).toLocaleDateString("en-GB", {
                           day: "numeric", month: "short", hour: "2-digit", minute: "2-digit",
                         })}</span>
@@ -409,18 +409,18 @@ export default function ContentStudio({ posts, accounts, clientId, onSave, onDel
 
         {activeTab === "higgsfield" && (
           <div className="max-w-2xl mx-auto p-4 space-y-5">
-            <div className="bg-gradient-to-r from-[#1a1f2e] to-[#1e2440] border border-[#2a3050] rounded-xl p-4">
+            <div className="bg-gradient-to-r from-[#1a1f2e] to-[#1e2440] border border-[#1a1a1a] rounded-xl p-4">
               <div className="flex items-center gap-2 mb-3">
                 <span className="text-base">🎬</span>
-                <span className="text-xs font-semibold text-gray-300">HIGGSFIELD SUPERCOMPUTER</span>
+                <span className="text-xs font-semibold text-gray-800">HIGGSFIELD SUPERCOMPUTER</span>
                 <span className="text-[10px] bg-green-500/10 text-green-400 px-1.5 py-0.5 rounded-full ml-auto">v2</span>
               </div>
               <p className="text-xs text-gray-500">One-chat campaign builder + batch UGC factory. 30+ video/image models, 4K images, 15s clips, watermark-free. Run everything from your phone via Telegram.</p>
             </div>
 
-            <div className="bg-[#1a1f2e] border border-[#1e293b] rounded-xl p-4">
-              <h4 className="text-xs font-semibold text-gray-300 mb-3">📱 Phone Workflow (Hermes + Telegram)</h4>
-              <div className="space-y-2 text-xs text-gray-400">
+            <div className="bg-white border border-[#1a1a1a] rounded-xl p-4">
+              <h4 className="text-xs font-semibold text-gray-800 mb-3">📱 Phone Workflow (Hermes + Telegram)</h4>
+              <div className="space-y-2 text-xs text-gray-500">
                 <div className="flex items-start gap-2"><span className="text-green-400 shrink-0 mt-0.5">1.</span><span>Connect Telegram bot to Higgsfield — control from phone</span></div>
                 <div className="flex items-start gap-2"><span className="text-green-400 shrink-0 mt-0.5">2.</span><span>Send voice memo: "Clip my latest YouTube video, make carousels + Twitter article"</span></div>
                 <div className="flex items-start gap-2"><span className="text-green-400 shrink-0 mt-0.5">3.</span><span>AI transcribes → generates clips, carousels, articles, Google Docs</span></div>
@@ -428,9 +428,9 @@ export default function ContentStudio({ posts, accounts, clientId, onSave, onDel
               </div>
             </div>
 
-            <div className="bg-[#1a1f2e] border border-[#1e293b] rounded-xl p-4">
-              <h4 className="text-xs font-semibold text-gray-300 mb-3">🏭 Batch UGC Factory (Claude MCP)</h4>
-              <div className="space-y-2 text-xs text-gray-400">
+            <div className="bg-white border border-[#1a1a1a] rounded-xl p-4">
+              <h4 className="text-xs font-semibold text-gray-800 mb-3">🏭 Batch UGC Factory (Claude MCP)</h4>
+              <div className="space-y-2 text-xs text-gray-500">
                 <div className="flex items-start gap-2"><span className="text-green-400 shrink-0 mt-0.5">1.</span><span>Create AI character in Higgsfield Marketing Studio → upload as avatar</span></div>
                 <div className="flex items-start gap-2"><span className="text-green-400 shrink-0 mt-0.5">2.</span><span>Drop folder of product images into Claude</span></div>
                 <div className="flex items-start gap-2"><span className="text-green-400 shrink-0 mt-0.5">3.</span><span>Claude auto-generates 5-20 UGC prompts — one per product image</span></div>
@@ -439,18 +439,18 @@ export default function ContentStudio({ posts, accounts, clientId, onSave, onDel
               </div>
             </div>
 
-            <div className="bg-[#1a1f2e] border border-[#1e293b] rounded-xl p-4">
-              <h4 className="text-xs font-semibold text-gray-300 mb-3">🎯 Models Available (30+)</h4>
+            <div className="bg-white border border-[#1a1a1a] rounded-xl p-4">
+              <h4 className="text-xs font-semibold text-gray-800 mb-3">🎯 Models Available (30+)</h4>
               <div className="flex flex-wrap gap-1.5">
                 {["Soul 2.0","Cance 2.0","Cinema","Studio","GPT Image 2","Seedance","Sole Character"].map(m => (
-                  <span key={m} className="text-[10px] bg-[#0f1320] text-gray-400 px-2 py-1 rounded-full border border-[#1e293b]">{m}</span>
+                  <span key={m} className="text-[10px] bg-white text-gray-500 px-2 py-1 rounded-full border border-[#1a1a1a]">{m}</span>
                 ))}
               </div>
             </div>
 
-            <div className="bg-gradient-to-r from-[#1a1f2e] to-[#1e2440] border border-[#2a3050] rounded-xl p-4">
-              <h4 className="text-xs font-semibold text-gray-300 mb-3">💰 Service Packaging</h4>
-              <div className="space-y-2 text-xs text-gray-400">
+            <div className="bg-gradient-to-r from-[#1a1f2e] to-[#1e2440] border border-[#1a1a1a] rounded-xl p-4">
+              <h4 className="text-xs font-semibold text-gray-800 mb-3">💰 Service Packaging</h4>
+              <div className="space-y-2 text-xs text-gray-500">
                 <div className="flex justify-between"><span>Content Repurposing</span><span className="text-green-400">$500/mo</span></div>
                 <div className="flex justify-between"><span>Batch UGC Ads (20/day)</span><span className="text-green-400">$1,000/mo</span></div>
                 <div className="flex justify-between"><span>Full Marketing Campaign</span><span className="text-green-400">$2,000+/mo</span></div>

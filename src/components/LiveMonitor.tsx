@@ -60,8 +60,8 @@ function StatusDot({ status }: { status: string }) {
 
 function Card({ title, icon: Icon, children, className = "" }: { title: string; icon: any; children: React.ReactNode; className?: string }) {
   return (
-    <div className={`bg-[#111827] border border-[#1e293b] rounded-lg p-4 ${className}`}>
-      <div className="flex items-center gap-2 mb-3 text-gray-400 text-xs uppercase tracking-wider">
+    <div className={`bg-white border border-[#1a1a1a] rounded-lg p-4 ${className}`}>
+      <div className="flex items-center gap-2 mb-3 text-gray-500 text-xs uppercase tracking-wider">
         <Icon size={14} />
         {title}
       </div>
@@ -102,11 +102,11 @@ export default function LiveMonitor() {
 
   if (error && !data) {
     return (
-      <div className="flex-1 flex items-center justify-center bg-[#0a0e17]">
+      <div className="flex-1 flex items-center justify-center bg-[#FDFBF7]">
         <div className="text-center text-gray-500">
           <Activity size={40} className="mx-auto mb-3 opacity-30" />
           <p className="text-sm">{error}</p>
-          <p className="text-xs mt-2 text-gray-600">Reporter pushes every 60s to Upstash</p>
+          <p className="text-xs mt-2 text-gray-500">Reporter pushes every 60s to Upstash</p>
         </div>
       </div>
     );
@@ -120,19 +120,19 @@ export default function LiveMonitor() {
   const totalCount = services.length;
 
   return (
-    <div className="flex-1 overflow-y-auto bg-[#0a0e17] p-4 space-y-4 pb-20">
+    <div className="flex-1 overflow-y-auto bg-[#FDFBF7] p-4 space-y-4 pb-20">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Activity size={18} className="text-blue-400" />
-          <h2 className="text-sm font-semibold text-gray-300">Live Monitor</h2>
+          <h2 className="text-sm font-semibold text-gray-800">Live Monitor</h2>
           {data && (
-            <span className="text-[10px] text-gray-600 ml-2">
+            <span className="text-[10px] text-gray-500 ml-2">
               {runningCount}/{totalCount} healthy
             </span>
           )}
         </div>
-        <div className="flex items-center gap-2 text-[10px] text-gray-600">
+        <div className="flex items-center gap-2 text-[10px] text-gray-500">
           <Clock size={10} />
           {lastFetch || (data?.ts || "—")}
         </div>
@@ -161,7 +161,7 @@ export default function LiveMonitor() {
         {gateway?.platforms && gateway.platforms.length > 0 && (
           <div className="flex gap-1.5 mt-2">
             {gateway.platforms.map(p => (
-              <span key={p} className="px-2 py-0.5 bg-[#1a1f2e] text-[10px] rounded text-gray-400 uppercase">{p}</span>
+              <span key={p} className="px-2 py-0.5 bg-white text-[10px] rounded text-gray-500 uppercase">{p}</span>
             ))}
           </div>
         )}
@@ -182,15 +182,15 @@ export default function LiveMonitor() {
             ))}
           </div>
         ) : (
-          <p className="text-[10px] text-gray-600">No models loaded in memory</p>
+          <p className="text-[10px] text-gray-500">No models loaded in memory</p>
         )}
         {(ollama?.available?.length ?? 0) > 0 && (
           <div className="flex flex-wrap gap-1 mt-2">
             {ollama!.available.slice(0, 5).map(m => (
-              <span key={m} className="px-2 py-0.5 bg-[#1a1f2e] text-gray-500 text-[10px] rounded">{m}</span>
+              <span key={m} className="px-2 py-0.5 bg-white text-gray-500 text-[10px] rounded">{m}</span>
             ))}
             {ollama!.available.length > 5 && (
-              <span className="px-2 py-0.5 text-[10px] text-gray-600">+{ollama!.available.length - 5} more</span>
+              <span className="px-2 py-0.5 text-[10px] text-gray-500">+{ollama!.available.length - 5} more</span>
             )}
           </div>
         )}
@@ -202,13 +202,13 @@ export default function LiveMonitor() {
           {services.map((svc) => (
             <div
               key={svc.name}
-              className="flex items-center justify-between py-2 px-3 rounded-md bg-[#0f1320] border border-[#1e293b] hover:border-[#2a3441] transition-colors"
+              className="flex items-center justify-between py-2 px-3 rounded-md bg-white border border-[#1a1a1a] hover:border-[#2a3441] transition-colors"
             >
               <div className="flex items-center gap-2 min-w-0">
                 <StatusDot status={svc.status} />
                 <div>
-                  <div className="text-xs font-medium text-gray-300 truncate">{svc.label}</div>
-                  <div className="text-[10px] text-gray-600">
+                  <div className="text-xs font-medium text-gray-800 truncate">{svc.label}</div>
+                  <div className="text-[10px] text-gray-500">
                     {svc.last_beat_s !== null ? `${svc.last_beat_s}s ago` : "no beat"}
                     {" · "}max ok: {svc.max_ok_s}s
                   </div>
@@ -220,13 +220,13 @@ export default function LiveMonitor() {
             </div>
           ))}
           {services.length === 0 && (
-            <p className="text-xs text-gray-600 text-center py-2">No services tracked yet</p>
+            <p className="text-xs text-gray-500 text-center py-2">No services tracked yet</p>
           )}
         </div>
       </Card>
 
       {/* Legend */}
-      <div className="flex gap-3 text-[10px] text-gray-600 justify-center">
+      <div className="flex gap-3 text-[10px] text-gray-500 justify-center">
         <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" /> Running</span>
         <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-green-500" /> Healthy</span>
         <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-yellow-500" /> Stale</span>

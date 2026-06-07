@@ -93,11 +93,11 @@ export default function NotificationCenter() {
   }, []);
 
   return (
-    <div className="flex-1 flex flex-col overflow-hidden bg-[#0a0e17]">
-      <div className="px-4 py-4 border-b border-[#1e293b] bg-[#0f1320] shrink-0 flex items-center gap-2">
+    <div className="flex-1 flex flex-col overflow-hidden bg-[#FDFBF7]">
+      <div className="px-4 py-4 border-b border-[#1a1a1a] bg-white shrink-0 flex items-center gap-2">
         <Bell size={18} className="text-blue-400" />
         <div>
-          <h2 className="text-sm font-semibold text-gray-300">Notifications</h2>
+          <h2 className="text-sm font-semibold text-gray-800">Notifications</h2>
           <p className="text-[10px] text-gray-500">{notifications.length} recent events</p>
         </div>
       </div>
@@ -106,14 +106,14 @@ export default function NotificationCenter() {
         {loading ? (
           <div className="p-4 space-y-3">
             {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="bg-[#1a1f2e] border border-[#1e293b] rounded-lg p-4 animate-pulse">
-                <div className="h-4 bg-[#0f1320] rounded w-3/4 mb-2" />
-                <div className="h-3 bg-[#0f1320] rounded w-1/2" />
+              <div key={i} className="bg-white border border-[#1a1a1a] rounded-lg p-4 animate-pulse">
+                <div className="h-4 bg-white rounded w-3/4 mb-2" />
+                <div className="h-3 bg-white rounded w-1/2" />
               </div>
             ))}
           </div>
         ) : notifications.length === 0 ? (
-          <div className="flex items-center justify-center h-full text-gray-600">
+          <div className="flex items-center justify-center h-full text-gray-500">
             <div className="text-center">
               <Bell size={32} className="mx-auto mb-3 opacity-30" />
               <p className="text-sm">No recent activity</p>
@@ -125,14 +125,14 @@ export default function NotificationCenter() {
             {notifications.map((n) => {
               const Icon = iconMap[n.type] || Bell;
               return (
-                <div key={n.id} className="bg-[#1a1f2e] border border-[#1e293b] rounded-lg p-3 flex items-start gap-3 hover:border-[#2a3441] transition-colors">
+                <div key={n.id} className="bg-white border border-[#1a1a1a] rounded-lg p-3 flex items-start gap-3 hover:border-[#2a3441] transition-colors">
                   <div className={`p-1.5 rounded-lg shrink-0 ${statusColors[n.status]}`}>
                     <Icon size={14} />
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-start justify-between gap-2">
-                      <p className="text-sm text-gray-200 font-medium truncate">{n.title}</p>
-                      <span className="text-[10px] text-gray-600 shrink-0 flex items-center gap-1">
+                      <p className="text-sm text-gray-800 font-medium truncate">{n.title}</p>
+                      <span className="text-[10px] text-gray-500 shrink-0 flex items-center gap-1">
                         <Clock size={10} />
                         {timeAgo(n.time)}
                       </span>

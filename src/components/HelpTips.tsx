@@ -279,18 +279,18 @@ export default function HelpTips({ board }: { board: NavBoard }) {
   const visibleTips = tips.filter((_, i) => !dismissed.includes(i));
 
   return (
-    <div className="border-b border-[#1e293b] bg-[#0f1a24] shrink-0">
+    <div className="border-b border-[#1a1a1a] bg-[#F0F9F0] shrink-0">
       {/* Collapsed bar — tap to expand */}
       {collapsed ? (
         <button
           onClick={() => setCollapsed(false)}
-          className="w-full flex items-center gap-2 px-4 py-2 text-xs text-gray-400 hover:text-gray-200 transition-colors"
+          className="w-full flex items-center gap-2 px-4 py-2 text-xs text-gray-500 hover:text-gray-800 transition-colors"
         >
           <Lightbulb size={14} className="text-amber-400 shrink-0" />
           <span className="flex-1 text-left">
             {visibleTips.length} quick tip{visibleTips.length > 1 ? "s" : ""} — tap to show
           </span>
-          <span className="text-gray-600">▶</span>
+          <span className="text-gray-500">▶</span>
         </button>
       ) : (
         /* Expanded tips */
@@ -305,12 +305,12 @@ export default function HelpTips({ board }: { board: NavBoard }) {
             </button>
             <div className="flex-1 min-w-0">
               <div className="flex items-center justify-between mb-1.5">
-                <div className="text-xs text-gray-400 font-medium">
+                <div className="text-xs text-gray-500 font-medium">
                   Quick tip{visibleTips.length > 1 ? "s" : ""}
                 </div>
                 <button
                   onClick={() => setCollapsed(true)}
-                  className="text-[10px] text-gray-600 hover:text-gray-400"
+                  className="text-[10px] text-gray-500 hover:text-gray-500"
                 >
                   ▲ hide
                 </button>
@@ -318,9 +318,9 @@ export default function HelpTips({ board }: { board: NavBoard }) {
               {visibleTips.map((tip, i) => (
                 <div
                   key={i}
-                  className="text-xs text-gray-300 leading-relaxed flex items-start gap-2 mb-1 last:mb-0 group"
+                  className="text-xs text-gray-800 leading-relaxed flex items-start gap-2 mb-1 last:mb-0 group"
                 >
-                  <span className="shrink-0 text-[10px] text-gray-600 mt-px">
+                  <span className="shrink-0 text-[10px] text-gray-500 mt-px">
                     {visibleTips.length > 1 ? `${dismissed.length + i + 1}.` : "💡"}
                   </span>
                   <span className="flex-1">
@@ -333,7 +333,7 @@ export default function HelpTips({ board }: { board: NavBoard }) {
                   </span>
                   <button
                     onClick={() => setDismissed(prev => [...prev, tips.indexOf(tip)])}
-                    className="shrink-0 p-0.5 text-gray-600 hover:text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity"
+                    className="shrink-0 p-0.5 text-gray-500 hover:text-gray-500 opacity-0 group-hover:opacity-100 transition-opacity"
                     title="Dismiss"
                   >
                     <X size={12} />
@@ -358,7 +358,7 @@ export function HelpToggle() {
       className={`px-2.5 py-1.5 text-xs rounded-md flex items-center gap-1.5 transition-colors ${
         showTips
           ? "bg-amber-600/20 text-amber-400 border border-amber-600/30 hover:bg-amber-600/30"
-          : "text-gray-500 hover:text-gray-300 hover:bg-[#1e293b]"
+          : "text-gray-500 hover:text-gray-800 hover:bg-[#1e293b]"
       }`}
       title={showTips ? "Hide help tips" : "Show help tips"}
     >

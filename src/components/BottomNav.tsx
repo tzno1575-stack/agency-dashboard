@@ -20,7 +20,7 @@ const navItems: { id: NavBoard; label: string; icon: typeof Sunrise }[] = [
 
 export default function BottomNav({ activeView, agentCount, reviewCount, onNavigate }: BottomNavProps) {
   return (
-    <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-[#111827] border-t border-[#1e293b] z-50"
+    <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-[#1a1a1a] z-50"
       style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}>
       <div className="flex items-center justify-around h-16 px-1">
         {navItems.map((item) => {
@@ -32,8 +32,8 @@ export default function BottomNav({ activeView, agentCount, reviewCount, onNavig
               onClick={() => onNavigate(item.id)}
               className={`flex flex-col items-center justify-center gap-1 flex-1 h-full min-h-[44px] min-w-[44px] transition-colors rounded-lg mx-0.5 ${
                 isActive
-                  ? "text-[#3b82f6] bg-[#1a1f2e]"
-                  : "text-gray-500 hover:text-gray-300"
+                  ? "text-[#3b82f6] bg-white"
+                  : "text-gray-500 hover:text-gray-800"
               }`}
             >
               <div className="relative">

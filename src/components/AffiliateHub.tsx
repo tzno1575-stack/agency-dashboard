@@ -71,20 +71,20 @@ export default function AffiliateHub() {
           <TrendingUp size={18} className="text-green-400" />
         </div>
         <div>
-          <h2 className="text-lg font-bold text-white">Affiliate Hub</h2>
+          <h2 className="text-lg font-bold text-black">Affiliate Hub</h2>
           <p className="text-xs text-gray-500">Claude + Higgsfield workflow</p>
         </div>
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-1 mb-4 bg-[#0f1320] rounded-lg p-1 border border-[#1e293b]">
+      <div className="flex gap-1 mb-4 bg-white rounded-lg p-1 border border-[#1a1a1a]">
         {([
           { id: "research", label: "🔍 Research", count: products.length },
           { id: "content", label: "🎬 Content", count: content.length },
           { id: "tracking", label: "📊 Tracking", count: postedCount },
         ] as const).map(t => (
           <button key={t.id} onClick={() => setActiveTab(t.id)}
-            className={`flex-1 py-1.5 text-xs rounded-md transition-colors ${activeTab === t.id ? "bg-[#1a1f2e] text-white" : "text-gray-500 hover:text-gray-300"}`}>
+            className={`flex-1 py-1.5 text-xs rounded-md transition-colors ${activeTab === t.id ? "bg-white text-black" : "text-gray-500 hover:text-gray-800"}`}>
             {t.label} ({t.count})
           </button>
         ))}
@@ -94,10 +94,10 @@ export default function AffiliateHub() {
       {activeTab === "research" && (
         <div className="space-y-4">
           {/* AI Product Researcher */}
-          <div className="bg-gradient-to-r from-[#1a1f2e] to-[#1e2440] border border-[#2a3050] rounded-xl p-4">
+          <div className="bg-gradient-to-r from-[#1a1f2e] to-[#1e2440] border border-[#1a1a1a] rounded-xl p-4">
             <div className="flex items-center gap-2 mb-3">
               <Wand2 size={16} className="text-green-400" />
-              <span className="text-xs font-semibold text-gray-300">CLAUDE PRODUCT RESEARCHER</span>
+              <span className="text-xs font-semibold text-gray-800">CLAUDE PRODUCT RESEARCHER</span>
             </div>
             <p className="text-xs text-gray-500 mb-3">
               Claude finds trending products with commission data, viral hooks, and content angles.
@@ -107,10 +107,10 @@ export default function AffiliateHub() {
               value={researchPrompt}
               onChange={e => setResearchPrompt(e.target.value)}
               placeholder="e.g., 'Find 5 trending health & wellness products with strong affiliate programs and viral short-form potential...'"
-              className="w-full bg-[#0f1320] border border-[#1e293b] rounded-lg p-3 text-sm text-gray-200 placeholder-gray-600 resize-none h-20 focus:outline-none focus:border-[#3b82f6]/50 mb-3"
+              className="w-full bg-white border border-[#1a1a1a] rounded-lg p-3 text-sm text-gray-800 placeholder-gray-600 resize-none h-20 focus:outline-none focus:border-[#3b82f6]/50 mb-3"
             />
             <button onClick={handleResearch} disabled={!researchPrompt.trim() || generating}
-              className="flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 disabled:opacity-40 text-white text-xs rounded-lg transition-colors">
+              className="flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 disabled:opacity-40 text-black text-xs rounded-lg transition-colors">
               {generating ? "Researching..." : <><Search size={14} /> Research Products</>}
             </button>
           </div>
@@ -118,21 +118,21 @@ export default function AffiliateHub() {
           {/* Product List */}
           <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-widest">Product Ideas ({products.length})</h3>
           {products.map(p => (
-            <div key={p.id} className="bg-[#1a1f2e] border border-[#1e293b] rounded-xl p-4">
+            <div key={p.id} className="bg-white border border-[#1a1a1a] rounded-xl p-4">
               <div className="flex items-start justify-between mb-3">
                 <div>
-                  <h4 className="text-sm font-semibold text-white">{p.name}</h4>
+                  <h4 className="text-sm font-semibold text-black">{p.name}</h4>
                   <div className="flex items-center gap-2 mt-1">
                     <span className="text-[10px] bg-green-500/10 text-green-400 px-1.5 py-0.5 rounded-full">{p.commission}</span>
                     <span className="text-[10px] bg-purple-500/10 text-purple-400 px-1.5 py-0.5 rounded-full">🔥 {p.viralScore}/10</span>
-                    <span className="text-[10px] text-gray-600">{p.platform}</span>
+                    <span className="text-[10px] text-gray-500">{p.platform}</span>
                   </div>
                 </div>
               </div>
 
-              <div className="bg-[#0f1320] rounded-lg p-3 mb-3">
+              <div className="bg-white rounded-lg p-3 mb-3">
                 <p className="text-[10px] text-gray-500 uppercase mb-1">Viral Hook</p>
-                <p className="text-xs text-gray-300 italic">"{p.hook}"</p>
+                <p className="text-xs text-gray-800 italic">"{p.hook}"</p>
               </div>
 
               <div className="flex gap-2">
@@ -154,18 +154,18 @@ export default function AffiliateHub() {
       {activeTab === "content" && (
         <div className="space-y-4">
           {/* Daily Goal */}
-          <div className="bg-[#1a1f2e] border border-[#1e293b] rounded-xl p-4">
-            <h4 className="text-xs font-semibold text-gray-300 mb-3">📅 Daily Goal: 2 Videos + 1 Carousel</h4>
+          <div className="bg-white border border-[#1a1a1a] rounded-xl p-4">
+            <h4 className="text-xs font-semibold text-gray-800 mb-3">📅 Daily Goal: 2 Videos + 1 Carousel</h4>
             <div className="flex gap-3">
-              <div className="flex-1 bg-[#0f1320] rounded-lg p-3 text-center">
+              <div className="flex-1 bg-white rounded-lg p-3 text-center">
                 <p className="text-[10px] text-gray-500 mb-1">Videos</p>
-                <p className={`text-lg font-bold ${todayVideos >= dailyGoal.videos ? "text-green-400" : "text-gray-400"}`}>
+                <p className={`text-lg font-bold ${todayVideos >= dailyGoal.videos ? "text-green-400" : "text-gray-500"}`}>
                   {todayVideos}/{dailyGoal.videos}
                 </p>
               </div>
-              <div className="flex-1 bg-[#0f1320] rounded-lg p-3 text-center">
+              <div className="flex-1 bg-white rounded-lg p-3 text-center">
                 <p className="text-[10px] text-gray-500 mb-1">Carousels</p>
-                <p className={`text-lg font-bold ${todayCarousels >= dailyGoal.carousels ? "text-green-400" : "text-gray-400"}`}>
+                <p className={`text-lg font-bold ${todayCarousels >= dailyGoal.carousels ? "text-green-400" : "text-gray-500"}`}>
                   {todayCarousels}/{dailyGoal.carousels}
                 </p>
               </div>
@@ -173,12 +173,12 @@ export default function AffiliateHub() {
           </div>
 
           {/* Multi-platform post template */}
-          <div className="bg-gradient-to-r from-[#1a1f2e] to-[#1e2440] border border-[#2a3050] rounded-xl p-4">
+          <div className="bg-gradient-to-r from-[#1a1f2e] to-[#1e2440] border border-[#1a1a1a] rounded-xl p-4">
             <div className="flex items-center gap-2 mb-3">
               <Send size={14} className="text-blue-400" />
-              <span className="text-xs font-semibold text-gray-300">POSTING WORKFLOW</span>
+              <span className="text-xs font-semibold text-gray-800">POSTING WORKFLOW</span>
             </div>
-            <div className="space-y-2 text-xs text-gray-400">
+            <div className="space-y-2 text-xs text-gray-500">
               <div className="flex items-center gap-2">
                 <span className="text-green-400">1.</span>
                 <span>Generate video/carousel in Claude via Higgsfield</span>
@@ -205,17 +205,17 @@ export default function AffiliateHub() {
           {/* Content items */}
           <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-widest">Content Queue ({content.length})</h3>
           {content.length === 0 && (
-            <p className="text-xs text-gray-600 text-center py-6">Select a product above and Generate Video/Carousel to start.</p>
+            <p className="text-xs text-gray-500 text-center py-6">Select a product above and Generate Video/Carousel to start.</p>
           )}
           {content.map(c => {
             const product = products.find(p => p.id === c.productId);
             return (
-              <div key={c.id} className="bg-[#1a1f2e] border border-[#1e293b] rounded-xl p-4">
+              <div key={c.id} className="bg-white border border-[#1a1a1a] rounded-xl p-4">
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-2">
                     {c.type === "video" ? <Video size={14} className="text-green-400" /> : <Image size={14} className="text-blue-400" />}
-                    <span className="text-xs font-medium text-white">{c.type === "video" ? "Video" : "Carousel"}</span>
-                    <span className="text-[10px] bg-[#0f1320] text-gray-500 px-1.5 py-0.5 rounded-full">{c.platform}</span>
+                    <span className="text-xs font-medium text-black">{c.type === "video" ? "Video" : "Carousel"}</span>
+                    <span className="text-[10px] bg-white text-gray-500 px-1.5 py-0.5 rounded-full">{c.platform}</span>
                     <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${
                       c.status === "posted" ? "bg-green-500/10 text-green-400" :
                       c.status === "scheduled" ? "bg-blue-500/10 text-blue-400" : "bg-gray-500/10 text-gray-500"
@@ -224,14 +224,14 @@ export default function AffiliateHub() {
                 </div>
                 {product && <p className="text-xs text-gray-500">{product.name} · {product.commission}</p>}
                 <div className="flex gap-2 mt-3">
-                  <select className="bg-[#0f1320] border border-[#1e293b] rounded-lg px-2 py-1 text-[10px] text-gray-400">
+                  <select className="bg-white border border-[#1a1a1a] rounded-lg px-2 py-1 text-[10px] text-gray-500">
                     <option>pinterest</option>
                     <option>tiktok</option>
                     <option>instagram</option>
                     <option>youtube</option>
                   </select>
                   <input type="date"
-                    className="bg-[#0f1320] border border-[#1e293b] rounded-lg px-2 py-1 text-[10px] text-gray-400" />
+                    className="bg-white border border-[#1a1a1a] rounded-lg px-2 py-1 text-[10px] text-gray-500" />
                 </div>
               </div>
             );
@@ -244,42 +244,42 @@ export default function AffiliateHub() {
         <div className="space-y-4">
           {/* Stats */}
           <div className="grid grid-cols-3 gap-3">
-            <div className="bg-[#1a1f2e] border border-[#1e293b] rounded-xl p-3 text-center">
+            <div className="bg-white border border-[#1a1a1a] rounded-xl p-3 text-center">
               <p className="text-[10px] text-gray-500 mb-1">Est. Clicks</p>
-              <p className="text-lg font-bold text-white">{totalClicks}</p>
+              <p className="text-lg font-bold text-black">{totalClicks}</p>
             </div>
-            <div className="bg-[#1a1f2e] border border-[#1e293b] rounded-xl p-3 text-center">
+            <div className="bg-white border border-[#1a1a1a] rounded-xl p-3 text-center">
               <p className="text-[10px] text-gray-500 mb-1">Posted</p>
-              <p className="text-lg font-bold text-white">{postedCount}</p>
+              <p className="text-lg font-bold text-black">{postedCount}</p>
             </div>
-            <div className="bg-[#1a1f2e] border border-[#1e293b] rounded-xl p-3 text-center">
+            <div className="bg-white border border-[#1a1a1a] rounded-xl p-3 text-center">
               <p className="text-[10px] text-gray-500 mb-1">Revenue</p>
               <p className="text-lg font-bold text-green-400">£{totalRevenue.toFixed(2)}</p>
             </div>
           </div>
 
           {/* Quick links */}
-          <div className="bg-[#1a1f2e] border border-[#1e293b] rounded-xl p-4">
-            <h4 className="text-xs font-semibold text-gray-300 mb-3">Affiliate Networks</h4>
+          <div className="bg-white border border-[#1a1a1a] rounded-xl p-4">
+            <h4 className="text-xs font-semibold text-gray-800 mb-3">Affiliate Networks</h4>
             <div className="space-y-2">
-              <a href="https://affiliate-program.amazon.com" target="_blank" className="flex items-center justify-between bg-[#0f1320] rounded-lg p-3 hover:bg-[#1a1f2e] transition-colors">
-                <span className="text-xs text-gray-300">Amazon Associates</span>
-                <ExternalLink size={12} className="text-gray-600" />
+              <a href="https://affiliate-program.amazon.com" target="_blank" className="flex items-center justify-between bg-white rounded-lg p-3 hover:bg-white transition-colors">
+                <span className="text-xs text-gray-800">Amazon Associates</span>
+                <ExternalLink size={12} className="text-gray-500" />
               </a>
-              <a href="https://clickbank.com" target="_blank" className="flex items-center justify-between bg-[#0f1320] rounded-lg p-3 hover:bg-[#1a1f2e] transition-colors">
-                <span className="text-xs text-gray-300">ClickBank</span>
-                <ExternalLink size={12} className="text-gray-600" />
+              <a href="https://clickbank.com" target="_blank" className="flex items-center justify-between bg-white rounded-lg p-3 hover:bg-white transition-colors">
+                <span className="text-xs text-gray-800">ClickBank</span>
+                <ExternalLink size={12} className="text-gray-500" />
               </a>
-              <a href="https://impact.com" target="_blank" className="flex items-center justify-between bg-[#0f1320] rounded-lg p-3 hover:bg-[#1a1f2e] transition-colors">
-                <span className="text-xs text-gray-300">Impact</span>
-                <ExternalLink size={12} className="text-gray-600" />
+              <a href="https://impact.com" target="_blank" className="flex items-center justify-between bg-white rounded-lg p-3 hover:bg-white transition-colors">
+                <span className="text-xs text-gray-800">Impact</span>
+                <ExternalLink size={12} className="text-gray-500" />
               </a>
             </div>
           </div>
 
           {/* Claude prompt templates */}
-          <div className="bg-gradient-to-r from-[#1a1f2e] to-[#1e2440] border border-[#2a3050] rounded-xl p-4">
-            <h4 className="text-xs font-semibold text-gray-300 mb-3">🎯 Claude Prompts</h4>
+          <div className="bg-gradient-to-r from-[#1a1f2e] to-[#1e2440] border border-[#1a1a1a] rounded-xl p-4">
+            <h4 className="text-xs font-semibold text-gray-800 mb-3">🎯 Claude Prompts</h4>
             <div className="space-y-2">
               {[
                 { label: "Product Researcher", text: "Find 5 trending product categories for short-form affiliate content. Break down: commission potential, viral score, best hooks, saturation level." },
@@ -288,13 +288,13 @@ export default function AffiliateHub() {
                 { label: "Carousel Generator", text: "Generate 4-slide carousel: 1) Problem 2) Routine 3) Benefit 4) Result. GPT Image 2, clean modern style." },
                 { label: "SEO Writer", text: "Write SEO-optimized Pinterest title, description, hashtags, and CTA for [PRODUCT]. Include affiliate disclosure." },
               ].map(p => (
-                <div key={p.label} className="bg-[#0f1320] rounded-lg p-3 flex items-center justify-between">
+                <div key={p.label} className="bg-white rounded-lg p-3 flex items-center justify-between">
                   <div className="min-w-0 mr-2">
-                    <p className="text-xs font-medium text-gray-300">{p.label}</p>
-                    <p className="text-[10px] text-gray-600 truncate">{p.text}</p>
+                    <p className="text-xs font-medium text-gray-800">{p.label}</p>
+                    <p className="text-[10px] text-gray-500 truncate">{p.text}</p>
                   </div>
                   <button onClick={() => navigator.clipboard?.writeText(p.text)}
-                    className="shrink-0 text-gray-600 hover:text-[#3b82f6] transition-colors">
+                    className="shrink-0 text-gray-500 hover:text-[#3b82f6] transition-colors">
                     <Copy size={14} />
                   </button>
                 </div>

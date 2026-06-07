@@ -121,11 +121,11 @@ export default function ChatWidget() {
   };
 
   return (
-    <div className="w-80 bg-[#111827] border-l border-[#1e293b] flex flex-col h-full">
+    <div className="w-80 bg-white border-l border-[#1a1a1a] flex flex-col h-full">
       {/* Header */}
-      <div className="p-4 border-b border-[#1e293b] flex items-center gap-2">
+      <div className="p-4 border-b border-[#1a1a1a] flex items-center gap-2">
         <Bot size={18} className="text-[#3b82f6]" />
-        <span className="text-sm font-semibold text-white">Ayla</span>
+        <span className="text-sm font-semibold text-black">Ayla</span>
         <span className="w-2 h-2 rounded-full bg-green-500 ml-auto animate-pulse" />
       </div>
 
@@ -140,7 +140,7 @@ export default function ChatWidget() {
               className={`max-w-[85%] rounded-lg px-3 py-2 text-sm ${
                 msg.role === "user"
                   ? "bg-[#3b82f6] text-white"
-                  : "bg-[#1a1f2e] text-gray-300 border border-[#1e293b]"
+                  : "bg-white text-gray-800 border border-[#1a1a1a]"
               }`}
             >
               {msg.content}
@@ -149,7 +149,7 @@ export default function ChatWidget() {
         ))}
         {loading && (
           <div className="flex justify-start">
-            <div className="bg-[#1a1f2e] text-gray-500 text-sm px-3 py-2 rounded-lg border border-[#1e293b] animate-pulse">
+            <div className="bg-white text-gray-500 text-sm px-3 py-2 rounded-lg border border-[#1a1a1a] animate-pulse">
               ...
             </div>
           </div>
@@ -158,7 +158,7 @@ export default function ChatWidget() {
       </div>
 
       {/* Input */}
-      <div className="p-3 border-t border-[#1e293b]">
+      <div className="p-3 border-t border-[#1a1a1a]">
         <div className="flex gap-2">
           <input
             type="text"
@@ -166,7 +166,7 @@ export default function ChatWidget() {
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && sendMessage()}
             placeholder="Talk to Ayla..."
-            className="flex-1 bg-[#0f1320] border border-[#1e293b] rounded-lg px-3 py-2 text-sm text-gray-200 placeholder-gray-600 focus:outline-none focus:border-[#3b82f6]"
+            className="flex-1 bg-white border border-[#1a1a1a] rounded-lg px-3 py-2 text-sm text-gray-800 placeholder-gray-600 focus:outline-none focus:border-[#3b82f6]"
           />
           <button
             onClick={sendMessage}

@@ -150,7 +150,7 @@ export default function DailyBriefing() {
           <Sun size={20} />
           <span className="text-xs font-semibold uppercase tracking-widest">Daily Briefing</span>
         </div>
-        <h2 className="text-xl font-bold text-white">{data.greeting}</h2>
+        <h2 className="text-xl font-bold text-black">{data.greeting}</h2>
         <p className="text-sm text-gray-500 mt-0.5">{data.date}</p>
       </div>
 
@@ -191,14 +191,14 @@ export default function DailyBriefing() {
       </div>
 
       {/* AI Suggestion */}
-      <div className="bg-gradient-to-r from-[#1a1f2e] to-[#1e2440] border border-[#2a3050] rounded-xl p-4 mb-6">
+      <div className="bg-gradient-to-r from-[#1a1f2e] to-[#1e2440] border border-[#1a1a1a] rounded-xl p-4 mb-6">
         <div className="flex items-start gap-3">
           <div className="w-8 h-8 rounded-lg bg-[#3b82f6]/20 flex items-center justify-center shrink-0 mt-0.5">
             <MessageSquare size={16} className="text-[#3b82f6]" />
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-xs font-semibold text-gray-400 mb-1">AI SUGGESTION</p>
-            <p className="text-sm text-gray-200 leading-relaxed">{data.suggestion}</p>
+            <p className="text-xs font-semibold text-gray-500 mb-1">AI SUGGESTION</p>
+            <p className="text-sm text-gray-800 leading-relaxed">{data.suggestion}</p>
           </div>
           <button
             onClick={handleGenerateAI}
@@ -212,12 +212,12 @@ export default function DailyBriefing() {
 
       {/* Market Pulse */}
       {marketIntel && (
-        <div className="mb-6 bg-gradient-to-br from-[#0f172a] to-[#1a1f2e] border border-[#2a3050] rounded-xl overflow-hidden">
-          <div className="flex items-center gap-2 px-4 py-3 border-b border-[#1e293b]">
+        <div className="mb-6 bg-gradient-to-br from-[#0f172a] to-[#1a1f2e] border border-[#1a1a1a] rounded-xl overflow-hidden">
+          <div className="flex items-center gap-2 px-4 py-3 border-b border-[#1a1a1a]">
             <Globe size={14} className="text-emerald-400" />
             <span className="text-xs font-semibold text-emerald-400 uppercase tracking-widest">Market Pulse</span>
             {marketIntel.stats && (
-              <span className="ml-auto text-[10px] text-gray-600">
+              <span className="ml-auto text-[10px] text-gray-500">
                 {marketIntel.stats.sourcesScraped} sources · {marketIntel.stats.halalPassed} halal
               </span>
             )}
@@ -225,12 +225,12 @@ export default function DailyBriefing() {
 
           {/* Top Find */}
           {marketIntel.topFind && (
-            <div className="px-4 py-3 bg-emerald-500/5 border-b border-[#1e293b]">
+            <div className="px-4 py-3 bg-emerald-500/5 border-b border-[#1a1a1a]">
               <div className="flex items-start gap-2">
                 <TrendingUp size={14} className="text-emerald-400 mt-0.5 shrink-0" />
                 <div className="min-w-0">
                   <p className="text-xs font-semibold text-emerald-300">{marketIntel.topFind.title}</p>
-                  <p className="text-[11px] text-gray-400 mt-0.5 leading-relaxed">{marketIntel.topFind.summary}</p>
+                  <p className="text-[11px] text-gray-500 mt-0.5 leading-relaxed">{marketIntel.topFind.summary}</p>
                   {marketIntel.topFind.action && (
                     <p className="text-[11px] text-emerald-500/80 mt-1 flex items-center gap-1">
                       <ArrowRight size={10} />
@@ -249,9 +249,9 @@ export default function DailyBriefing() {
                 <p className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider mb-1.5">New Ventures</p>
                 <ul className="space-y-1">
                   {marketIntel.ventures.slice(0, 3).map((v, i) => (
-                    <li key={i} className="text-[11px] text-gray-300 flex items-start gap-1.5">
+                    <li key={i} className="text-[11px] text-gray-800 flex items-start gap-1.5">
                       <span className="text-emerald-500 mt-0.5 shrink-0">•</span>
-                      <span><span className="text-white font-medium">{v.name}</span> — {v.description}</span>
+                      <span><span className="text-black font-medium">{v.name}</span> — {v.description}</span>
                     </li>
                   ))}
                 </ul>
@@ -264,9 +264,9 @@ export default function DailyBriefing() {
                 <p className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider mb-1.5">Tools Found</p>
                 <ul className="space-y-1">
                   {marketIntel.tools.map((t, i) => (
-                    <li key={i} className="text-[11px] text-gray-300 flex items-start gap-1.5">
+                    <li key={i} className="text-[11px] text-gray-800 flex items-start gap-1.5">
                       <span className="text-blue-400 mt-0.5 shrink-0">•</span>
-                      <span><span className="text-white font-medium">{t.name}</span> — {t.description} <span className="text-gray-600">({t.pricing})</span></span>
+                      <span><span className="text-black font-medium">{t.name}</span> — {t.description} <span className="text-gray-500">({t.pricing})</span></span>
                     </li>
                   ))}
                 </ul>
@@ -275,20 +275,20 @@ export default function DailyBriefing() {
 
             {/* Market Signal */}
             {marketIntel.marketSignal && (
-              <div className="bg-[#1a1f2e] rounded-lg px-3 py-2">
+              <div className="bg-white rounded-lg px-3 py-2">
                 <p className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider mb-0.5">Signal</p>
-                <p className="text-[11px] text-gray-400 leading-relaxed">{marketIntel.marketSignal}</p>
+                <p className="text-[11px] text-gray-500 leading-relaxed">{marketIntel.marketSignal}</p>
               </div>
             )}
 
             {/* Idea */}
             {marketIntel.idea && (
-              <div className="bg-[#1a1f2e] rounded-lg px-3 py-2 border-l-2 border-amber-500/50">
+              <div className="bg-white rounded-lg px-3 py-2 border-l-2 border-amber-500/50">
                 <div className="flex items-center gap-1.5 mb-0.5">
                   <Lightbulb size={12} className="text-amber-400" />
                   <p className="text-[10px] font-semibold text-amber-400 uppercase tracking-wider">Idea for Aql</p>
                 </div>
-                <p className="text-[11px] text-gray-300">{marketIntel.idea}</p>
+                <p className="text-[11px] text-gray-800">{marketIntel.idea}</p>
               </div>
             )}
           </div>
@@ -309,7 +309,7 @@ export default function DailyBriefing() {
       {/* Refresh */}
       <button
         onClick={fetchBriefing}
-        className="w-full py-2 text-xs text-gray-600 hover:text-gray-400 transition-colors"
+        className="w-full py-2 text-xs text-gray-500 hover:text-gray-500 transition-colors"
       >
         Refresh briefing
       </button>
@@ -326,11 +326,11 @@ function MetricCard({ icon, label, value, sub, color, bg }: {
   bg: string;
 }) {
   return (
-    <div className={`${bg} rounded-xl p-3 border border-[#1e293b]`}>
+    <div className={`${bg} rounded-xl p-3 border border-[#1a1a1a]`}>
       <div className={`${color} mb-1.5`}>{icon}</div>
       <p className="text-[10px] text-gray-500 uppercase tracking-wider mb-0.5">{label}</p>
-      <p className="text-sm font-semibold text-white">{value}</p>
-      <p className="text-[10px] text-gray-600">{sub}</p>
+      <p className="text-sm font-semibold text-black">{value}</p>
+      <p className="text-[10px] text-gray-500">{sub}</p>
     </div>
   );
 }
@@ -339,7 +339,7 @@ function QuickAction({ icon, label, href }: { icon: React.ReactNode; label: stri
   return (
     <a
       href={href}
-      className="flex items-center gap-2 px-3 py-2.5 bg-[#1a1f2e] border border-[#1e293b] rounded-lg text-xs text-gray-300 hover:text-white hover:border-[#3b82f6]/50 transition-all"
+      className="flex items-center gap-2 px-3 py-2.5 bg-white border border-[#1a1a1a] rounded-lg text-xs text-gray-800 hover:text-gray-900 hover:border-[#3b82f6]/50 transition-all"
     >
       <span className="text-gray-500">{icon}</span>
       {label}

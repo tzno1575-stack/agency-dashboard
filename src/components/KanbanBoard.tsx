@@ -66,28 +66,28 @@ export default function KanbanBoard({ tasks, onTasksChange, clients, selectedCli
   return (
     <div className="flex-1 flex flex-col overflow-hidden">
       {/* Toolbar */}
-      <div className="flex items-center gap-3 px-3 md:px-4 py-2 border-b border-[#1e293b] shrink-0">
+      <div className="flex items-center gap-3 px-3 md:px-4 py-2 border-b border-[#1a1a1a] shrink-0">
         <button
           onClick={() => setShowAddForm(!showAddForm)}
           className={`flex items-center gap-1.5 text-sm px-3 py-1.5 rounded-lg transition-colors ${
             showAddForm
-              ? "bg-[#1e293b] text-gray-300"
+              ? "bg-[#1e293b] text-gray-800"
               : "bg-[#3b82f6] text-white hover:bg-[#2563eb]"
           }`}
         >
           <Plus size={14} />
           Add Task
         </button>
-        <span className="text-xs text-gray-600">{tasks.length} tasks</span>
+        <span className="text-xs text-gray-500">{tasks.length} tasks</span>
       </div>
 
       {/* Add Task Form */}
       {showAddForm && (
-        <div className="px-3 md:px-4 py-3 border-b border-[#1e293b] bg-[#0f1320] shrink-0">
-          <div className="bg-[#1a1f2e] border border-[#1e293b] rounded-lg p-4 space-y-3 max-w-lg">
+        <div className="px-3 md:px-4 py-3 border-b border-[#1a1a1a] bg-white shrink-0">
+          <div className="bg-white border border-[#1a1a1a] rounded-lg p-4 space-y-3 max-w-lg">
             <div className="flex items-center justify-between">
-              <span className="text-sm font-medium text-gray-300">New Task</span>
-              <button onClick={() => setShowAddForm(false)} className="text-gray-500 hover:text-white">
+              <span className="text-sm font-medium text-gray-800">New Task</span>
+              <button onClick={() => setShowAddForm(false)} className="text-gray-500 hover:text-gray-900">
                 <X size={16} />
               </button>
             </div>
@@ -101,7 +101,7 @@ export default function KanbanBoard({ tasks, onTasksChange, clients, selectedCli
                 onKeyDown={(e) => e.key === "Enter" && handleAddTask()}
                 placeholder="What needs to be done?"
                 autoFocus
-                className="w-full bg-[#0f1320] border border-[#1e293b] rounded-lg px-3 py-2 text-sm text-gray-200 focus:outline-none focus:border-[#3b82f6] placeholder:text-gray-600"
+                className="w-full bg-white border border-[#1a1a1a] rounded-lg px-3 py-2 text-sm text-gray-800 focus:outline-none focus:border-[#3b82f6] placeholder:text-gray-500"
               />
             </div>
 
@@ -110,7 +110,7 @@ export default function KanbanBoard({ tasks, onTasksChange, clients, selectedCli
               <select
                 value={newClient}
                 onChange={(e) => setNewClient(e.target.value)}
-                className="w-full bg-[#0f1320] border border-[#1e293b] rounded-lg px-3 py-2 text-sm text-gray-200 focus:outline-none focus:border-[#3b82f6]"
+                className="w-full bg-white border border-[#1a1a1a] rounded-lg px-3 py-2 text-sm text-gray-800 focus:outline-none focus:border-[#3b82f6]"
               >
                 {clients.map((c) => (
                   <option key={c.id} value={c.id}>{c.name}</option>
@@ -124,14 +124,14 @@ export default function KanbanBoard({ tasks, onTasksChange, clients, selectedCli
                 value={newNotes}
                 onChange={(e) => setNewNotes(e.target.value)}
                 placeholder="Anything the agent should know?"
-                className="w-full bg-[#0f1320] border border-[#1e293b] rounded-lg px-3 py-2 text-sm text-gray-200 h-16 resize-none focus:outline-none focus:border-[#3b82f6] placeholder:text-gray-600"
+                className="w-full bg-white border border-[#1a1a1a] rounded-lg px-3 py-2 text-sm text-gray-800 h-16 resize-none focus:outline-none focus:border-[#3b82f6] placeholder:text-gray-500"
               />
             </div>
 
             <div className="flex gap-2 justify-end">
               <button
                 onClick={() => { setShowAddForm(false); setNewTitle(""); setNewNotes(""); }}
-                className="px-4 py-2 text-sm text-gray-400 hover:text-white bg-[#1e293b] rounded-lg"
+                className="px-4 py-2 text-sm text-gray-500 hover:text-gray-900 bg-[#1e293b] rounded-lg"
               >
                 Cancel
               </button>
@@ -154,8 +154,8 @@ export default function KanbanBoard({ tasks, onTasksChange, clients, selectedCli
             <div key={col.id} className="flex-1 min-w-[220px] max-w-[320px] flex flex-col">
               <div className="flex items-center gap-2 mb-2 px-1">
                 <span className={`w-2 h-2 rounded-full ${col.color}`} />
-                <h3 className="text-xs font-semibold text-gray-300 uppercase tracking-wider">{col.title}</h3>
-                <span className="text-[10px] text-gray-600 ml-auto">{getColumnTasks(col.id).length}</span>
+                <h3 className="text-xs font-semibold text-gray-800 uppercase tracking-wider">{col.title}</h3>
+                <span className="text-[10px] text-gray-500 ml-auto">{getColumnTasks(col.id).length}</span>
               </div>
 
               <Droppable droppableId={col.id}>
@@ -164,7 +164,7 @@ export default function KanbanBoard({ tasks, onTasksChange, clients, selectedCli
                     ref={provided.innerRef}
                     {...provided.droppableProps}
                     className={`rounded-lg p-2 min-h-[200px] flex-1 transition-colors ${
-                      snapshot.isDraggingOver ? "bg-[#1a1f2e]" : "bg-[#0f1320]"
+                      snapshot.isDraggingOver ? "bg-white" : "bg-white"
                     }`}
                   >
                     {getColumnTasks(col.id).map((task, index) => (
@@ -173,23 +173,23 @@ export default function KanbanBoard({ tasks, onTasksChange, clients, selectedCli
                           <div
                             ref={provided.innerRef}
                             {...provided.draggableProps}
-                            className={`bg-[#1a1f2e] border border-[#1e293b] rounded-lg p-3 mb-2 transition-shadow ${
+                            className={`bg-white border border-[#1a1a1a] rounded-lg p-3 mb-2 transition-shadow ${
                               snapshot.isDragging ? "shadow-lg shadow-blue-500/20" : ""
                             }`}
                           >
                             <div className="flex items-start gap-2">
                               <span {...provided.dragHandleProps} className="mt-1 cursor-grab">
-                                <GripVertical size={14} className="text-gray-600" />
+                                <GripVertical size={14} className="text-gray-500" />
                               </span>
                               <div className="flex-1 min-w-0">
-                                <p className="text-sm text-gray-200 leading-snug">{task.title}</p>
+                                <p className="text-sm text-gray-800 leading-snug">{task.title}</p>
                                 {task.agentNotes && (
                                   <p className="text-xs text-gray-500 mt-1 truncate">{task.agentNotes}</p>
                                 )}
-                                <p className="text-[10px] text-gray-600 mt-2">{task.createdAt?.slice(0, 10)}</p>
+                                <p className="text-[10px] text-gray-500 mt-2">{task.createdAt?.slice(0, 10)}</p>
                               </div>
                               <button className="mt-1">
-                                <MoreHorizontal size={14} className="text-gray-600" />
+                                <MoreHorizontal size={14} className="text-gray-500" />
                               </button>
                             </div>
                           </div>

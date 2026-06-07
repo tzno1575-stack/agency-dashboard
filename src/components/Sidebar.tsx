@@ -61,11 +61,11 @@ export default function Sidebar({
   return (
     <>
       {/* Logo */}
-      <div className="p-3 md:p-3 py-3.5 border-b border-[#1e293b] flex items-center gap-2.5 shrink-0 min-h-[52px]">
+      <div className="p-3 md:p-3 py-3.5 border-b border-[#1a1a1a] flex items-center gap-2.5 shrink-0 min-h-[52px]">
         {/* Mobile: menu icon to expand */}
         <button
           onClick={onMobileExpand}
-          className="md:hidden text-gray-400 hover:text-white p-1 -ml-0.5"
+          className="md:hidden text-gray-500 hover:text-gray-900 p-1 -ml-0.5"
           title="Expand menu"
         >
           <Menu size={22} />
@@ -74,13 +74,13 @@ export default function Sidebar({
         {/* Desktop: collapse toggle */}
         <button
           onClick={onToggleCollapse}
-          className="sidebar-collapse-btn hidden md:flex text-gray-500 hover:text-gray-300 p-0.5 shrink-0"
+          className="sidebar-collapse-btn hidden md:flex text-gray-500 hover:text-gray-800 p-0.5 shrink-0"
           title={collapsed ? "Expand sidebar (Ctrl+B)" : "Collapse sidebar (Ctrl+B)"}
         >
           {collapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
         </button>
 
-        <h1 className="text-base font-bold text-white sidebar-logo-text truncate">
+        <h1 className="text-base font-bold text-black sidebar-logo-text truncate">
           <span className="text-[#3b82f6]">Aql</span> <span className="sidebar-logo-text">Digital</span>
         </h1>
 
@@ -93,7 +93,7 @@ export default function Sidebar({
       {/* Navigation */}
       <nav className="flex-1 overflow-y-auto py-2">
         {sections.map((section, si) => (
-          <div key={section.key} className={si > 0 ? "mt-1 pt-1 border-t border-[#1e293b]/50" : ""}>
+          <div key={section.key} className={si > 0 ? "mt-1 pt-1 border-t border-[#1a1a1a]/50" : ""}>
             <span className="sidebar-section-label text-[9px] font-semibold text-gray-500 uppercase tracking-widest px-3 py-1.5 block">
               {section.label}
             </span>
@@ -106,11 +106,11 @@ export default function Sidebar({
                   onClick={() => onNavigate(board.id)}
                   className={`flex items-center gap-3 w-full px-3 py-2.5 text-sm transition-colors ${
                     isActive
-                      ? "bg-[#1a1f2e] text-white border-r-2 border-[#3b82f6]"
-                      : "text-gray-400 hover:text-white hover:bg-[#1a1f2e] border-r-2 border-transparent"
+                      ? "bg-white text-black border-r-2 border-[#3b82f6]"
+                      : "text-gray-500 hover:text-gray-900 hover:bg-white border-r-2 border-transparent"
                   }`}
                 >
-                  <Icon size={20} className={`shrink-0 ${isActive ? board.color || "text-white" : ""}`} />
+                  <Icon size={20} className={`shrink-0 ${isActive ? board.color || "text-black" : ""}`} />
                   <span className="sidebar-label text-xs font-medium truncate flex items-center gap-1.5">
                     {board.name}
                     {board.id === "taskforce" && agentCount > 0 && (
@@ -131,7 +131,7 @@ export default function Sidebar({
         ))}
 
         {/* Client selector */}
-        <div className="sidebar-client-list mt-2 pt-2 border-t border-[#1e293b]">
+        <div className="sidebar-client-list mt-2 pt-2 border-t border-[#1a1a1a]">
           <div className="flex items-center justify-between px-3 py-1">
             <span className="sidebar-section-label text-[9px] font-semibold text-gray-500 uppercase tracking-widest">
               Clients ({clients.length})
@@ -146,8 +146,8 @@ export default function Sidebar({
               onClick={() => onSelectClient(client.id)}
               className={`w-full text-left px-3 py-2.5 text-[13px] transition-colors border-r-2 ${
                 selectedClientId === client.id
-                  ? "bg-[#1a1f2e] text-white border-[#3b82f6]"
-                  : "text-gray-400 hover:text-white hover:bg-[#1a1f2e] border-transparent"
+                  ? "bg-white text-black border-[#3b82f6]"
+                  : "text-gray-500 hover:text-gray-900 hover:bg-white border-transparent"
               }`}
             >
               <div className="flex items-center justify-between">
@@ -157,14 +157,14 @@ export default function Sidebar({
             </button>
           ))}
           {clients.length === 0 && (
-            <p className="sidebar-label text-[10px] text-gray-600 text-center py-2">No clients</p>
+            <p className="sidebar-label text-[10px] text-gray-500 text-center py-2">No clients</p>
           )}
         </div>
       </nav>
 
       {/* Footer */}
-      <div className="p-2.5 border-t border-[#1e293b] shrink-0 space-y-1">
-        <div className="sidebar-footer-text text-[10px] text-gray-600 flex items-center gap-1.5">
+      <div className="p-2.5 border-t border-[#1a1a1a] shrink-0 space-y-1">
+        <div className="sidebar-footer-text text-[10px] text-gray-500 flex items-center gap-1.5">
           <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse shrink-0" />
           Hermes
         </div>

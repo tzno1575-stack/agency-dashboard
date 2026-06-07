@@ -60,40 +60,40 @@ export default function VideoStudio() {
           <Film size={18} className="text-purple-400" />
         </div>
         <div>
-          <h2 className="text-lg font-bold text-white">Video Studio</h2>
+          <h2 className="text-lg font-bold text-black">Video Studio</h2>
           <p className="text-xs text-gray-500">YouTube & TikTok content production</p>
         </div>
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-1 mb-4 bg-[#0f1320] rounded-lg p-1 border border-[#1e293b]">
+      <div className="flex gap-1 mb-4 bg-white rounded-lg p-1 border border-[#1a1a1a]">
         <button onClick={() => setActiveTab("scripts")}
-          className={`flex-1 py-1.5 text-xs rounded-md transition-colors ${activeTab === "scripts" ? "bg-[#1a1f2e] text-white" : "text-gray-500 hover:text-gray-300"}`}>
+          className={`flex-1 py-1.5 text-xs rounded-md transition-colors ${activeTab === "scripts" ? "bg-white text-black" : "text-gray-500 hover:text-gray-800"}`}>
           ✍️ Scripts ({scripts.length})
         </button>
         <button onClick={() => setActiveTab("schedule")}
-          className={`flex-1 py-1.5 text-xs rounded-md transition-colors ${activeTab === "schedule" ? "bg-[#1a1f2e] text-white" : "text-gray-500 hover:text-gray-300"}`}>
+          className={`flex-1 py-1.5 text-xs rounded-md transition-colors ${activeTab === "schedule" ? "bg-white text-black" : "text-gray-500 hover:text-gray-800"}`}>
           📅 Schedule ({scheduled.length})
         </button>
         <button onClick={() => setActiveTab("voice")}
-          className={`flex-1 py-1.5 text-xs rounded-md transition-colors ${activeTab === "voice" ? "bg-[#1a1f2e] text-white" : "text-gray-500 hover:text-gray-300"}`}>
+          className={`flex-1 py-1.5 text-xs rounded-md transition-colors ${activeTab === "voice" ? "bg-white text-black" : "text-gray-500 hover:text-gray-800"}`}>
           🎙️ Voiceover
         </button>
       </div>
 
       {/* AI Generator */}
-      <div className="bg-gradient-to-r from-[#1a1f2e] to-[#1e2440] border border-[#2a3050] rounded-xl p-4 mb-6">
+      <div className="bg-gradient-to-r from-[#1a1f2e] to-[#1e2440] border border-[#1a1a1a] rounded-xl p-4 mb-6">
         <div className="flex items-center gap-2 mb-3">
           <Wand2 size={16} className="text-purple-400" />
-          <span className="text-xs font-semibold text-gray-300">AI SCRIPT GENERATOR</span>
+          <span className="text-xs font-semibold text-gray-800">AI SCRIPT GENERATOR</span>
         </div>
         <div className="flex gap-2 mb-3">
           <button onClick={() => setPlatform("youtube")}
-            className={`flex items-center gap-1 px-3 py-1.5 text-xs rounded-lg transition-colors ${platform === "youtube" ? "bg-red-500/20 text-red-400 border border-red-500/30" : "bg-[#0f1320] text-gray-500 border border-[#1e293b]"}`}>
+            className={`flex items-center gap-1 px-3 py-1.5 text-xs rounded-lg transition-colors ${platform === "youtube" ? "bg-red-500/20 text-red-400 border border-red-500/30" : "bg-white text-gray-500 border border-[#1a1a1a]"}`}>
             <Video size={14} /> YouTube
           </button>
           <button onClick={() => setPlatform("tiktok")}
-            className={`flex items-center gap-1 px-3 py-1.5 text-xs rounded-lg transition-colors ${platform === "tiktok" ? "bg-pink-500/20 text-pink-400 border border-pink-500/30" : "bg-[#0f1320] text-gray-500 border border-[#1e293b]"}`}>
+            className={`flex items-center gap-1 px-3 py-1.5 text-xs rounded-lg transition-colors ${platform === "tiktok" ? "bg-pink-500/20 text-pink-400 border border-pink-500/30" : "bg-white text-gray-500 border border-[#1a1a1a]"}`}>
             <Music size={14} /> TikTok
           </button>
         </div>
@@ -101,10 +101,10 @@ export default function VideoStudio() {
           value={topic}
           onChange={(e) => setTopic(e.target.value)}
           placeholder={`What's your ${platform === "youtube" ? "video" : "TikTok"} about? (e.g., "5 AI tools for small business")`}
-          className="w-full bg-[#0f1320] border border-[#1e293b] rounded-lg p-3 text-sm text-gray-200 placeholder-gray-600 resize-none h-20 focus:outline-none focus:border-[#3b82f6]/50 mb-3"
+          className="w-full bg-white border border-[#1a1a1a] rounded-lg p-3 text-sm text-gray-800 placeholder-gray-600 resize-none h-20 focus:outline-none focus:border-[#3b82f6]/50 mb-3"
         />
         <button onClick={handleGenerate} disabled={!topic.trim() || generating}
-          className="flex items-center gap-2 px-4 py-2 bg-purple-600 hover:bg-purple-700 disabled:opacity-40 text-white text-xs rounded-lg transition-colors">
+          className="flex items-center gap-2 px-4 py-2 bg-purple-600 hover:bg-purple-700 disabled:opacity-40 text-black text-xs rounded-lg transition-colors">
           {generating ? "Generating..." : <><Send size={14} /> Generate Script</>}
         </button>
       </div>
@@ -114,13 +114,13 @@ export default function VideoStudio() {
         <div className="space-y-3">
           <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-widest">Upcoming</h3>
           {scheduled.length === 0 && (
-            <p className="text-xs text-gray-600 text-center py-6">No scheduled videos. Generate a script first.</p>
+            <p className="text-xs text-gray-500 text-center py-6">No scheduled videos. Generate a script first.</p>
           )}
           {scheduled.map(s => (
-            <div key={s.id} className="bg-[#1a1f2e] border border-[#1e293b] rounded-xl p-4">
+            <div key={s.id} className="bg-white border border-[#1a1a1a] rounded-xl p-4">
               <div className="flex items-center gap-2 mb-2">
                 {s.platform === "youtube" ? <Video size={14} className="text-red-400" /> : <Music size={14} className="text-pink-400" />}
-                <span className="text-sm font-medium text-white truncate">{s.title}</span>
+                <span className="text-sm font-medium text-black truncate">{s.title}</span>
               </div>
               <div className="flex items-center gap-2 text-xs text-gray-500">
                 <Calendar size={12} />
@@ -135,30 +135,30 @@ export default function VideoStudio() {
       {activeTab === "scripts" && (
         <div className="space-y-4">
           {scripts.length === 0 && (
-            <p className="text-xs text-gray-600 text-center py-8">No scripts yet. Describe your video topic above.</p>
+            <p className="text-xs text-gray-500 text-center py-8">No scripts yet. Describe your video topic above.</p>
           )}
           {scripts.map(s => (
-            <div key={s.id} className="bg-[#1a1f2e] border border-[#1e293b] rounded-xl p-4">
+            <div key={s.id} className="bg-white border border-[#1a1a1a] rounded-xl p-4">
               <div className="flex items-start justify-between mb-3">
                 <div className="flex items-center gap-2">
                   {s.platform === "youtube" ? <Video size={16} className="text-red-400" /> : <Music size={16} className="text-pink-400" />}
                   <div>
-                    <h4 className="text-sm font-semibold text-white">{s.title}</h4>
+                    <h4 className="text-sm font-semibold text-black">{s.title}</h4>
                     <span className="text-[10px] text-gray-500">{s.status}</span>
                   </div>
                 </div>
-                <button onClick={() => handleDelete(s.id)} className="text-gray-600 hover:text-red-400 transition-colors">
+                <button onClick={() => handleDelete(s.id)} className="text-gray-500 hover:text-red-400 transition-colors">
                   <Trash2 size={14} />
                 </button>
               </div>
 
-              <div className="bg-[#0f1320] rounded-lg p-3 mb-3">
-                <p className="text-xs text-gray-400 whitespace-pre-wrap line-clamp-4">{s.description}</p>
+              <div className="bg-white rounded-lg p-3 mb-3">
+                <p className="text-xs text-gray-500 whitespace-pre-wrap line-clamp-4">{s.description}</p>
               </div>
 
               <div className="flex flex-wrap gap-2 mb-3">
                 {s.hashtags.split(" ").map((tag, i) => (
-                  <span key={i} className="text-[10px] bg-[#0f1320] text-gray-400 px-2 py-0.5 rounded-full">{tag}</span>
+                  <span key={i} className="text-[10px] bg-white text-gray-500 px-2 py-0.5 rounded-full">{tag}</span>
                 ))}
               </div>
 
@@ -172,7 +172,7 @@ export default function VideoStudio() {
                   <input
                     type="date"
                     onChange={(e) => handleSchedule(s.id, e.target.value)}
-                    className="bg-[#0f1320] border border-[#1e293b] rounded-lg px-3 py-1.5 text-xs text-gray-300 focus:outline-none focus:border-[#3b82f6]/50"
+                    className="bg-white border border-[#1a1a1a] rounded-lg px-3 py-1.5 text-xs text-gray-800 focus:outline-none focus:border-[#3b82f6]/50"
                   />
                   <button
                     onClick={() => s.scheduledDate && handleSchedule(s.id, s.scheduledDate)}
@@ -189,10 +189,10 @@ export default function VideoStudio() {
       {/* Voice Tab — VoxCPM voice cloning */}
       {activeTab === "voice" && (
         <div className="space-y-4">
-          <div className="bg-gradient-to-r from-[#1a1f2e] to-[#1e2440] border border-[#2a3050] rounded-xl p-4">
+          <div className="bg-gradient-to-r from-[#1a1f2e] to-[#1e2440] border border-[#1a1a1a] rounded-xl p-4">
             <div className="flex items-center gap-2 mb-3">
               <span className="text-base">🎙️</span>
-              <span className="text-xs font-semibold text-gray-300">VOXCPM VOICE CLONING</span>
+              <span className="text-xs font-semibold text-gray-800">VOXCPM VOICE CLONING</span>
               <span className="text-[10px] bg-green-500/10 text-green-400 px-1.5 py-0.5 rounded-full ml-auto">Free · Local</span>
             </div>
             <p className="text-xs text-gray-500 mb-3">Clone your voice once, generate unlimited voiceovers for YouTube videos. Runs locally — no API costs.</p>
@@ -200,7 +200,7 @@ export default function VideoStudio() {
               value={voiceText}
               onChange={(e) => setVoiceText(e.target.value)}
               placeholder="Paste your video script here to generate voiceover..."
-              className="w-full bg-[#0f1320] border border-[#1e293b] rounded-lg p-3 text-sm text-gray-200 placeholder-gray-600 resize-none h-24 focus:outline-none focus:border-[#3b82f6]/50 mb-3"
+              className="w-full bg-white border border-[#1a1a1a] rounded-lg p-3 text-sm text-gray-800 placeholder-gray-600 resize-none h-24 focus:outline-none focus:border-[#3b82f6]/50 mb-3"
             />
             <div className="flex gap-2">
               <button
@@ -213,18 +213,18 @@ export default function VideoStudio() {
                   setVoiceText("");
                 }}
                 disabled={!voiceText.trim() || voiceGenerating}
-                className="flex items-center gap-2 px-4 py-2 bg-purple-600 hover:bg-purple-700 disabled:opacity-40 text-white text-xs rounded-lg transition-colors">
+                className="flex items-center gap-2 px-4 py-2 bg-purple-600 hover:bg-purple-700 disabled:opacity-40 text-black text-xs rounded-lg transition-colors">
                 {voiceGenerating ? "Generating..." : "🎤 Generate Voiceover"}
               </button>
             </div>
           </div>
 
-          <div className="bg-[#1a1f2e] border border-[#1e293b] rounded-xl p-4">
-            <h4 className="text-xs font-semibold text-gray-300 mb-3">Setup (one-time)</h4>
-            <div className="space-y-2 text-xs text-gray-400">
+          <div className="bg-white border border-[#1a1a1a] rounded-xl p-4">
+            <h4 className="text-xs font-semibold text-gray-800 mb-3">Setup (one-time)</h4>
+            <div className="space-y-2 text-xs text-gray-500">
               <div className="flex items-start gap-2">
                 <span className="text-green-400 shrink-0 mt-0.5">1.</span>
-                <span>Install <code className="text-[10px] bg-[#0f1320] px-1.5 py-0.5 rounded">VoxCPM.cpp</code> — <a href="https://github.com/bluryar/VoxCPM.cpp" target="_blank" className="text-[#3b82f6] hover:underline">github.com/bluryar/VoxCPM.cpp</a> (CPU-only, no GPU)</span>
+                <span>Install <code className="text-[10px] bg-white px-1.5 py-0.5 rounded">VoxCPM.cpp</code> — <a href="https://github.com/bluryar/VoxCPM.cpp" target="_blank" className="text-[#3b82f6] hover:underline">github.com/bluryar/VoxCPM.cpp</a> (CPU-only, no GPU)</span>
               </div>
               <div className="flex items-start gap-2">
                 <span className="text-green-400 shrink-0 mt-0.5">2.</span>
@@ -232,7 +232,7 @@ export default function VideoStudio() {
               </div>
               <div className="flex items-start gap-2">
                 <span className="text-green-400 shrink-0 mt-0.5">3.</span>
-                <span>For better quality: fine-tune with <code className="text-[10px] bg-[#0f1320] px-1.5 py-0.5 rounded">ComfyUI-VoxCPM2</code> + LoRA training (30 languages, 48kHz)</span>
+                <span>For better quality: fine-tune with <code className="text-[10px] bg-white px-1.5 py-0.5 rounded">ComfyUI-VoxCPM2</code> + LoRA training (30 languages, 48kHz)</span>
               </div>
             </div>
           </div>

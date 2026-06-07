@@ -94,7 +94,7 @@ export default function SocialAccountsPanel({ accounts, clientId, clientName, on
     <div className="p-4">
       <div className="flex items-center justify-between mb-4">
         <div>
-          <h2 className="text-sm font-semibold text-gray-300 uppercase tracking-wider">
+          <h2 className="text-sm font-semibold text-gray-800 uppercase tracking-wider">
             Social Accounts — {clientName}
           </h2>
           <p className="text-xs text-gray-500 mt-1">
@@ -115,11 +115,11 @@ export default function SocialAccountsPanel({ accounts, clientId, clientName, on
 
       {/* Add form */}
       {showAdd && (
-        <div className="bg-[#1a1f2e] border border-[#1e293b] rounded-lg p-3 mb-4 space-y-2">
+        <div className="bg-white border border-[#1a1a1a] rounded-lg p-3 mb-4 space-y-2">
           <select
             value={newPlatform}
             onChange={(e) => setNewPlatform(e.target.value as SocialPlatform)}
-            className="w-full bg-[#0f1320] border border-[#1e293b] rounded px-3 py-2 text-sm text-gray-200"
+            className="w-full bg-white border border-[#1a1a1a] rounded px-3 py-2 text-sm text-gray-800"
           >
             {socialPlatforms.map((p) => (
               <option key={p.id} value={p.id}>
@@ -132,14 +132,14 @@ export default function SocialAccountsPanel({ accounts, clientId, clientName, on
             value={newPageName}
             onChange={(e) => setNewPageName(e.target.value)}
             placeholder="Page name (e.g. Tesla Rides)"
-            className="w-full bg-[#0f1320] border border-[#1e293b] rounded px-3 py-2 text-sm text-gray-200 focus:outline-none focus:border-[#3b82f6]"
+            className="w-full bg-white border border-[#1a1a1a] rounded px-3 py-2 text-sm text-gray-800 focus:outline-none focus:border-[#3b82f6]"
           />
           <input
             type="text"
             value={newPageUrl}
             onChange={(e) => setNewPageUrl(e.target.value)}
             placeholder="Page URL (e.g. https://facebook.com/...)"
-            className="w-full bg-[#0f1320] border border-[#1e293b] rounded px-3 py-2 text-sm text-gray-200 focus:outline-none focus:border-[#3b82f6]"
+            className="w-full bg-white border border-[#1a1a1a] rounded px-3 py-2 text-sm text-gray-800 focus:outline-none focus:border-[#3b82f6]"
           />
           <button
             onClick={handleAdd}
@@ -152,7 +152,7 @@ export default function SocialAccountsPanel({ accounts, clientId, clientName, on
 
       {/* Account list */}
       {clientAccounts.length === 0 ? (
-        <div className="text-center text-gray-600 py-8">
+        <div className="text-center text-gray-500 py-8">
           <p className="text-sm">No social accounts yet</p>
           <p className="text-xs mt-1">Add Facebook, Instagram, TikTok, or X</p>
         </div>
@@ -166,11 +166,11 @@ export default function SocialAccountsPanel({ accounts, clientId, clientName, on
 
             if (isEditing) {
               return (
-                <div key={account.id} className="bg-[#1a1f2e] border border-[#3b82f6] rounded-lg p-3 space-y-2">
+                <div key={account.id} className="bg-white border border-[#3b82f6] rounded-lg p-3 space-y-2">
                   <select
                     value={editPlatform}
                     onChange={(e) => setEditPlatform(e.target.value as SocialPlatform)}
-                    className="w-full bg-[#0f1320] border border-[#1e293b] rounded px-3 py-2 text-sm text-gray-200"
+                    className="w-full bg-white border border-[#1a1a1a] rounded px-3 py-2 text-sm text-gray-800"
                   >
                     {socialPlatforms.map((p) => (
                       <option key={p.id} value={p.id}>
@@ -183,14 +183,14 @@ export default function SocialAccountsPanel({ accounts, clientId, clientName, on
                     value={editPageName}
                     onChange={(e) => setEditPageName(e.target.value)}
                     placeholder="Page name"
-                    className="w-full bg-[#0f1320] border border-[#1e293b] rounded px-3 py-2 text-sm text-gray-200 focus:outline-none focus:border-[#3b82f6]"
+                    className="w-full bg-white border border-[#1a1a1a] rounded px-3 py-2 text-sm text-gray-800 focus:outline-none focus:border-[#3b82f6]"
                   />
                   <input
                     type="text"
                     value={editPageUrl}
                     onChange={(e) => setEditPageUrl(e.target.value)}
                     placeholder="Page URL"
-                    className="w-full bg-[#0f1320] border border-[#1e293b] rounded px-3 py-2 text-sm text-gray-200 focus:outline-none focus:border-[#3b82f6]"
+                    className="w-full bg-white border border-[#1a1a1a] rounded px-3 py-2 text-sm text-gray-800 focus:outline-none focus:border-[#3b82f6]"
                   />
                   <div className="flex gap-2">
                     <button
@@ -201,7 +201,7 @@ export default function SocialAccountsPanel({ accounts, clientId, clientName, on
                     </button>
                     <button
                       onClick={cancelEdit}
-                      className="flex-1 bg-gray-700 text-gray-300 text-xs py-1.5 rounded flex items-center justify-center gap-1 hover:bg-gray-600"
+                      className="flex-1 bg-gray-700 text-gray-800 text-xs py-1.5 rounded flex items-center justify-center gap-1 hover:bg-gray-600"
                     >
                       <X size={12} /> Cancel
                     </button>
@@ -213,13 +213,13 @@ export default function SocialAccountsPanel({ accounts, clientId, clientName, on
             return (
               <div
                 key={account.id}
-                className="bg-[#1a1f2e] border border-[#1e293b] rounded-lg p-3 flex items-center gap-3"
+                className="bg-white border border-[#1a1a1a] rounded-lg p-3 flex items-center gap-3"
               >
                 <span className="text-xl shrink-0">{platform?.icon}</span>
 
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2">
-                    <span className="text-sm font-medium text-gray-200 truncate">
+                    <span className="text-sm font-medium text-gray-800 truncate">
                       {account.pageName}
                     </span>
                     <span
@@ -242,7 +242,7 @@ export default function SocialAccountsPanel({ accounts, clientId, clientName, on
                   </button>
                   <button
                     onClick={() => handleStatusToggle(account.id)}
-                    className="p-1.5 text-gray-500 hover:text-gray-300 rounded"
+                    className="p-1.5 text-gray-500 hover:text-gray-800 rounded"
                     title="Toggle status"
                   >
                     <RefreshCw size={14} />

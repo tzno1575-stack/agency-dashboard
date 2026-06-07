@@ -61,17 +61,17 @@ export default function AutoPilotPage() {
   const ollamaModels = heartbeat?.ollama_models?.length || 0;
 
   return (
-    <div className="min-h-screen bg-[#0a0e17] text-gray-200">
-      <header className="flex items-center gap-3 px-4 py-3 border-b border-[#1e293b] bg-[#0f1320] sticky top-0 z-10">
+    <div className="min-h-screen bg-[#FDFBF7] text-gray-800">
+      <header className="flex items-center gap-3 px-4 py-3 border-b border-[#1a1a1a] bg-white sticky top-0 z-10">
         <a
           href="/"
-          className="p-1.5 text-gray-400 hover:text-white rounded-lg hover:bg-[#1a1f2e] transition-colors"
+          className="p-1.5 text-gray-500 hover:text-gray-900 rounded-lg hover:bg-white transition-colors"
           title="Back to Dashboard"
         >
           <ArrowLeft size={18} />
         </a>
         <div>
-          <h1 className="text-sm font-semibold text-gray-300 uppercase tracking-wider">🤖 AutoPilot — 24/7 Operations</h1>
+          <h1 className="text-sm font-semibold text-gray-800 uppercase tracking-wider">🤖 AutoPilot — 24/7 Operations</h1>
           <p className="text-xs text-gray-500">Agents run autonomously · You review in the morning</p>
         </div>
         <a
@@ -86,37 +86,37 @@ export default function AutoPilotPage() {
       <div className="max-w-5xl mx-auto p-4">
         {/* Status grid */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
-          <div className="bg-[#1a1f2e] border border-[#1e293b] rounded-lg p-3">
+          <div className="bg-white border border-[#1a1a1a] rounded-lg p-3">
             <div className="flex items-center gap-2 mb-1">
               <Activity size={14} className="text-green-400" />
               <span className="text-xs text-gray-500">Gateway</span>
             </div>
             <p className="text-lg font-semibold text-green-400">Online</p>
-            <p className="text-[10px] text-gray-600">Uptime: {uptime}</p>
+            <p className="text-[10px] text-gray-500">Uptime: {uptime}</p>
           </div>
-          <div className="bg-[#1a1f2e] border border-[#1e293b] rounded-lg p-3">
+          <div className="bg-white border border-[#1a1a1a] rounded-lg p-3">
             <div className="flex items-center gap-2 mb-1">
               <Zap size={14} className="text-blue-400" />
               <span className="text-xs text-gray-500">Agents</span>
             </div>
-            <p className="text-lg font-semibold text-white">{runningAgents}</p>
-            <p className="text-[10px] text-gray-600">{completedAgents} done · {failedAgents} failed</p>
+            <p className="text-lg font-semibold text-black">{runningAgents}</p>
+            <p className="text-[10px] text-gray-500">{completedAgents} done · {failedAgents} failed</p>
           </div>
-          <div className="bg-[#1a1f2e] border border-[#1e293b] rounded-lg p-3">
+          <div className="bg-white border border-[#1a1a1a] rounded-lg p-3">
             <div className="flex items-center gap-2 mb-1">
               <CheckCircle2 size={14} className="text-yellow-400" />
               <span className="text-xs text-gray-500">Review Queue</span>
             </div>
             <p className="text-lg font-semibold text-yellow-400">{reviewCount}</p>
-            <p className="text-[10px] text-gray-600">pending approval</p>
+            <p className="text-[10px] text-gray-500">pending approval</p>
           </div>
-          <div className="bg-[#1a1f2e] border border-[#1e293b] rounded-lg p-3">
+          <div className="bg-white border border-[#1a1a1a] rounded-lg p-3">
             <div className="flex items-center gap-2 mb-1">
               <span className="text-sm">🧠</span>
               <span className="text-xs text-gray-500">Ollama</span>
             </div>
-            <p className="text-lg font-semibold text-white">{ollamaModels}</p>
-            <p className="text-[10px] text-gray-600">models loaded</p>
+            <p className="text-lg font-semibold text-black">{ollamaModels}</p>
+            <p className="text-[10px] text-gray-500">models loaded</p>
           </div>
         </div>
 
@@ -130,12 +130,12 @@ export default function AutoPilotPage() {
               {Object.entries(bridges).map(([name, status]) => (
                 <div
                   key={name}
-                  className={`bg-[#1a1f2e] border rounded-lg p-2 flex items-center gap-2 ${
+                  className={`bg-white border rounded-lg p-2 flex items-center gap-2 ${
                     status === "alive" ? "border-green-500/30" : "border-red-500/30"
                   }`}
                 >
                   <span className={`w-2 h-2 rounded-full ${status === "alive" ? "bg-green-400 animate-pulse" : "bg-red-400"}`} />
-                  <span className="text-xs text-gray-300 truncate">{name}</span>
+                  <span className="text-xs text-gray-800 truncate">{name}</span>
                 </div>
               ))}
             </div>
@@ -150,15 +150,15 @@ export default function AutoPilotPage() {
               {Object.entries(heartbeat.cron_jobs).map(([name, status]) => (
                 <div
                   key={name}
-                  className={`bg-[#1a1f2e] border rounded-lg p-2 flex items-center gap-2 ${
+                  className={`bg-white border rounded-lg p-2 flex items-center gap-2 ${
                     status === "running" || status === "ok" ? "border-green-500/30" : "border-red-500/30"
                   }`}
                 >
                   <span className={`w-2 h-2 rounded-full ${
                     status === "running" || status === "ok" ? "bg-green-400" : "bg-red-400"
                   }`} />
-                  <span className="text-xs text-gray-300 flex-1 truncate">{name}</span>
-                  <span className="text-[10px] text-gray-600">{status}</span>
+                  <span className="text-xs text-gray-800 flex-1 truncate">{name}</span>
+                  <span className="text-[10px] text-gray-500">{status}</span>
                 </div>
               ))}
             </div>
@@ -167,7 +167,7 @@ export default function AutoPilotPage() {
 
         {/* No heartbeat */}
         {!heartbeat && (
-          <div className="text-center text-gray-600 py-12">
+          <div className="text-center text-gray-500 py-12">
             <Loader2 size={24} className="animate-spin mx-auto mb-3" />
             <p className="text-sm">Connecting to monitor...</p>
           </div>

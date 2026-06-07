@@ -34,7 +34,7 @@ export default function StandardsPanel() {
     { id: "api-format", name: "API Response Format", desc: "All responses use { success, data, error } envelope" },
     { id: "naming", name: "Component Naming", desc: "PascalCase for components, camelCase for functions" },
     { id: "errors", name: "Error Handling", desc: "Use custom error codes: AUTH_001, DB_002, VAL_003" },
-    { id: "styling", name: "Styling Convention", desc: "Tailwind only — bg-[#0a0e17], text-gray-200, border-[#1e293b]" },
+    { id: "styling", name: "Styling Convention", desc: "Tailwind only — bg-[#FDFBF7], text-gray-800, border-[#1a1a1a]" },
   ];
 
   const toggleStep = (id: string) => {
@@ -78,19 +78,19 @@ export default function StandardsPanel() {
           <FileText size={18} className="text-indigo-400" />
         </div>
         <div>
-          <h2 className="text-lg font-bold text-white">Standards & Specs</h2>
+          <h2 className="text-lg font-bold text-black">Standards & Specs</h2>
           <p className="text-xs text-gray-500">Agent OS — spec-driven development</p>
         </div>
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-1 mb-4 bg-[#0f1320] rounded-lg p-1 border border-[#1e293b]">
+      <div className="flex gap-1 mb-4 bg-white rounded-lg p-1 border border-[#1a1a1a]">
         <button onClick={() => setShowSaved(false)}
-          className={`flex-1 py-1.5 text-xs rounded-md transition-colors ${!showSaved ? "bg-[#1a1f2e] text-white" : "text-gray-500 hover:text-gray-300"}`}>
+          className={`flex-1 py-1.5 text-xs rounded-md transition-colors ${!showSaved ? "bg-white text-black" : "text-gray-500 hover:text-gray-800"}`}>
           ✍️ Shape Spec
         </button>
         <button onClick={() => setShowSaved(true)}
-          className={`flex-1 py-1.5 text-xs rounded-md transition-colors ${showSaved ? "bg-[#1a1f2e] text-white" : "text-gray-500 hover:text-gray-300"}`}>
+          className={`flex-1 py-1.5 text-xs rounded-md transition-colors ${showSaved ? "bg-white text-black" : "text-gray-500 hover:text-gray-800"}`}>
           📚 Standards ({activeStandards.length})
         </button>
       </div>
@@ -98,10 +98,10 @@ export default function StandardsPanel() {
       {!showSaved ? (
         <>
           {/* Shape Spec Builder */}
-          <div className="bg-gradient-to-r from-[#1a1f2e] to-[#1e2440] border border-[#2a3050] rounded-xl p-4 mb-4">
+          <div className="bg-gradient-to-r from-[#1a1f2e] to-[#1e2440] border border-[#1a1a1a] rounded-xl p-4 mb-4">
             <div className="flex items-center gap-2 mb-3">
               <Lightbulb size={16} className="text-indigo-400" />
-              <span className="text-xs font-semibold text-gray-300">SHAPE SPEC</span>
+              <span className="text-xs font-semibold text-gray-800">SHAPE SPEC</span>
               <span className="text-[10px] bg-indigo-500/10 text-indigo-400 px-1.5 py-0.5 rounded-full ml-auto">{doneCount}/5 done</span>
             </div>
 
@@ -110,10 +110,10 @@ export default function StandardsPanel() {
                 value={specName}
                 onChange={(e) => setSpecName(e.target.value)}
                 placeholder="Feature name (e.g., 'user-auth-system')"
-                className="flex-1 bg-[#0f1320] border border-[#1e293b] rounded-lg px-3 py-1.5 text-xs text-gray-200 placeholder-gray-600 focus:outline-none focus:border-[#3b82f6]/50"
+                className="flex-1 bg-white border border-[#1a1a1a] rounded-lg px-3 py-1.5 text-xs text-gray-800 placeholder-gray-600 focus:outline-none focus:border-[#3b82f6]/50"
               />
               <button onClick={handleSaveSpec} disabled={!specName.trim()}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-40 text-white text-xs rounded-lg transition-colors shrink-0">
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-40 text-black text-xs rounded-lg transition-colors shrink-0">
                 <Save size={12} /> Save
               </button>
             </div>
@@ -121,17 +121,17 @@ export default function StandardsPanel() {
             {/* Steps */}
             <div className="space-y-1.5">
               {activeSpec.map(step => (
-                <div key={step.id} className="bg-[#0f1320] rounded-lg overflow-hidden">
+                <div key={step.id} className="bg-white rounded-lg overflow-hidden">
                   <button onClick={() => toggleStep(step.id)}
-                    className="w-full flex items-center gap-2 px-3 py-2 text-left hover:bg-[#1a1f2e]/50 transition-colors">
+                    className="w-full flex items-center gap-2 px-3 py-2 text-left hover:bg-white/50 transition-colors">
                     <button onClick={(e) => { e.stopPropagation(); toggleDone(step.id); }}
                       className={`w-4 h-4 rounded border flex items-center justify-center shrink-0 transition-colors ${step.done ? "bg-green-500 border-green-500" : "border-gray-600"}`}>
-                      {step.done && <CheckCircle size={12} className="text-white" />}
+                      {step.done && <CheckCircle size={12} className="text-black" />}
                     </button>
-                    <span className={`text-xs flex-1 ${step.done ? "text-gray-500 line-through" : "text-gray-300"}`}>
+                    <span className={`text-xs flex-1 ${step.done ? "text-gray-500 line-through" : "text-gray-800"}`}>
                       {step.label}
                     </span>
-                    {expandedStep === step.id ? <ChevronDown size={12} className="text-gray-600" /> : <ChevronRight size={12} className="text-gray-600" />}
+                    {expandedStep === step.id ? <ChevronDown size={12} className="text-gray-500" /> : <ChevronRight size={12} className="text-gray-500" />}
                   </button>
                   {expandedStep === step.id && (
                     <div className="px-3 pb-3">
@@ -145,7 +145,7 @@ export default function StandardsPanel() {
                           : step.id === "standards" ? "Which standards from the Standards tab apply? e.g., 'api-format, styling'"
                           : "Break it into numbered tasks. Task 1: Save spec documentation first."
                         }
-                        className="w-full bg-[#0a0e17] border border-[#1e293b] rounded-lg p-2.5 text-xs text-gray-200 placeholder-gray-600 resize-none h-20 focus:outline-none focus:border-[#3b82f6]/50"
+                        className="w-full bg-[#FDFBF7] border border-[#1a1a1a] rounded-lg p-2.5 text-xs text-gray-800 placeholder-gray-600 resize-none h-20 focus:outline-none focus:border-[#3b82f6]/50"
                       />
                     </div>
                   )}
@@ -155,16 +155,16 @@ export default function StandardsPanel() {
           </div>
 
           {/* Quick Reference — Inject Standards */}
-          <div className="bg-[#1a1f2e] border border-[#1e293b] rounded-xl p-4">
+          <div className="bg-white border border-[#1a1a1a] rounded-xl p-4">
             <div className="flex items-center gap-2 mb-3">
               <BookOpen size={14} className="text-indigo-400" />
-              <span className="text-xs font-semibold text-gray-300">INJECT STANDARDS</span>
+              <span className="text-xs font-semibold text-gray-800">INJECT STANDARDS</span>
             </div>
             <p className="text-xs text-gray-500 mb-3">Auto-load relevant standards based on what you're building. Agents read these before executing.</p>
             <div className="flex flex-wrap gap-1.5">
               {activeStandards.map(s => (
                 <button key={s.id}
-                  className="text-[10px] bg-[#0f1320] border border-[#1e293b] hover:border-indigo-500/50 text-gray-400 hover:text-white px-2.5 py-1 rounded-full transition-colors">
+                  className="text-[10px] bg-white border border-[#1a1a1a] hover:border-indigo-500/50 text-gray-500 hover:text-gray-900 px-2.5 py-1 rounded-full transition-colors">
                   {s.name}
                 </button>
               ))}
@@ -176,10 +176,10 @@ export default function StandardsPanel() {
           {/* Standards Reference */}
           <div className="space-y-3">
             {activeStandards.map(s => (
-              <div key={s.id} className="bg-[#1a1f2e] border border-[#1e293b] rounded-xl p-4">
-                <h4 className="text-sm font-semibold text-white mb-1">{s.name}</h4>
-                <p className="text-xs text-gray-400">{s.desc}</p>
-                <code className="text-[10px] text-gray-600 mt-2 block">agent-os/standards/{s.id}.md</code>
+              <div key={s.id} className="bg-white border border-[#1a1a1a] rounded-xl p-4">
+                <h4 className="text-sm font-semibold text-black mb-1">{s.name}</h4>
+                <p className="text-xs text-gray-500">{s.desc}</p>
+                <code className="text-[10px] text-gray-500 mt-2 block">agent-os/standards/{s.id}.md</code>
               </div>
             ))}
           </div>
@@ -190,11 +190,11 @@ export default function StandardsPanel() {
               <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-widest mb-3">Saved Specs ({specs.length})</h3>
               <div className="space-y-2">
                 {specs.map(spec => (
-                  <div key={spec.id} className="bg-[#1a1f2e] border border-[#1e293b] rounded-lg p-3">
+                  <div key={spec.id} className="bg-white border border-[#1a1a1a] rounded-lg p-3">
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-xs font-medium text-white">{spec.name}</p>
-                        <p className="text-[10px] text-gray-600">{spec.date} · {spec.steps.filter(s => s.done).length}/5 steps</p>
+                        <p className="text-xs font-medium text-black">{spec.name}</p>
+                        <p className="text-[10px] text-gray-500">{spec.date} · {spec.steps.filter(s => s.done).length}/5 steps</p>
                       </div>
                       <button
                         onClick={() => { setActiveSpec(spec.steps); setSpecName(spec.name); setShowSaved(false); }}

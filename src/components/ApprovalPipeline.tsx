@@ -192,15 +192,15 @@ export default function ApprovalPipeline({ posts, accounts, clientId, onDelete }
       facebook: { bg: "bg-blue-500/10", text: "text-blue-400", label: "Facebook" },
       instagram: { bg: "bg-pink-500/10", text: "text-pink-400", label: "Instagram" },
       twitter: { bg: "bg-sky-500/10", text: "text-sky-400", label: "X" },
-      tiktok: { bg: "bg-gray-500/10", text: "text-gray-400", label: "TikTok" },
+      tiktok: { bg: "bg-gray-500/10", text: "text-gray-500", label: "TikTok" },
     };
-    return map[platform] || { bg: "bg-gray-500/10", text: "text-gray-400", label: platform };
+    return map[platform] || { bg: "bg-gray-500/10", text: "text-gray-500", label: platform };
   };
 
   if (loading) {
     return (
       <div className="flex-1 flex items-center justify-center">
-        <RefreshCw size={20} className="animate-spin text-gray-600" />
+        <RefreshCw size={20} className="animate-spin text-gray-500" />
       </div>
     );
   }
@@ -212,14 +212,14 @@ export default function ApprovalPipeline({ posts, accounts, clientId, onDelete }
   return (
     <>
       <div className="flex-1 flex flex-col overflow-hidden">
-      <div className="px-3 py-2 border-b border-[#1e293b] bg-[#0a0e17] shrink-0">
+      <div className="px-3 py-2 border-b border-[#1a1a1a] bg-[#FDFBF7] shrink-0">
         <div className="flex items-center justify-between">
           <button
             onClick={() => updateAutoAuth(!autoAuth)}
             className={`flex items-center gap-1.5 text-[11px] px-2.5 py-1.5 rounded-lg transition-colors ${
               autoAuth 
                 ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20" 
-                : "bg-gray-500/10 text-gray-500 border border-gray-500/10 hover:text-gray-400"
+                : "bg-gray-500/10 text-gray-500 border border-gray-500/10 hover:text-gray-500"
             }`}
           >
             {autoAuth ? <Zap size={13} /> : <ZapOff size={13} />}
@@ -230,13 +230,13 @@ export default function ApprovalPipeline({ posts, accounts, clientId, onDelete }
             <div className="relative">
               <button
                 onClick={() => setShowLimitPicker(!showLimitPicker)}
-                className="flex items-center gap-1 text-[11px] text-gray-500 hover:text-gray-300 px-2 py-1 rounded"
+                className="flex items-center gap-1 text-[11px] text-gray-500 hover:text-gray-800 px-2 py-1 rounded"
               >
                 <Settings size={12} />
                 {autoAuthLimit}x
               </button>
               {showLimitPicker && (
-                <div className="absolute right-0 top-7 bg-[#1a1f2e] border border-[#2a3050] rounded-lg py-1 z-20 shadow-xl min-w-[100px]">
+                <div className="absolute right-0 top-7 bg-white border border-[#1a1a1a] rounded-lg py-1 z-20 shadow-xl min-w-[100px]">
                   {AUTO_AUTH_LIMITS.map(limit => (
                     <button
                       key={limit}
@@ -245,7 +245,7 @@ export default function ApprovalPipeline({ posts, accounts, clientId, onDelete }
                         setShowLimitPicker(false);
                       }}
                       className={`block w-full text-left px-3 py-2 text-xs hover:bg-[#2a3050] ${
-                        autoAuthLimit === limit ? "text-emerald-400" : "text-gray-400"
+                        autoAuthLimit === limit ? "text-emerald-400" : "text-gray-500"
                       }`}
                     >
                       {limit}x daily
@@ -258,7 +258,7 @@ export default function ApprovalPipeline({ posts, accounts, clientId, onDelete }
           )}
         </div>
         {autoAuth && (
-          <div className="mt-1.5 text-[10px] text-gray-600 leading-tight">
+          <div className="mt-1.5 text-[10px] text-gray-500 leading-tight">
             {dailyAutoCount >= autoAuthLimit 
               ? `⚠️ Limit reached. New posts need manual approval.`
               : `Next ${autoAuthLimit - dailyAutoCount} posts auto-approved.`
@@ -268,7 +268,7 @@ export default function ApprovalPipeline({ posts, accounts, clientId, onDelete }
       </div>
 
       {/* Filter tabs */}
-      <div className="flex border-b border-[#1e293b] shrink-0">
+      <div className="flex border-b border-[#1a1a1a] shrink-0">
         {[
           { key: "pending" as const, label: "Pending", count: pending.length, color: "border-amber-400 text-amber-400" },
           { key: "approved" as const, label: "Approved", count: approved.length, color: "border-green-400 text-green-400" },
@@ -280,7 +280,7 @@ export default function ApprovalPipeline({ posts, accounts, clientId, onDelete }
             className={`flex-1 py-3 text-xs font-medium border-b-2 transition-colors ${
               filter === tab.key 
                 ? tab.color
-                : "border-transparent text-gray-600 hover:text-gray-400"
+                : "border-transparent text-gray-500 hover:text-gray-500"
             }`}
           >
             {tab.label} {tab.count > 0 && `(${tab.count})`}
@@ -291,8 +291,8 @@ export default function ApprovalPipeline({ posts, accounts, clientId, onDelete }
       {/* Items list */}
       <div className="flex-1 overflow-y-auto">
         {filteredItems.length === 0 && (
-          <div className="p-8 text-center text-sm text-gray-600">
-            <CheckCircle2 size={28} className="mx-auto mb-3 text-gray-700" />
+          <div className="p-8 text-center text-sm text-gray-500">
+            <CheckCircle2 size={28} className="mx-auto mb-3 text-gray-400" />
             No {filter} items
           </div>
         )}
@@ -305,7 +305,7 @@ export default function ApprovalPipeline({ posts, accounts, clientId, onDelete }
             <div key={item.id} className="px-3 py-1.5">
               <button
                 onClick={() => setExpandedId(isExpanded ? null : item.id)}
-                className="w-full text-left p-4 bg-[#111827] border-2 border-[#1e293b] rounded-xl hover:border-[#2a3050] active:bg-[#151d2b] transition-all"
+                className="w-full text-left p-4 bg-white border-2 border-[#1a1a1a] rounded-xl hover:border-[#1a1a1a] active:bg-gray-100 transition-all"
               >
                 {/* Status + platform badges */}
                 <div className="flex items-center gap-2 mb-3">
@@ -320,17 +320,17 @@ export default function ApprovalPipeline({ posts, accounts, clientId, onDelete }
                   <span className={`text-[10px] px-2.5 py-1 rounded-full font-medium ${badge.bg} ${badge.text}`}>
                     {badge.label}
                   </span>
-                  <span className="ml-auto text-[10px] text-gray-600">{formatDate(item.createdAt)}</span>
+                  <span className="ml-auto text-[10px] text-gray-500">{formatDate(item.createdAt)}</span>
                 </div>
 
                 {/* Title — bold and prominent */}
                 {item.title && (
-                  <h4 className="text-sm font-semibold text-white mb-2 leading-snug">{item.title}</h4>
+                  <h4 className="text-sm font-semibold text-black mb-2 leading-snug">{item.title}</h4>
                 )}
 
                 {/* Content preview */}
                 <div className="relative">
-                  <p className="text-[13px] text-gray-300 leading-relaxed whitespace-pre-wrap break-words line-clamp-3">
+                  <p className="text-[13px] text-gray-800 leading-relaxed whitespace-pre-wrap break-words line-clamp-3">
                     {item.content}
                   </p>
                   {item.content && item.content.length > 150 && (
@@ -359,12 +359,12 @@ export default function ApprovalPipeline({ posts, accounts, clientId, onDelete }
 
     {/* FULL-SCREEN OVERLAY — like opening a new tab */}
     {expandedItem && (
-      <div className="fixed inset-0 z-50 bg-[#0a0e17] flex flex-col" style={{ height: "100dvh" }}>
+      <div className="fixed inset-0 z-50 bg-[#FDFBF7] flex flex-col" style={{ height: "100dvh" }}>
         {/* Top bar: back + meta */}
-        <div className="px-4 py-3 border-b border-[#1e293b] bg-[#0f1320] shrink-0">
+        <div className="px-4 py-3 border-b border-[#1a1a1a] bg-white shrink-0">
           <button
             onClick={() => setExpandedId(null)}
-            className="flex items-center gap-2 text-sm text-gray-300 hover:text-white py-1"
+            className="flex items-center gap-2 text-sm text-gray-800 hover:text-gray-900 py-1"
           >
             <ChevronLeft size={20} />
             <span className="font-medium">Back</span>
@@ -381,14 +381,14 @@ export default function ApprovalPipeline({ posts, accounts, clientId, onDelete }
             <span className={`text-[11px] px-2 py-0.5 rounded-full ${getPlatformBadge(expandedItem.platform).bg} ${getPlatformBadge(expandedItem.platform).text}`}>
               {getPlatformBadge(expandedItem.platform).label}
             </span>
-            <span className="text-[11px] text-gray-600">{formatDate(expandedItem.createdAt)}</span>
+            <span className="text-[11px] text-gray-500">{formatDate(expandedItem.createdAt)}</span>
           </div>
         </div>
 
         {/* Scrollable content — THE FULL POST */}
         <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4">
           {expandedItem.title && (
-            <h2 className="text-lg font-bold text-white leading-snug">
+            <h2 className="text-lg font-bold text-black leading-snug">
               {expandedItem.title}
             </h2>
           )}
@@ -397,14 +397,14 @@ export default function ApprovalPipeline({ posts, accounts, clientId, onDelete }
             <div className="text-xs text-gray-500">Drafted by {expandedItem.agent}</div>
           )}
 
-          <div className="bg-[#111827] border border-[#1e293b] rounded-xl p-5">
+          <div className="bg-white border border-[#1a1a1a] rounded-xl p-5">
             <p className="text-[15px] text-gray-100 leading-relaxed whitespace-pre-wrap break-words">
               {expandedItem.content}
             </p>
           </div>
 
           {expandedItem.imageUrl && (
-            <img src={expandedItem.imageUrl} alt="Post" className="w-full rounded-xl border border-[#1e293b]" />
+            <img src={expandedItem.imageUrl} alt="Post" className="w-full rounded-xl border border-[#1a1a1a]" />
           )}
 
           {expandedItem.feedback && (
@@ -421,7 +421,7 @@ export default function ApprovalPipeline({ posts, accounts, clientId, onDelete }
         </div>
 
         {/* Bottom action bar */}
-        <div className="px-4 py-4 border-t border-[#1e293b] bg-[#0f1320] shrink-0">
+        <div className="px-4 py-4 border-t border-[#1a1a1a] bg-white shrink-0">
           {expandedItem.status === "pending" && (
             <div className="space-y-3">
               <div className="flex gap-3">
@@ -442,7 +442,7 @@ export default function ApprovalPipeline({ posts, accounts, clientId, onDelete }
                 value={feedback}
                 onChange={(e) => setFeedback(e.target.value)}
                 placeholder="Feedback (optional)..."
-                className="w-full bg-[#0a0e17] border border-[#1e293b] rounded-xl px-4 py-3 text-sm text-gray-300 placeholder-gray-600 resize-none"
+                className="w-full bg-[#FDFBF7] border border-[#1a1a1a] rounded-xl px-4 py-3 text-sm text-gray-800 placeholder-gray-600 resize-none"
                 rows={2}
               />
             </div>

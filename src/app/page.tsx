@@ -184,10 +184,10 @@ export default function Dashboard() {
 
   if (fatalError) {
     return (
-      <div className="flex h-screen bg-[#0a0e17] items-center justify-center">
+      <div className="flex h-screen bg-[#FDFBF7] items-center justify-center">
         <div className="text-center max-w-sm px-4">
           <div className="text-4xl mb-4">⚠️</div>
-          <h2 className="text-lg font-semibold text-gray-300 mb-2">Something went wrong</h2>
+          <h2 className="text-lg font-semibold text-gray-800 mb-2">Something went wrong</h2>
           <p className="text-sm text-gray-500 mb-4">{fatalError}</p>
           <button onClick={() => { setFatalError(null); window.location.reload(); }}
             className="px-4 py-2 bg-[#3b82f6] text-white text-sm rounded-lg hover:bg-[#2563eb]">
@@ -199,11 +199,11 @@ export default function Dashboard() {
   }
 
   if (!loaded) {
-    return <div className="flex h-screen bg-[#0a0e17] items-center justify-center text-gray-500">Loading...</div>;
+    return <div className="flex h-screen bg-[#FDFBF7] items-center justify-center text-gray-500">Loading...</div>;
   }
 
   return (
-    <div className="flex h-screen bg-[#0a0e17] text-gray-200 overflow-hidden">
+    <div className="flex h-screen bg-[#FDFBF7] text-gray-800 overflow-hidden">
       {/* === FIXED SIDEBAR FRAME === */}
       <div className={sidebarClasses}>
         <Sidebar
@@ -237,8 +237,8 @@ export default function Dashboard() {
       {/* === MAIN CONTENT === */}
       <main className={mainClasses}>
         {/* Header */}
-        <header className="flex items-center gap-2 md:gap-4 px-3 md:px-4 py-3 border-b border-[#1e293b] bg-[#0f1320] shrink-0">
-          <span className="text-sm font-semibold text-gray-300 hidden sm:block">
+        <header className="flex items-center gap-2 md:gap-4 px-3 md:px-4 py-3 border-b border-[#1a1a1a] bg-white shrink-0">
+          <span className="text-sm font-semibold text-gray-800 hidden sm:block">
             {activeBoard === "briefing" && "☀️ Daily Briefing"}
             {activeBoard === "dashboard" && "📋 Dashboard"}
             {activeBoard === "setup" && "⚡ Hermes Setup"}
@@ -263,7 +263,7 @@ export default function Dashboard() {
           <div className="flex gap-1 ml-auto tabs-scroll">
             <HelpToggle />
             <button onClick={() => setChatOpen(!chatOpen)}
-              className={`px-3 py-1.5 text-xs rounded-md flex items-center gap-1 ${chatOpen ? "bg-[#3b82f6] text-white" : "text-gray-500 hover:text-gray-300"}`}>
+              className={`px-3 py-1.5 text-xs rounded-md flex items-center gap-1 ${chatOpen ? "bg-[#3b82f6] text-white" : "text-gray-500 hover:text-gray-800"}`}>
               <MessageCircle size={14} />Chat
             </button>
           </div>
@@ -327,7 +327,7 @@ export default function Dashboard() {
 
           {activeBoard === "clients" && selectedClient && (
             <div className="flex flex-1 overflow-hidden crm-stack">
-              <div className="w-80 border-r border-[#1e293b] overflow-y-auto flex flex-col">
+              <div className="w-80 border-r border-[#1a1a1a] overflow-y-auto flex flex-col">
                 <ClientDetail client={selectedClient} onSave={handleSaveClient} onDelete={handleDeleteClient}
                   onClose={() => setActiveBoard("dashboard")} />
               </div>
@@ -365,7 +365,7 @@ export default function Dashboard() {
           <div className="fixed md:relative inset-y-0 right-0 w-80 max-w-[85vw] z-40 md:z-auto animate-slide-in md:animate-none">
             <ChatWidget />
             <button onClick={() => setChatOpen(false)}
-              className="absolute top-2 right-2 md:hidden bg-[#1a1f2e] p-1 rounded text-gray-400 hover:text-white">
+              className="absolute top-2 right-2 md:hidden bg-white p-1 rounded text-gray-500 hover:text-gray-900">
               <X size={18} />
             </button>
           </div>

@@ -181,16 +181,16 @@ hermes doctor`;
   return (
     <div className="flex-1 flex flex-col overflow-hidden">
       {/* Header */}
-      <div className="px-4 py-3 border-b border-[#1e293b] bg-[#0f1320] shrink-0">
+      <div className="px-4 py-3 border-b border-[#1a1a1a] bg-white shrink-0">
         <div className="flex items-center gap-2">
           <Sparkles size={18} className="text-amber-400" />
-          <h2 className="text-sm font-semibold text-gray-200">Hermes Setup Wizard</h2>
-          <span className="text-[10px] text-gray-600 ml-auto">Step {step} of 5</span>
+          <h2 className="text-sm font-semibold text-gray-800">Hermes Setup Wizard</h2>
+          <span className="text-[10px] text-gray-500 ml-auto">Step {step} of 5</span>
         </div>
       </div>
 
       {/* Progress bar */}
-      <div className="px-4 py-2 bg-[#0a0e17] border-b border-[#1e293b] shrink-0">
+      <div className="px-4 py-2 bg-[#FDFBF7] border-b border-[#1a1a1a] shrink-0">
         <div className="flex gap-1 md:gap-2">
           {STEPS.map((s) => (
             <button
@@ -201,7 +201,7 @@ hermes doctor`;
                   ? "bg-[#3b82f6] text-white"
                   : step > s.step
                   ? "bg-[#1e293b] text-green-400"
-                  : "bg-[#1e293b] text-gray-600"
+                  : "bg-[#1e293b] text-gray-500"
               }`}
             >
               <s.icon size={12} />
@@ -217,7 +217,7 @@ hermes doctor`;
         {step === 1 && (
           <div className="max-w-lg mx-auto space-y-6">
             <div className="text-center mb-6">
-              <h3 className="text-lg font-semibold text-gray-200 mb-2">How will Hermes run?</h3>
+              <h3 className="text-lg font-semibold text-gray-800 mb-2">How will Hermes run?</h3>
               <p className="text-sm text-gray-500">Hermes connects to your dashboard via Redis. Choose where it lives.</p>
             </div>
 
@@ -226,20 +226,20 @@ hermes doctor`;
               className={`w-full p-4 rounded-xl border-2 text-left transition-all ${
                 installType === "local"
                   ? "border-[#3b82f6] bg-[#1e293b]"
-                  : "border-[#1e293b] hover:border-[#3b82f6]/50 bg-[#0f1320]"
+                  : "border-[#1a1a1a] hover:border-[#3b82f6]/50 bg-white"
               }`}
             >
               <div className="flex items-start gap-3">
                 <Monitor size={24} className="text-blue-400 mt-0.5 shrink-0" />
                 <div>
-                  <div className="font-medium text-gray-200">Local Computer</div>
+                  <div className="font-medium text-gray-800">Local Computer</div>
                   <div className="text-xs text-gray-500 mt-1">
                     Install Hermes on your Mac, Windows, or Linux machine. Free, private, always under your control.
                   </div>
                   <div className="flex gap-2 mt-2">
-                    <span className="text-[10px] bg-[#1a2436] text-blue-400 px-2 py-0.5 rounded">Free</span>
-                    <span className="text-[10px] bg-[#1a2436] text-green-400 px-2 py-0.5 rounded">Private</span>
-                    <span className="text-[10px] bg-[#1a2436] text-amber-400 px-2 py-0.5 rounded">No server costs</span>
+                    <span className="text-[10px] bg-[#E8F5E9] text-blue-400 px-2 py-0.5 rounded">Free</span>
+                    <span className="text-[10px] bg-[#E8F5E9] text-green-400 px-2 py-0.5 rounded">Private</span>
+                    <span className="text-[10px] bg-[#E8F5E9] text-amber-400 px-2 py-0.5 rounded">No server costs</span>
                   </div>
                 </div>
               </div>
@@ -250,32 +250,32 @@ hermes doctor`;
               className={`w-full p-4 rounded-xl border-2 text-left transition-all ${
                 installType === "vps"
                   ? "border-[#3b82f6] bg-[#1e293b]"
-                  : "border-[#1e293b] hover:border-[#3b82f6]/50 bg-[#0f1320]"
+                  : "border-[#1a1a1a] hover:border-[#3b82f6]/50 bg-white"
               }`}
             >
               <div className="flex items-start gap-3">
                 <Server size={24} className="text-purple-400 mt-0.5 shrink-0" />
                 <div>
-                  <div className="font-medium text-gray-200">Cloud VPS</div>
+                  <div className="font-medium text-gray-800">Cloud VPS</div>
                   <div className="text-xs text-gray-500 mt-1">
                     Run Hermes 24/7 on a virtual server. No computer needed — always online, handles cron jobs and overnight tasks.
                   </div>
                   <div className="flex gap-2 mt-2">
-                    <span className="text-[10px] bg-[#1a2436] text-purple-400 px-2 py-0.5 rounded">24/7 uptime</span>
-                    <span className="text-[10px] bg-[#1a2436] text-green-400 px-2 py-0.5 rounded">Auto-scaling</span>
-                    <span className="text-[10px] bg-[#1a2436] text-amber-400 px-2 py-0.5 rounded">~$5-10/mo</span>
+                    <span className="text-[10px] bg-[#E8F5E9] text-purple-400 px-2 py-0.5 rounded">24/7 uptime</span>
+                    <span className="text-[10px] bg-[#E8F5E9] text-green-400 px-2 py-0.5 rounded">Auto-scaling</span>
+                    <span className="text-[10px] bg-[#E8F5E9] text-amber-400 px-2 py-0.5 rounded">~$5-10/mo</span>
                   </div>
                 </div>
               </div>
             </button>
 
-            <div className="p-3 bg-[#1a2436] border border-[#3b82f6]/20 rounded-lg">
+            <div className="p-3 bg-[#E8F5E9] border border-[#3b82f6]/20 rounded-lg">
               <div className="flex gap-2">
                 <span className="text-sm mt-0.5">💡</span>
                 <div>
-                  <div className="text-xs font-medium text-gray-300">Not sure?</div>
+                  <div className="text-xs font-medium text-gray-800">Not sure?</div>
                   <div className="text-xs text-gray-500 mt-0.5">
-                    Start with <strong className="text-gray-400">Local</strong> — it's free and takes 2 minutes. You can move to VPS later by copying your config files.
+                    Start with <strong className="text-gray-500">Local</strong> — it's free and takes 2 minutes. You can move to VPS later by copying your config files.
                   </div>
                 </div>
               </div>
@@ -287,13 +287,13 @@ hermes doctor`;
         {step === 2 && (
           <div className="max-w-lg mx-auto space-y-4">
             <div className="text-center mb-6">
-              <h3 className="text-lg font-semibold text-gray-200 mb-2">API Keys</h3>
+              <h3 className="text-lg font-semibold text-gray-800 mb-2">API Keys</h3>
               <p className="text-sm text-gray-500">Hermes needs these to connect to your dashboard and AI providers.</p>
             </div>
 
             <div className="space-y-4">
               <div>
-                <label className="text-xs font-medium text-gray-400 mb-1.5 block">
+                <label className="text-xs font-medium text-gray-500 mb-1.5 block">
                   DeepSeek API Key <span className="text-red-400">*</span>
                 </label>
                 <input
@@ -301,9 +301,9 @@ hermes doctor`;
                   value={keys.deepseek}
                   onChange={(e) => updateKey("deepseek", e.target.value)}
                   placeholder="sk-..."
-                  className="w-full bg-[#0f1320] border border-[#1e293b] rounded-lg px-3 py-2 text-sm text-gray-200 placeholder-gray-600 focus:border-[#3b82f6] focus:outline-none"
+                  className="w-full bg-white border border-[#1a1a1a] rounded-lg px-3 py-2 text-sm text-gray-800 placeholder-gray-600 focus:border-[#3b82f6] focus:outline-none"
                 />
-                <div className="text-[10px] text-gray-600 mt-1">
+                <div className="text-[10px] text-gray-500 mt-1">
                   Get one at{" "}
                   <button onClick={() => window.open("https://platform.deepseek.com/api_keys", "_blank")} className="text-blue-400 hover:underline">
                     platform.deepseek.com
@@ -313,20 +313,20 @@ hermes doctor`;
               </div>
 
               <div>
-                <label className="text-xs font-medium text-gray-400 mb-1.5 block">
-                  OpenRouter API Key <span className="text-gray-600">(optional)</span>
+                <label className="text-xs font-medium text-gray-500 mb-1.5 block">
+                  OpenRouter API Key <span className="text-gray-500">(optional)</span>
                 </label>
                 <input
                   type="password"
                   value={keys.openrouter}
                   onChange={(e) => updateKey("openrouter", e.target.value)}
                   placeholder="sk-or-..."
-                  className="w-full bg-[#0f1320] border border-[#1e293b] rounded-lg px-3 py-2 text-sm text-gray-200 placeholder-gray-600 focus:border-[#3b82f6] focus:outline-none"
+                  className="w-full bg-white border border-[#1a1a1a] rounded-lg px-3 py-2 text-sm text-gray-800 placeholder-gray-600 focus:border-[#3b82f6] focus:outline-none"
                 />
               </div>
 
               <div>
-                <label className="text-xs font-medium text-gray-400 mb-1.5 block">
+                <label className="text-xs font-medium text-gray-500 mb-1.5 block">
                   Upstash Redis URL <span className="text-red-400">*</span>
                 </label>
                 <input
@@ -334,9 +334,9 @@ hermes doctor`;
                   value={keys.upstash_url}
                   onChange={(e) => updateKey("upstash_url", e.target.value)}
                   placeholder="https://your-instance.upstash.io"
-                  className="w-full bg-[#0f1320] border border-[#1e293b] rounded-lg px-3 py-2 text-sm text-gray-200 placeholder-gray-600 focus:border-[#3b82f6] focus:outline-none"
+                  className="w-full bg-white border border-[#1a1a1a] rounded-lg px-3 py-2 text-sm text-gray-800 placeholder-gray-600 focus:border-[#3b82f6] focus:outline-none"
                 />
-                <div className="text-[10px] text-gray-600 mt-1">
+                <div className="text-[10px] text-gray-500 mt-1">
                   Free tier at{" "}
                   <button onClick={() => window.open("https://console.upstash.com/redis", "_blank")} className="text-blue-400 hover:underline">
                     upstash.com
@@ -346,7 +346,7 @@ hermes doctor`;
               </div>
 
               <div>
-                <label className="text-xs font-medium text-gray-400 mb-1.5 block">
+                <label className="text-xs font-medium text-gray-500 mb-1.5 block">
                   Upstash Redis Token <span className="text-red-400">*</span>
                 </label>
                 <input
@@ -354,22 +354,22 @@ hermes doctor`;
                   value={keys.upstash_token}
                   onChange={(e) => updateKey("upstash_token", e.target.value)}
                   placeholder="your-rest-token"
-                  className="w-full bg-[#0f1320] border border-[#1e293b] rounded-lg px-3 py-2 text-sm text-gray-200 placeholder-gray-600 focus:border-[#3b82f6] focus:outline-none"
+                  className="w-full bg-white border border-[#1a1a1a] rounded-lg px-3 py-2 text-sm text-gray-800 placeholder-gray-600 focus:border-[#3b82f6] focus:outline-none"
                 />
               </div>
 
               <div>
-                <label className="text-xs font-medium text-gray-400 mb-1.5 block">
-                  Telegram Bot Token <span className="text-gray-600">(optional)</span>
+                <label className="text-xs font-medium text-gray-500 mb-1.5 block">
+                  Telegram Bot Token <span className="text-gray-500">(optional)</span>
                 </label>
                 <input
                   type="password"
                   value={keys.telegram_token}
                   onChange={(e) => updateKey("telegram_token", e.target.value)}
                   placeholder="123456:ABC-DEF..."
-                  className="w-full bg-[#0f1320] border border-[#1e293b] rounded-lg px-3 py-2 text-sm text-gray-200 placeholder-gray-600 focus:border-[#3b82f6] focus:outline-none"
+                  className="w-full bg-white border border-[#1a1a1a] rounded-lg px-3 py-2 text-sm text-gray-800 placeholder-gray-600 focus:border-[#3b82f6] focus:outline-none"
                 />
-                <div className="text-[10px] text-gray-600 mt-1">
+                <div className="text-[10px] text-gray-500 mt-1">
                   Create via @BotFather on Telegram — lets you talk to Hermes from your phone
                 </div>
               </div>
@@ -388,7 +388,7 @@ hermes doctor`;
         {step === 3 && (
           <div className="max-w-lg mx-auto space-y-4">
             <div className="text-center mb-6">
-              <h3 className="text-lg font-semibold text-gray-200 mb-2">Your Config Files</h3>
+              <h3 className="text-lg font-semibold text-gray-800 mb-2">Your Config Files</h3>
               <p className="text-sm text-gray-500">Download these and place them in <code className="bg-[#1e293b] px-1.5 py-0.5 rounded text-xs">~/.hermes/</code></p>
             </div>
 
@@ -403,68 +403,68 @@ hermes doctor`;
             {generated && (
               <div className="space-y-3 mt-4">
                 {/* config.yaml download */}
-                <div className="bg-[#0f1320] border border-[#1e293b] rounded-lg p-4">
+                <div className="bg-white border border-[#1a1a1a] rounded-lg p-4">
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-2">
                       <FileText size={16} className="text-blue-400" />
-                      <span className="text-sm font-medium text-gray-300">config.yaml</span>
+                      <span className="text-sm font-medium text-gray-800">config.yaml</span>
                     </div>
                     <div className="flex gap-1">
                       <button
                         onClick={() => copyToClipboard(generateConfigYaml(), "config")}
-                        className="p-1.5 text-gray-500 hover:text-gray-300 rounded"
+                        className="p-1.5 text-gray-500 hover:text-gray-800 rounded"
                         title="Copy"
                       >
                         {copiedCmd === "config" ? <Check size={14} className="text-green-400" /> : <Copy size={14} />}
                       </button>
                       <button
                         onClick={() => downloadFile(generateConfigYaml(), "config.yaml")}
-                        className="p-1.5 text-gray-500 hover:text-gray-300 rounded"
+                        className="p-1.5 text-gray-500 hover:text-gray-800 rounded"
                         title="Download"
                       >
                         <Download size={14} />
                       </button>
                     </div>
                   </div>
-                  <pre className="text-[11px] text-gray-400 bg-[#0a0e17] rounded p-3 overflow-x-auto max-h-60">
+                  <pre className="text-[11px] text-gray-500 bg-[#FDFBF7] rounded p-3 overflow-x-auto max-h-60">
 {generateConfigYaml()}</pre>
                 </div>
 
                 {/* .env download */}
-                <div className="bg-[#0f1320] border border-[#1e293b] rounded-lg p-4">
+                <div className="bg-white border border-[#1a1a1a] rounded-lg p-4">
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-2">
                       <Key size={16} className="text-amber-400" />
-                      <span className="text-sm font-medium text-gray-300">.env</span>
+                      <span className="text-sm font-medium text-gray-800">.env</span>
                       <span className="text-[10px] text-red-400">Keep this private!</span>
                     </div>
                     <div className="flex gap-1">
                       <button
                         onClick={() => copyToClipboard(generateEnvFile(), "env")}
-                        className="p-1.5 text-gray-500 hover:text-gray-300 rounded"
+                        className="p-1.5 text-gray-500 hover:text-gray-800 rounded"
                         title="Copy"
                       >
                         {copiedCmd === "env" ? <Check size={14} className="text-green-400" /> : <Copy size={14} />}
                       </button>
                       <button
                         onClick={() => downloadFile(generateEnvFile(), ".env")}
-                        className="p-1.5 text-gray-500 hover:text-gray-300 rounded"
+                        className="p-1.5 text-gray-500 hover:text-gray-800 rounded"
                         title="Download"
                       >
                         <Download size={14} />
                       </button>
                     </div>
                   </div>
-                  <pre className="text-[11px] text-gray-400 bg-[#0a0e17] rounded p-3 overflow-x-auto max-h-60">
+                  <pre className="text-[11px] text-gray-500 bg-[#FDFBF7] rounded p-3 overflow-x-auto max-h-60">
 {generateEnvFile()}</pre>
                 </div>
 
                 {/* Muslim SOUL download */}
-                <div className="bg-[#0f1320] border border-[#1e293b] rounded-lg p-4">
+                <div className="bg-white border border-[#1a1a1a] rounded-lg p-4">
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-2">
                       <BookOpen size={16} className="text-emerald-400" />
-                      <span className="text-sm font-medium text-gray-300">SOUL.md — Muslim Business Companion</span>
+                      <span className="text-sm font-medium text-gray-800">SOUL.md — Muslim Business Companion</span>
                       <span className="text-[10px] text-emerald-400">Recommended</span>
                     </div>
                     <div className="flex gap-1">
@@ -478,7 +478,7 @@ hermes doctor`;
                             setTimeout(() => setCopiedCmd(null), 2000);
                           } catch {}
                         }}
-                        className="p-1.5 text-gray-500 hover:text-gray-300 rounded"
+                        className="p-1.5 text-gray-500 hover:text-gray-800 rounded"
                         title="Copy"
                       >
                         {copiedCmd === "soul" ? <Check size={14} className="text-green-400" /> : <Copy size={14} />}
@@ -486,7 +486,7 @@ hermes doctor`;
                       <a
                         href="/souls/business-soul.md"
                         download="SOUL.md"
-                        className="p-1.5 text-gray-500 hover:text-gray-300 rounded"
+                        className="p-1.5 text-gray-500 hover:text-gray-800 rounded"
                         title="Download"
                       >
                         <Download size={14} />
@@ -514,30 +514,30 @@ hermes doctor`;
         {step === 4 && (
           <div className="max-w-lg mx-auto space-y-4">
             <div className="text-center mb-6">
-              <h3 className="text-lg font-semibold text-gray-200 mb-2">
+              <h3 className="text-lg font-semibold text-gray-800 mb-2">
                 {installType === "vps" ? "Install on VPS" : "Install on Your Computer"}
               </h3>
               <p className="text-sm text-gray-500">Run these commands in your terminal</p>
             </div>
 
             <div className="space-y-4">
-              <div className="bg-[#0f1320] border border-[#1e293b] rounded-lg p-4">
+              <div className="bg-white border border-[#1a1a1a] rounded-lg p-4">
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-2">
                     <Terminal size={16} className="text-green-400" />
-                    <span className="text-sm font-medium text-gray-300">
+                    <span className="text-sm font-medium text-gray-800">
                       {installType === "vps" ? "VPS Setup Commands" : "Installation Commands"}
                     </span>
                   </div>
                   <button
                     onClick={() => copyToClipboard(getInstallCommand(), "install")}
-                    className="p-1.5 text-gray-500 hover:text-gray-300 rounded"
+                    className="p-1.5 text-gray-500 hover:text-gray-800 rounded"
                     title="Copy all"
                   >
                     {copiedCmd === "install" ? <Check size={14} className="text-green-400" /> : <Copy size={14} />}
                   </button>
                 </div>
-                <pre className="text-[11px] text-gray-400 bg-[#0a0e17] rounded p-3 overflow-x-auto whitespace-pre-wrap">
+                <pre className="text-[11px] text-gray-500 bg-[#FDFBF7] rounded p-3 overflow-x-auto whitespace-pre-wrap">
 {getInstallCommand()}</pre>
               </div>
 
@@ -546,7 +546,7 @@ hermes doctor`;
                 <div className="flex gap-3">
                   <div className="w-5 h-5 rounded-full bg-[#3b82f6] text-white text-[10px] flex items-center justify-center shrink-0 mt-0.5">1</div>
                   <div>
-                    <div className="text-sm text-gray-300">Install Hermes</div>
+                    <div className="text-sm text-gray-800">Install Hermes</div>
                     <div className="text-xs text-gray-500">Copy and paste the command above into your terminal</div>
                   </div>
                 </div>
@@ -554,7 +554,7 @@ hermes doctor`;
                 <div className="flex gap-3">
                   <div className="w-5 h-5 rounded-full bg-[#3b82f6] text-white text-[10px] flex items-center justify-center shrink-0 mt-0.5">2</div>
                   <div>
-                    <div className="text-sm text-gray-300">Place config files</div>
+                    <div className="text-sm text-gray-800">Place config files</div>
                     <div className="text-xs text-gray-500">
                       Move <code className="bg-[#1e293b] px-1 rounded text-[10px]">config.yaml</code> and{" "}
                       <code className="bg-[#1e293b] px-1 rounded text-[10px]">.env</code> into{" "}
@@ -566,7 +566,7 @@ hermes doctor`;
                 <div className="flex gap-3">
                   <div className="w-5 h-5 rounded-full bg-[#3b82f6] text-white text-[10px] flex items-center justify-center shrink-0 mt-0.5">3</div>
                   <div>
-                    <div className="text-sm text-gray-300">(Optional) Install Muslim SOUL</div>
+                    <div className="text-sm text-gray-800">(Optional) Install Muslim SOUL</div>
                     <div className="text-xs text-gray-500">
                       Place <code className="bg-[#1e293b] px-1 rounded text-[10px]">SOUL.md</code> in{" "}
                       <code className="bg-[#1e293b] px-1 rounded text-[10px]">~/.hermes/</code> and run{" "}
@@ -578,7 +578,7 @@ hermes doctor`;
                 <div className="flex gap-3">
                   <div className="w-5 h-5 rounded-full bg-[#3b82f6] text-white text-[10px] flex items-center justify-center shrink-0 mt-0.5">4</div>
                   <div>
-                    <div className="text-sm text-gray-300">Start Hermes</div>
+                    <div className="text-sm text-gray-800">Start Hermes</div>
                     <div className="text-xs text-gray-500">
                       <code className="bg-[#1e293b] px-1 rounded text-[10px]">hermes gateway start</code> — this runs Hermes as a background service
                     </div>
@@ -586,11 +586,11 @@ hermes doctor`;
                 </div>
               </div>
 
-              <div className="p-3 bg-[#1a2436] border border-[#3b82f6]/20 rounded-lg">
+              <div className="p-3 bg-[#E8F5E9] border border-[#3b82f6]/20 rounded-lg">
                 <div className="flex gap-2">
                   <span className="text-sm">📖</span>
                   <div>
-                    <div className="text-xs font-medium text-gray-300">Full documentation</div>
+                    <div className="text-xs font-medium text-gray-800">Full documentation</div>
                     <button onClick={openHermesDocs} className="text-xs text-blue-400 hover:underline mt-0.5">
                       hermes-agent.nousresearch.com/docs
                     </button>
@@ -613,20 +613,20 @@ hermes doctor`;
           <div className="max-w-lg mx-auto space-y-4">
             <div className="text-center mb-6">
               <div className="text-4xl mb-3">🔗</div>
-              <h3 className="text-lg font-semibold text-gray-200 mb-2">Connect & Test</h3>
+              <h3 className="text-lg font-semibold text-gray-800 mb-2">Connect & Test</h3>
               <p className="text-sm text-gray-500">Verify Hermes can talk to your dashboard</p>
             </div>
 
             <div className="space-y-4">
               {/* Test commands */}
-              <div className="bg-[#0f1320] border border-[#1e293b] rounded-lg p-4">
-                <div className="text-xs font-medium text-gray-400 mb-3">Run these in your terminal to verify:</div>
+              <div className="bg-white border border-[#1a1a1a] rounded-lg p-4">
+                <div className="text-xs font-medium text-gray-500 mb-3">Run these in your terminal to verify:</div>
                 <div className="space-y-3">
                   <div>
                     <div className="text-[10px] text-gray-500 mb-1">Check Hermes is running:</div>
-                    <div className="flex items-center justify-between bg-[#0a0e17] rounded px-3 py-1.5">
+                    <div className="flex items-center justify-between bg-[#FDFBF7] rounded px-3 py-1.5">
                       <code className="text-xs text-green-400">hermes status</code>
-                      <button onClick={() => copyToClipboard("hermes status", "status")} className="p-1 text-gray-600 hover:text-gray-400">
+                      <button onClick={() => copyToClipboard("hermes status", "status")} className="p-1 text-gray-500 hover:text-gray-500">
                         {copiedCmd === "status" ? <Check size={12} className="text-green-400" /> : <Copy size={12} />}
                       </button>
                     </div>
@@ -634,9 +634,9 @@ hermes doctor`;
 
                   <div>
                     <div className="text-[10px] text-gray-500 mb-1">Health check:</div>
-                    <div className="flex items-center justify-between bg-[#0a0e17] rounded px-3 py-1.5">
+                    <div className="flex items-center justify-between bg-[#FDFBF7] rounded px-3 py-1.5">
                       <code className="text-xs text-green-400">hermes doctor</code>
-                      <button onClick={() => copyToClipboard("hermes doctor", "doctor")} className="p-1 text-gray-600 hover:text-gray-400">
+                      <button onClick={() => copyToClipboard("hermes doctor", "doctor")} className="p-1 text-gray-500 hover:text-gray-500">
                         {copiedCmd === "doctor" ? <Check size={12} className="text-green-400" /> : <Copy size={12} />}
                       </button>
                     </div>
@@ -644,9 +644,9 @@ hermes doctor`;
 
                   <div>
                     <div className="text-[10px] text-gray-500 mb-1">Test chat (should respond):</div>
-                    <div className="flex items-center justify-between bg-[#0a0e17] rounded px-3 py-1.5">
+                    <div className="flex items-center justify-between bg-[#FDFBF7] rounded px-3 py-1.5">
                       <code className="text-xs text-green-400">hermes chat -q "hello"</code>
-                      <button onClick={() => copyToClipboard('hermes chat -q "hello"', "chat")} className="p-1 text-gray-600 hover:text-gray-400">
+                      <button onClick={() => copyToClipboard('hermes chat -q "hello"', "chat")} className="p-1 text-gray-500 hover:text-gray-500">
                         {copiedCmd === "chat" ? <Check size={12} className="text-green-400" /> : <Copy size={12} />}
                       </button>
                     </div>
@@ -654,9 +654,9 @@ hermes doctor`;
 
                   <div>
                     <div className="text-[10px] text-gray-500 mb-1">Check Redis connection:</div>
-                    <div className="flex items-center justify-between bg-[#0a0e17] rounded px-3 py-1.5">
+                    <div className="flex items-center justify-between bg-[#FDFBF7] rounded px-3 py-1.5">
                       <code className="text-xs text-green-400">hermes gateway status</code>
-                      <button onClick={() => copyToClipboard("hermes gateway status", "gw")} className="p-1 text-gray-600 hover:text-gray-400">
+                      <button onClick={() => copyToClipboard("hermes gateway status", "gw")} className="p-1 text-gray-500 hover:text-gray-500">
                         {copiedCmd === "gw" ? <Check size={12} className="text-green-400" /> : <Copy size={12} />}
                       </button>
                     </div>
@@ -665,16 +665,16 @@ hermes doctor`;
               </div>
 
               {/* What to expect */}
-              <div className="bg-[#0f1320] border border-[#1e293b] rounded-lg p-4">
-                <div className="text-xs font-medium text-gray-400 mb-3">What success looks like:</div>
-                <div className="space-y-2 text-xs text-gray-400">
+              <div className="bg-white border border-[#1a1a1a] rounded-lg p-4">
+                <div className="text-xs font-medium text-gray-500 mb-3">What success looks like:</div>
+                <div className="space-y-2 text-xs text-gray-500">
                   <div className="flex items-start gap-2">
                     <span className="text-green-400 mt-0.5">✓</span>
-                    <span><code className="bg-[#0a0e17] px-1 rounded">hermes status</code> shows all components green</span>
+                    <span><code className="bg-[#FDFBF7] px-1 rounded">hermes status</code> shows all components green</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="text-green-400 mt-0.5">✓</span>
-                    <span><code className="bg-[#0a0e17] px-1 rounded">hermes chat -q "hello"</code> returns a response</span>
+                    <span><code className="bg-[#FDFBF7] px-1 rounded">hermes chat -q "hello"</code> returns a response</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="text-green-400 mt-0.5">✓</span>
@@ -688,11 +688,11 @@ hermes doctor`;
               </div>
 
               {/* Dashboard connection info */}
-              <div className="p-3 bg-[#1a2436] border border-[#3b82f6]/20 rounded-lg">
+              <div className="p-3 bg-[#E8F5E9] border border-[#3b82f6]/20 rounded-lg">
                 <div className="flex gap-2">
                   <Code size={16} className="text-blue-400 shrink-0 mt-0.5" />
                   <div>
-                    <div className="text-xs font-medium text-gray-300">How Hermes talks to your dashboard</div>
+                    <div className="text-xs font-medium text-gray-800">How Hermes talks to your dashboard</div>
                     <div className="text-[11px] text-gray-500 mt-1 leading-relaxed">
                       Hermes ↔ Upstash Redis ↔ Dashboard<br />
                       The chat bridge syncs every 60 seconds. Your dashboard's Messages board is the live chat interface.
@@ -703,16 +703,16 @@ hermes doctor`;
               </div>
 
               {/* Troubleshooting guide */}
-              <div className="bg-[#0f1320] border border-[#1e293b] rounded-lg p-4">
+              <div className="bg-white border border-[#1a1a1a] rounded-lg p-4">
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-2">
                     <BookOpen size={16} className="text-amber-400" />
-                    <span className="text-sm font-medium text-gray-300">Troubleshooting Guide</span>
+                    <span className="text-sm font-medium text-gray-800">Troubleshooting Guide</span>
                   </div>
                   <a
                     href="/troubleshooting.md"
                     download="troubleshooting.md"
-                    className="p-1.5 text-gray-500 hover:text-gray-300 rounded"
+                    className="p-1.5 text-gray-500 hover:text-gray-800 rounded"
                     title="Download"
                   >
                     <Download size={14} />
@@ -735,11 +735,11 @@ hermes doctor`;
       </div>
 
       {/* Footer nav */}
-      <div className="px-4 py-3 border-t border-[#1e293b] bg-[#0f1320] shrink-0 flex justify-between">
+      <div className="px-4 py-3 border-t border-[#1a1a1a] bg-white shrink-0 flex justify-between">
         <button
           onClick={() => setStep(Math.max(1, step - 1) as SetupStep)}
           disabled={step === 1}
-          className="px-3 py-1.5 text-xs text-gray-500 hover:text-gray-300 disabled:opacity-30 rounded"
+          className="px-3 py-1.5 text-xs text-gray-500 hover:text-gray-800 disabled:opacity-30 rounded"
         >
           ← Back
         </button>

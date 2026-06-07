@@ -26,10 +26,10 @@ export class ErrorBoundary extends Component<Props, State> {
     if (this.state.hasError) {
       if (this.props.fallback) return this.props.fallback;
       return (
-        <div className="flex h-screen bg-[#0a0e17] items-center justify-center">
+        <div className="flex h-screen bg-[#FDFBF7] items-center justify-center">
           <div className="text-center max-w-sm px-4">
             <div className="text-4xl mb-4">⚠️</div>
-            <h2 className="text-lg font-semibold text-gray-300 mb-2">Something went wrong</h2>
+            <h2 className="text-lg font-semibold text-gray-800 mb-2">Something went wrong</h2>
             <p className="text-sm text-gray-500 mb-4">
               {this.state.error?.message || "The dashboard couldn't load. This may be due to browser privacy settings."}
             </p>
@@ -42,7 +42,7 @@ export class ErrorBoundary extends Component<Props, State> {
             >
               Try Again
             </button>
-            <p className="text-xs text-gray-600 mt-4">
+            <p className="text-xs text-gray-500 mt-4">
               If this persists, try disabling private browsing or content blockers.
             </p>
           </div>

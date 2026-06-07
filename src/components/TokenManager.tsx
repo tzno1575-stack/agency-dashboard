@@ -121,8 +121,8 @@ export default function TokenManager() {
       {/* Header */}
       <div className="flex items-center gap-2 mb-2">
         <Key size={16} className="text-amber-400" />
-        <h3 className="text-sm font-semibold text-gray-200">API Token Manager</h3>
-        <span className="text-[10px] text-gray-600 ml-auto">{tokens.filter(t => t.status === "expired" || t.status === "expiring").length} need attention</span>
+        <h3 className="text-sm font-semibold text-gray-800">API Token Manager</h3>
+        <span className="text-[10px] text-gray-500 ml-auto">{tokens.filter(t => t.status === "expired" || t.status === "expiring").length} need attention</span>
       </div>
 
       {/* Expiring alert */}
@@ -143,23 +143,23 @@ export default function TokenManager() {
         {tokens.map((token) => (
           <div
             key={token.id}
-            className={`bg-[#0f1320] border rounded-lg p-3 transition-all ${
+            className={`bg-white border rounded-lg p-3 transition-all ${
               token.status === "expired"
                 ? "border-red-500/30"
                 : token.status === "expiring"
                 ? "border-amber-500/30"
-                : "border-[#1e293b]"
+                : "border-[#1a1a1a]"
             }`}
           >
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3 min-w-0">
                 <span className="text-xl">{token.icon}</span>
                 <div className="min-w-0">
-                  <div className="text-sm font-medium text-gray-200">{token.platform}</div>
+                  <div className="text-sm font-medium text-gray-800">{token.platform}</div>
                   <div className="flex items-center gap-2 mt-0.5">
-                    <code className="text-[10px] text-gray-600 bg-[#0a0e17] px-1.5 py-0.5 rounded">{token.envVar}</code>
+                    <code className="text-[10px] text-gray-500 bg-[#FDFBF7] px-1.5 py-0.5 rounded">{token.envVar}</code>
                     {token.expiresAt && (
-                      <span className="text-[10px] text-gray-600 flex items-center gap-1">
+                      <span className="text-[10px] text-gray-500 flex items-center gap-1">
                         <Clock size={10} />
                         {token.status === "expired" ? "Expired " : "Expires "}
                         {token.expiresAt}
@@ -174,10 +174,10 @@ export default function TokenManager() {
             </div>
 
             {/* Actions */}
-            <div className="flex items-center gap-2 mt-2 pt-2 border-t border-[#1e293b]">
+            <div className="flex items-center gap-2 mt-2 pt-2 border-t border-[#1a1a1a]">
               <button
                 onClick={() => refreshToken(token)}
-                className="flex-1 py-1.5 text-xs bg-[#1e293b] text-gray-300 rounded hover:bg-[#2a3446] flex items-center justify-center gap-1"
+                className="flex-1 py-1.5 text-xs bg-[#1e293b] text-gray-800 rounded hover:bg-[#2a3446] flex items-center justify-center gap-1"
               >
                 <RefreshCw size={11} />
                 {token.status === "expired" || token.status === "expiring"
@@ -190,29 +190,29 @@ export default function TokenManager() {
                 onClick={() => {
                   window.open(token.refreshUrl, "_blank");
                 }}
-                className="p-1.5 text-gray-500 hover:text-gray-300 rounded"
+                className="p-1.5 text-gray-500 hover:text-gray-800 rounded"
                 title="Open platform"
               >
                 <ExternalLink size={13} />
               </button>
             </div>
 
-            <div className="text-[10px] text-gray-600 mt-1.5">{token.notes}</div>
+            <div className="text-[10px] text-gray-500 mt-1.5">{token.notes}</div>
           </div>
         ))}
       </div>
 
       {/* How it works */}
-      <div className="p-3 bg-[#1a2436] border border-[#3b82f6]/20 rounded-lg">
+      <div className="p-3 bg-[#E8F5E9] border border-[#3b82f6]/20 rounded-lg">
         <div className="flex gap-2">
           <Shield size={14} className="text-blue-400 shrink-0 mt-0.5" />
           <div>
-            <div className="text-xs font-medium text-gray-300">How token refresh works</div>
+            <div className="text-xs font-medium text-gray-800">How token refresh works</div>
             <div className="text-[11px] text-gray-500 mt-1 leading-relaxed">
-              Click &quot;Refresh Now&quot; → platform opens in new tab → generate new token → paste it back. The dashboard stores tokens in <code className="bg-[#0a0e17] px-1 rounded text-[10px]">~/.hermes/.env</code> and Vercel environment variables. Facebook tokens expire every 60 days.
+              Click &quot;Refresh Now&quot; → platform opens in new tab → generate new token → paste it back. The dashboard stores tokens in <code className="bg-[#FDFBF7] px-1 rounded text-[10px]">~/.hermes/.env</code> and Vercel environment variables. Facebook tokens expire every 60 days.
             </div>
             <div className="text-[11px] text-gray-500 mt-1">
-              <strong className="text-gray-400">n8n alternative:</strong> n8n can auto-refresh Facebook tokens using OAuth flows. Once set up, tokens never expire — n8n handles the refresh silently.
+              <strong className="text-gray-500">n8n alternative:</strong> n8n can auto-refresh Facebook tokens using OAuth flows. Once set up, tokens never expire — n8n handles the refresh silently.
             </div>
           </div>
         </div>

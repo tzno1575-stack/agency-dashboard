@@ -47,7 +47,7 @@ const integrations: IntegrationStatus[] = [
     id: "github",
     name: "GitHub",
     icon: GitBranch,
-    color: "text-gray-300",
+    color: "text-gray-800",
     status: "connected",
     details: "tzno1575-stack · agency-dashboard repo · 40+ commits",
     fields: [
@@ -135,7 +135,7 @@ export default function SettingsPanel() {
 
   return (
     <div className="flex-1 overflow-y-auto p-4">
-      <h2 className="text-sm font-semibold text-gray-300 uppercase tracking-wider mb-4">
+      <h2 className="text-sm font-semibold text-gray-800 uppercase tracking-wider mb-4">
         Settings & Integrations
       </h2>
 
@@ -150,17 +150,17 @@ export default function SettingsPanel() {
           return (
             <div
               key={integration.id}
-              className="bg-[#1a1f2e] border border-[#1e293b] rounded-lg overflow-hidden"
+              className="bg-white border border-[#1a1a1a] rounded-lg overflow-hidden"
             >
               {/* Status line with live result */}
               <button
                 onClick={() => setExpanded(isExpanded ? null : integration.id)}
-                className="w-full flex items-center gap-3 p-4 text-left hover:bg-[#1a1f2e]/80 transition-colors"
+                className="w-full flex items-center gap-3 p-4 text-left hover:bg-white/80 transition-colors"
               >
                 <Icon size={18} className={integration.color} />
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2">
-                    <h3 className="text-sm font-medium text-gray-200">{integration.name}</h3>
+                    <h3 className="text-sm font-medium text-gray-800">{integration.name}</h3>
                     {results[integration.id] ? (
                       results[integration.id].status === "done" ? (
                         <CheckCircle2 size={12} className="text-green-400" />
@@ -189,14 +189,14 @@ export default function SettingsPanel() {
 
               {/* Expanded config */}
               {isExpanded && integration.fields && (
-                <div className="px-4 pb-4 border-t border-[#1e293b] pt-3 space-y-3">
+                <div className="px-4 pb-4 border-t border-[#1a1a1a] pt-3 space-y-3">
                   {integration.fields.map((field) => (
                     <div key={field.key}>
                       <label className="text-xs text-gray-500 mb-1 block">{field.label}</label>
                       <input
                         type={field.type}
                         placeholder={field.placeholder}
-                        className="w-full bg-[#0f1320] border border-[#1e293b] rounded px-3 py-2 text-xs text-gray-200 focus:outline-none focus:border-[#3b82f6]"
+                        className="w-full bg-white border border-[#1a1a1a] rounded px-3 py-2 text-xs text-gray-800 focus:outline-none focus:border-[#3b82f6]"
                       />
                     </div>
                   ))}
@@ -205,7 +205,7 @@ export default function SettingsPanel() {
                     <button
                       onClick={() => handleTest(integration.id)}
                       disabled={testing === integration.id}
-                      className="flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-lg bg-[#0f1320] border border-[#1e293b] text-gray-300 hover:border-[#3b82f6] disabled:opacity-50 transition-colors"
+                      className="flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-lg bg-white border border-[#1a1a1a] text-gray-800 hover:border-[#3b82f6] disabled:opacity-50 transition-colors"
                     >
                       {testing === integration.id ? (
                         <RefreshCw size={12} className="animate-spin" />
@@ -229,28 +229,28 @@ export default function SettingsPanel() {
         })}
 
         {/* Quick Actions */}
-        <div className="bg-[#1a1f2e] border border-[#1e293b] rounded-lg p-4">
+        <div className="bg-white border border-[#1a1a1a] rounded-lg p-4">
           <div className="flex items-center gap-3 mb-3">
             <Shield size={16} className="text-yellow-500" />
             <div>
-              <h3 className="text-sm font-medium text-gray-200">Quick Actions</h3>
+              <h3 className="text-sm font-medium text-gray-800">Quick Actions</h3>
               <p className="text-xs text-gray-500">One-tap operations</p>
             </div>
           </div>
           <div className="grid grid-cols-2 gap-2">
-            <button className="flex items-center gap-1.5 justify-center px-3 py-2 bg-[#0f1320] border border-[#1e293b] rounded-lg text-xs text-gray-400 hover:text-white hover:border-[#3b82f6] transition-colors">
+            <button className="flex items-center gap-1.5 justify-center px-3 py-2 bg-white border border-[#1a1a1a] rounded-lg text-xs text-gray-500 hover:text-gray-900 hover:border-[#3b82f6] transition-colors">
               <RefreshCw size={12} />
               Redeploy Dashboard
             </button>
-            <button className="flex items-center gap-1.5 justify-center px-3 py-2 bg-[#0f1320] border border-[#1e293b] rounded-lg text-xs text-gray-400 hover:text-white hover:border-[#3b82f6] transition-colors">
+            <button className="flex items-center gap-1.5 justify-center px-3 py-2 bg-white border border-[#1a1a1a] rounded-lg text-xs text-gray-500 hover:text-gray-900 hover:border-[#3b82f6] transition-colors">
               <GitBranch size={12} />
               View on GitHub
             </button>
-            <button className="flex items-center gap-1.5 justify-center px-3 py-2 bg-[#0f1320] border border-[#1e293b] rounded-lg text-xs text-gray-400 hover:text-white hover:border-[#3b82f6] transition-colors">
+            <button className="flex items-center gap-1.5 justify-center px-3 py-2 bg-white border border-[#1a1a1a] rounded-lg text-xs text-gray-500 hover:text-gray-900 hover:border-[#3b82f6] transition-colors">
               <Bot size={12} />
               Restart Hermes
             </button>
-            <button className="flex items-center gap-1.5 justify-center px-3 py-2 bg-[#0f1320] border border-[#1e293b] rounded-lg text-xs text-gray-400 hover:text-white hover:border-[#3b82f6] transition-colors">
+            <button className="flex items-center gap-1.5 justify-center px-3 py-2 bg-white border border-[#1a1a1a] rounded-lg text-xs text-gray-500 hover:text-gray-900 hover:border-[#3b82f6] transition-colors">
               <ExternalLink size={12} />
               Open Dashboard
             </button>
@@ -258,11 +258,11 @@ export default function SettingsPanel() {
         </div>
 
         {/* System Health — Hermes Doctor equivalent */}
-        <div className="bg-[#1a1f2e] border border-[#1e293b] rounded-lg p-4">
+        <div className="bg-white border border-[#1a1a1a] rounded-lg p-4">
           <div className="flex items-center gap-3 mb-3">
             <Stethoscope size={16} className="text-green-400" />
             <div>
-              <h3 className="text-sm font-medium text-gray-200">System Health</h3>
+              <h3 className="text-sm font-medium text-gray-800">System Health</h3>
               <p className="text-xs text-gray-500">Dashboard + Hermes self-repair status</p>
             </div>
             <span className={`ml-auto text-[10px] px-2 py-0.5 rounded-full ${
@@ -275,12 +275,12 @@ export default function SettingsPanel() {
             </span>
           </div>
           {healthLoading ? (
-            <p className="text-xs text-gray-600">Checking system health...</p>
+            <p className="text-xs text-gray-500">Checking system health...</p>
           ) : health?.checks ? (
             <div className="space-y-2">
               {Object.entries(health.checks as Record<string, any>).map(([key, check]: [string, any]) => (
                 <div key={key} className="flex items-center justify-between text-xs">
-                  <span className="text-gray-400 capitalize">{key.replace("_", " ")}</span>
+                  <span className="text-gray-500 capitalize">{key.replace("_", " ")}</span>
                   <span className={`flex items-center gap-1 ${
                     check.status === "ok" ? "text-green-400" :
                     check.status === "warn" ? "text-yellow-400" : "text-red-400"
@@ -296,24 +296,24 @@ export default function SettingsPanel() {
         </div>
 
         {/* Theme */}
-        <div className="bg-[#1a1f2e] border border-[#1e293b] rounded-lg p-4">
+        <div className="bg-white border border-[#1a1a1a] rounded-lg p-4">
           <div className="flex items-center gap-3 mb-3">
             <Palette size={16} className="text-purple-400" />
             <div>
-              <h3 className="text-sm font-medium text-gray-200">Theme</h3>
+              <h3 className="text-sm font-medium text-gray-800">Theme</h3>
               <p className="text-xs text-gray-500">Dashboard appearance</p>
             </div>
           </div>
           <div className="flex gap-2">
             <button className="px-3 py-1.5 bg-[#3b82f6] text-white text-xs rounded-lg">Dark</button>
-            <button className="px-3 py-1.5 bg-[#1a1f2e] border border-[#1e293b] text-gray-400 text-xs rounded-lg">
+            <button className="px-3 py-1.5 bg-white border border-[#1a1a1a] text-gray-500 text-xs rounded-lg">
               🕌 Al-Aql (Green/Gold)
             </button>
           </div>
         </div>
 
         {/* Token Manager */}
-        <div className="bg-[#1a1f2e] border border-[#1e293b] rounded-lg p-4">
+        <div className="bg-white border border-[#1a1a1a] rounded-lg p-4">
           <TokenManager />
         </div>
       </div>

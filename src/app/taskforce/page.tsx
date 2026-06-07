@@ -56,17 +56,17 @@ export default function TaskForcePage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0e17] text-gray-200">
-      <header className="flex items-center gap-3 px-4 py-3 border-b border-[#1e293b] bg-[#0f1320] sticky top-0 z-10">
+    <div className="min-h-screen bg-[#FDFBF7] text-gray-800">
+      <header className="flex items-center gap-3 px-4 py-3 border-b border-[#1a1a1a] bg-white sticky top-0 z-10">
         <a
           href="/"
-          className="p-1.5 text-gray-400 hover:text-white rounded-lg hover:bg-[#1a1f2e] transition-colors"
+          className="p-1.5 text-gray-500 hover:text-gray-900 rounded-lg hover:bg-white transition-colors"
           title="Back to Dashboard"
         >
           <ArrowLeft size={18} />
         </a>
         <div>
-          <h1 className="text-sm font-semibold text-gray-300 uppercase tracking-wider">📎 TaskForce — Agent Desk</h1>
+          <h1 className="text-sm font-semibold text-gray-800 uppercase tracking-wider">📎 TaskForce — Agent Desk</h1>
           <p className="text-xs text-gray-500">{activeAgents.length} active · {completedAgents.length} completed</p>
         </div>
         <button
@@ -80,8 +80,8 @@ export default function TaskForcePage() {
       <div className="max-w-4xl mx-auto p-4">
         {/* Deploy form */}
         {showDeploy && (
-          <div className="bg-[#1a1f2e] border border-[#1e293b] rounded-lg p-4 mb-6 space-y-3">
-            <h3 className="text-sm font-semibold text-gray-300">Deploy New Agent</h3>
+          <div className="bg-white border border-[#1a1a1a] rounded-lg p-4 mb-6 space-y-3">
+            <h3 className="text-sm font-semibold text-gray-800">Deploy New Agent</h3>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
               {agentTypes.map((at) => (
                 <button
@@ -89,8 +89,8 @@ export default function TaskForcePage() {
                   onClick={() => setSelectedType(at.id)}
                   className={`text-left px-3 py-2 rounded-lg text-xs transition-colors ${
                     selectedType === at.id
-                      ? "bg-[#3b82f6]/20 border border-[#3b82f6]/50 text-white"
-                      : "bg-[#0f1320] border border-[#1e293b] text-gray-400 hover:text-gray-200"
+                      ? "bg-[#3b82f6]/20 border border-[#3b82f6]/50 text-black"
+                      : "bg-white border border-[#1a1a1a] text-gray-500 hover:text-gray-800"
                   }`}
                 >
                   <span className="block text-base mb-0.5">{at.icon}</span>
@@ -101,7 +101,7 @@ export default function TaskForcePage() {
             <select
               value={selectedClient}
               onChange={(e) => setSelectedClient(e.target.value)}
-              className="w-full bg-[#0f1320] border border-[#1e293b] rounded-lg px-3 py-2 text-sm text-gray-200"
+              className="w-full bg-white border border-[#1a1a1a] rounded-lg px-3 py-2 text-sm text-gray-800"
             >
               <option value="">Select client...</option>
               {clients.map((c) => (
@@ -111,7 +111,7 @@ export default function TaskForcePage() {
             <textarea
               value={task}
               onChange={(e) => setTask(e.target.value)}
-              className="w-full bg-[#0f1320] border border-[#1e293b] rounded-lg px-3 py-2 text-sm text-gray-200 h-24 resize-none"
+              className="w-full bg-white border border-[#1a1a1a] rounded-lg px-3 py-2 text-sm text-gray-800 h-24 resize-none"
               placeholder="What should the agent do? e.g. 'Write 3 Facebook posts about sensory-friendly rides'"
             />
             <button
@@ -132,15 +132,15 @@ export default function TaskForcePage() {
               {activeAgents.map((agent) => {
                 const badge = statusBadges[agent.status];
                 return (
-                  <div key={agent.id} className="bg-[#1a1f2e] border border-[#1e293b] rounded-lg p-3">
+                  <div key={agent.id} className="bg-white border border-[#1a1a1a] rounded-lg p-3">
                     <div className="flex items-center gap-2">
-                      <span className="text-sm font-medium text-gray-200">{agent.name}</span>
+                      <span className="text-sm font-medium text-gray-800">{agent.name}</span>
                       <span className={`text-xs px-2 py-0.5 rounded-full ${badge.color}`}>{badge.label}</span>
                     </div>
-                    <p className="text-sm text-gray-400 mt-1">{agent.task}</p>
-                    <p className="text-xs text-gray-600 mt-1">{agent.createdAt}</p>
+                    <p className="text-sm text-gray-500 mt-1">{agent.task}</p>
+                    <p className="text-xs text-gray-500 mt-1">{agent.createdAt}</p>
                     {agent.output && (
-                      <div className="mt-2 p-2 bg-[#0f1320] rounded text-xs text-gray-400">{agent.output}</div>
+                      <div className="mt-2 p-2 bg-white rounded text-xs text-gray-500">{agent.output}</div>
                     )}
                   </div>
                 );
@@ -157,14 +157,14 @@ export default function TaskForcePage() {
               {completedAgents.map((agent) => {
                 const badge = statusBadges[agent.status];
                 return (
-                  <div key={agent.id} className={`bg-[#1a1f2e] border rounded-lg p-3 ${agent.status === "done" ? "border-green-500/20" : "border-red-500/20"}`}>
+                  <div key={agent.id} className={`bg-white border rounded-lg p-3 ${agent.status === "done" ? "border-green-500/20" : "border-red-500/20"}`}>
                     <div className="flex items-center gap-2">
-                      <span className="text-sm font-medium text-gray-300">{agent.name}</span>
+                      <span className="text-sm font-medium text-gray-800">{agent.name}</span>
                       <span className={`text-xs px-2 py-0.5 rounded-full ${badge.color}`}>{badge.label}</span>
                     </div>
                     <p className="text-sm text-gray-500 mt-1">{agent.task}</p>
                     {agent.output && (
-                      <div className="mt-2 p-2 bg-[#0f1320] rounded text-xs text-gray-400">{agent.output}</div>
+                      <div className="mt-2 p-2 bg-white rounded text-xs text-gray-500">{agent.output}</div>
                     )}
                   </div>
                 );
@@ -174,7 +174,7 @@ export default function TaskForcePage() {
         )}
 
         {agents.length === 0 && (
-          <div className="text-center text-gray-600 mt-20">
+          <div className="text-center text-gray-500 mt-20">
             <p className="text-4xl mb-3">📎</p>
             <p className="text-lg mb-1">No agents yet</p>
             <p className="text-sm">Deploy an agent — hire a Content Writer, SEO Auditor, or Dev Agent</p>

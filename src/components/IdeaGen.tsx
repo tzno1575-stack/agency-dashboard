@@ -36,15 +36,15 @@ export default function IdeaGen() {
   };
 
   return (
-    <div className="flex-1 flex flex-col overflow-hidden bg-[#0a0e17]">
+    <div className="flex-1 flex flex-col overflow-hidden bg-[#FDFBF7]">
       {/* Header */}
-      <div className="px-4 py-4 border-b border-[#1e293b] bg-[#0f1320] shrink-0">
+      <div className="px-4 py-4 border-b border-[#1a1a1a] bg-white shrink-0">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 rounded-lg bg-yellow-500/20 flex items-center justify-center">
             <Lightbulb size={18} className="text-yellow-400" />
           </div>
           <div>
-            <h2 className="text-sm font-semibold text-gray-300">Idea Generator</h2>
+            <h2 className="text-sm font-semibold text-gray-800">Idea Generator</h2>
             <p className="text-[10px] text-gray-500">Enter your skills and budget — get business ideas</p>
           </div>
         </div>
@@ -53,7 +53,7 @@ export default function IdeaGen() {
       <div className="flex-1 overflow-y-auto">
         <div className="max-w-4xl mx-auto p-4 md:p-6 space-y-6">
           {/* Form */}
-          <div className="bg-[#1a1f2e] border border-[#1e293b] rounded-xl p-4 md:p-6 space-y-4">
+          <div className="bg-white border border-[#1a1a1a] rounded-xl p-4 md:p-6 space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
               <div>
                 <label className="text-[10px] font-medium text-gray-500 uppercase tracking-wider block mb-1.5">
@@ -66,7 +66,7 @@ export default function IdeaGen() {
                   onKeyDown={(e) => e.key === "Enter" && handleGenerate()}
                   placeholder="e.g. web dev, marketing, writing"
                   autoFocus
-                  className="w-full bg-[#0f1320] border border-[#1e293b] rounded-lg px-4 py-2.5 text-sm text-gray-200 focus:outline-none focus:border-[#3b82f6] placeholder:text-gray-600"
+                  className="w-full bg-white border border-[#1a1a1a] rounded-lg px-4 py-2.5 text-sm text-gray-800 focus:outline-none focus:border-[#3b82f6] placeholder:text-gray-500"
                 />
               </div>
               <div>
@@ -76,7 +76,7 @@ export default function IdeaGen() {
                 <select
                   value={budget}
                   onChange={(e) => setBudget(e.target.value)}
-                  className="w-full bg-[#0f1320] border border-[#1e293b] rounded-lg px-4 py-2.5 text-sm text-gray-200 focus:outline-none focus:border-[#3b82f6]"
+                  className="w-full bg-white border border-[#1a1a1a] rounded-lg px-4 py-2.5 text-sm text-gray-800 focus:outline-none focus:border-[#3b82f6]"
                 >
                   <option value="">Select budget...</option>
                   <option value="100">£100</option>
@@ -96,7 +96,7 @@ export default function IdeaGen() {
                   onChange={(e) => setLocation(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && handleGenerate()}
                   placeholder="e.g. Birmingham, UK"
-                  className="w-full bg-[#0f1320] border border-[#1e293b] rounded-lg px-4 py-2.5 text-sm text-gray-200 focus:outline-none focus:border-[#3b82f6] placeholder:text-gray-600"
+                  className="w-full bg-white border border-[#1a1a1a] rounded-lg px-4 py-2.5 text-sm text-gray-800 focus:outline-none focus:border-[#3b82f6] placeholder:text-gray-500"
                 />
               </div>
             </div>
@@ -119,10 +119,10 @@ export default function IdeaGen() {
                   {ideas.map((idea) => (
                     <div
                       key={idea.id}
-                      className="bg-[#1a1f2e] border border-[#1e293b] rounded-xl p-5 hover:border-[#3b82f6]/30 transition-colors"
+                      className="bg-white border border-[#1a1a1a] rounded-xl p-5 hover:border-[#3b82f6]/30 transition-colors"
                     >
                       <div className="flex items-start justify-between mb-3">
-                        <h3 className="text-base font-semibold text-gray-200">{idea.businessName}</h3>
+                        <h3 className="text-base font-semibold text-gray-800">{idea.businessName}</h3>
                         <span
                           className={`text-[10px] px-2 py-0.5 rounded-full border font-medium ${
                             difficultyColors[idea.difficulty]
@@ -131,8 +131,8 @@ export default function IdeaGen() {
                           {idea.difficulty}
                         </span>
                       </div>
-                      <p className="text-sm text-gray-400 mb-4 leading-relaxed">{idea.description}</p>
-                      <div className="flex items-center gap-4 text-xs text-gray-500 border-t border-[#1e293b] pt-3">
+                      <p className="text-sm text-gray-500 mb-4 leading-relaxed">{idea.description}</p>
+                      <div className="flex items-center gap-4 text-xs text-gray-500 border-t border-[#1a1a1a] pt-3">
                         <span className="flex items-center gap-1.5">
                           <TrendingUp size={12} className="text-green-400" />
                           {idea.estimatedRevenue}
@@ -155,7 +155,7 @@ export default function IdeaGen() {
           )}
 
           {!hasSearched && (
-            <div className="text-center text-gray-600 py-16">
+            <div className="text-center text-gray-500 py-16">
               <Lightbulb size={40} className="mx-auto mb-4 opacity-20" />
               <p className="text-sm">Enter your skills and budget above to generate business ideas</p>
               <p className="text-xs mt-1">Ideas are filtered by your startup budget</p>
