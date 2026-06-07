@@ -250,6 +250,30 @@ export default function TaskForce({ agents, clients, onDeploy }: TaskForceProps)
             )}
           </div>
 
+          {/* Agent Team Templates */}
+          <div className="mb-4 bg-[#1a1f2e] border border-[#1e293b] rounded-xl p-3">
+            <div className="flex items-center gap-1.5 mb-2">
+              <span className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider">Team Templates</span>
+            </div>
+            <div className="space-y-1">
+              {[
+                { name: "YouTube Team", agents: "Scout + Forge + Pulse + Bridge", desc: "Research → Script → SEO → Community" },
+                { name: "Marketing Team", agents: "Analyst + Creator + Publisher", desc: "Research → Create → Distribute" },
+                { name: "Solo Agent", agents: "Custom role", desc: "Single specialist agent" },
+              ].map(t => (
+                <button key={t.name}
+                  onClick={() => {
+                    setSelectedType("content");
+                    setTask(`Team: ${t.name} — ${t.desc}`);
+                  }}
+                  className="w-full text-left px-2.5 py-1.5 rounded-lg text-[10px] text-gray-400 hover:text-white hover:bg-[#0f1320] transition-colors">
+                  <span className="font-medium text-gray-300">{t.name}</span>
+                  <span className="text-gray-600 ml-2">{t.agents}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+
           {/* Agent type */}
           <label className="text-xs text-gray-500 mb-1 block">Agent Type</label>
           <div className="space-y-1 mb-4">
