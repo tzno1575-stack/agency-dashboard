@@ -102,7 +102,7 @@ export default function Dashboard() {
       const data = await res.json();
       if (data.agents?.length > 0) setAgents(data.agents);
     } catch {}
-  }, [setAgents]);
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(fetchAgents, 10000);
@@ -229,7 +229,7 @@ export default function Dashboard() {
       {/* Mobile backdrop when sidebar expanded */}
       {sidebarExpandedMobile && (
         <div
-          className="fixed inset-0 bg-black/50 z-30 md:hidden"
+          className="fixed inset-0 bg-black/50 z-40 md:hidden"
           onClick={() => setSidebarExpandedMobile(false)}
         />
       )}
@@ -362,7 +362,7 @@ export default function Dashboard() {
       {chatOpen && (
         <>
           <div className="fixed inset-0 bg-black/50 z-30 md:hidden" onClick={() => setChatOpen(false)} />
-          <div className="fixed md:relative inset-y-0 right-0 w-80 max-w-[85vw] z-40 md:z-auto animate-slide-in md:animate-none">
+          <div className="fixed md:relative md:h-full inset-y-0 right-0 w-80 max-w-[85vw] z-50 md:z-auto animate-slide-in md:animate-none">
             <ChatWidget />
             <button onClick={() => setChatOpen(false)}
               className="absolute top-2 right-2 md:hidden bg-white p-1 rounded text-gray-500 hover:text-gray-900">

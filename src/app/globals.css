@@ -114,7 +114,7 @@ body {
   }
 
   .app-sidebar.expanded-mobile .sidebar-section-label {
-    display: block;
+    /* display:block already set at lines 108-114 — this block deleted */
   }
 
   /* Mobile sidebar: big touch targets (56px icon-only bar) */
