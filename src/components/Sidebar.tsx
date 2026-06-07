@@ -1,9 +1,9 @@
 "use client";
 
-import { Home, Briefcase, MessageSquare, Settings, Users, Zap, ClipboardCheck, Share2, PenLine, ChevronLeft, ChevronRight, Menu, Lightbulb, Bell, DollarSign, Sunrise, Film, Link, BookOpen } from "lucide-react";
+import { Home, Briefcase, MessageSquare, Settings, Users, Zap, ClipboardCheck, Share2, PenLine, ChevronLeft, ChevronRight, Menu, Lightbulb, Bell, DollarSign, Sunrise, Film, Link, BookOpen, FileText } from "lucide-react";
 import type { Client } from "@/lib/data";
 
-export type NavBoard = "briefing" | "dashboard" | "videostudio" | "taskforce" | "autopilot" | "ideagen" | "review" | "social" | "content" | "affiliates" | "kdp" | "clients" | "billing" | "notifications" | "messages" | "settings";
+export type NavBoard = "briefing" | "dashboard" | "videostudio" | "taskforce" | "autopilot" | "ideagen" | "standards" | "review" | "social" | "content" | "affiliates" | "kdp" | "clients" | "billing" | "notifications" | "messages" | "settings";
 
 interface SidebarProps {
   clients: Client[];
@@ -27,6 +27,7 @@ const boards: { id: NavBoard; section: string; name: string; icon: typeof Home; 
   { id: "taskforce", section: "boards", name: "TaskForce", icon: Users, color: "text-amber-400" },
   { id: "autopilot", section: "boards", name: "AutoPilot", icon: Zap, color: "text-purple-400" },
   { id: "ideagen", section: "boards", name: "IdeaGen", icon: Lightbulb, color: "text-yellow-400" },
+  { id: "standards", section: "boards", name: "Standards", icon: FileText, color: "text-indigo-400" },
   { id: "review", section: "workspace", name: "Review Queue", icon: ClipboardCheck, color: "text-yellow-400" },
   { id: "social", section: "workspace", name: "Social", icon: Share2, color: "text-blue-400" },
   { id: "content", section: "workspace", name: "Content", icon: PenLine, color: "text-green-400" },

@@ -19,12 +19,13 @@ import DailyBriefing from "@/components/DailyBriefing";
 import VideoStudio from "@/components/VideoStudio";
 import AffiliateHub from "@/components/AffiliateHub";
 import KdpHub from "@/components/KdpHub";
+import StandardsPanel from "@/components/StandardsPanel";
 import BottomNav from "@/components/BottomNav";
 import { sampleClients, sampleTasks, sampleSocialAccounts, normalizeClient, normalizeClients } from "@/lib/data";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import type { Client, Task, Agent, SocialAccount, ScheduledPost } from "@/lib/data";
 
-type NavBoard = "briefing" | "dashboard" | "videostudio" | "taskforce" | "autopilot" | "ideagen" | "review" | "social" | "content" | "affiliates" | "kdp" | "clients" | "billing" | "notifications" | "messages" | "settings";
+type NavBoard = "briefing" | "dashboard" | "videostudio" | "taskforce" | "autopilot" | "ideagen" | "standards" | "review" | "social" | "content" | "affiliates" | "kdp" | "clients" | "billing" | "notifications" | "messages" | "settings";
 
 export default function Dashboard() {
   const [clientsRaw, setClientsRaw, clientsLoaded] = useLocalStorage<Client[]>("aqd_clients", sampleClients);
@@ -241,6 +242,7 @@ export default function Dashboard() {
             {activeBoard === "taskforce" && "📎 TaskForce"}
             {activeBoard === "autopilot" && "🤖 AutoPilot"}
             {activeBoard === "ideagen" && "💡 IdeaGen"}
+            {activeBoard === "standards" && "📐 Standards & Specs"}
             {activeBoard === "review" && "✅ Review Queue"}
             {activeBoard === "social" && "📱 Social Accounts"}
             {activeBoard === "content" && "✍️ Content Studio"}
@@ -278,6 +280,8 @@ export default function Dashboard() {
           {activeBoard === "autopilot" && <LiveMonitor />}
 
           {activeBoard === "ideagen" && <IdeaGen />}
+
+          {activeBoard === "standards" && <StandardsPanel />}
 
           {activeBoard === "review" && <ReviewQueue />}
 
