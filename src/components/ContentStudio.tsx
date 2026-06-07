@@ -397,6 +397,58 @@ export default function ContentStudio({ posts, accounts, clientId, onSave, onDel
             </div>
           )}
         </div>
+      )}
+
+        {activeTab === "higgsfield" && (
+          <div className="max-w-2xl mx-auto p-4 space-y-5">
+            <div className="bg-gradient-to-r from-[#1a1f2e] to-[#1e2440] border border-[#2a3050] rounded-xl p-4">
+              <div className="flex items-center gap-2 mb-3">
+                <span className="text-base">🎬</span>
+                <span className="text-xs font-semibold text-gray-300">HIGGSFIELD SUPERCOMPUTER</span>
+                <span className="text-[10px] bg-green-500/10 text-green-400 px-1.5 py-0.5 rounded-full ml-auto">New</span>
+              </div>
+              <p className="text-xs text-gray-500 mb-3">One-chat marketing campaign builder. Auto-switches between Claude Opus 4.7, GPT 5.5 Pro, Gemini 3.1. 50+ tools, persistent brand memory.</p>
+            </div>
+
+            <div className="bg-[#1a1f2e] border border-[#1e293b] rounded-xl p-4">
+              <h4 className="text-xs font-semibold text-gray-300 mb-3">Workflow</h4>
+              <div className="space-y-2 text-xs text-gray-400">
+                <div className="flex items-start gap-2"><span className="text-green-400 shrink-0 mt-0.5">1.</span><span>Connect <span className="text-blue-400">Google Drive</span> or <span className="text-blue-400">Notion</span> — gives agent persistent brand memory</span></div>
+                <div className="flex items-start gap-2"><span className="text-green-400 shrink-0 mt-0.5">2.</span><span>Paste product link + one-shot prompt: "Create 5-image campaign for this product"</span></div>
+                <div className="flex items-start gap-2"><span className="text-green-400 shrink-0 mt-0.5">3.</span><span>Iterate: ask for UGC talking-head video (15s, 9x16 vertical)</span></div>
+                <div className="flex items-start gap-2"><span className="text-green-400 shrink-0 mt-0.5">4.</span><span>Save perfected workflow as a <span className="text-purple-400">Skill</span> — reusable, shareable with team</span></div>
+                <div className="flex items-start gap-2"><span className="text-green-400 shrink-0 mt-0.5">5.</span><span>Full campaign ready: images + video + brand voice — all from one chat</span></div>
+              </div>
+            </div>
+
+            <div className="bg-[#1a1f2e] border border-[#1e293b] rounded-xl p-4">
+              <h4 className="text-xs font-semibold text-gray-300 mb-3">Model Auto-Switching</h4>
+              <div className="grid grid-cols-3 gap-2 text-center text-[10px]">
+                <div className="bg-[#0f1320] rounded-lg p-2.5"><p className="text-blue-400 font-medium mb-0.5">Claude Opus 4.7</p><p className="text-gray-600">Script writing</p></div>
+                <div className="bg-[#0f1320] rounded-lg p-2.5"><p className="text-purple-400 font-medium mb-0.5">GPT 5.5 Pro</p><p className="text-gray-600">Image generation</p></div>
+                <div className="bg-[#0f1320] rounded-lg p-2.5"><p className="text-green-400 font-medium mb-0.5">Gemini 3.1</p><p className="text-gray-600">Audio mixing</p></div>
+              </div>
+            </div>
+
+            <div className="bg-[#1a1f2e] border border-[#1e293b] rounded-xl p-4">
+              <h4 className="text-xs font-semibold text-gray-300 mb-3">Integrations (30+)</h4>
+              <div className="flex flex-wrap gap-1.5">
+                {["Google Drive","Notion","Gmail","Figma","Slack","Obsidian","GitHub"].map(i => (
+                  <span key={i} className="text-[10px] bg-[#0f1320] text-gray-400 px-2 py-1 rounded-full border border-[#1e293b]">{i}</span>
+                ))}
+              </div>
+            </div>
+
+            <div className="bg-gradient-to-r from-[#1a1f2e] to-[#1e2440] border border-[#2a3050] rounded-xl p-4">
+              <h4 className="text-xs font-semibold text-gray-300 mb-3">Pricing Guide</h4>
+              <div className="space-y-2 text-xs text-gray-400">
+                <div className="flex justify-between"><span>Ultra plan</span><span className="text-green-400">~16,000 videos/mo</span></div>
+                <div className="flex justify-between"><span>Plus plan</span><span className="text-green-400">~533 videos/mo</span></div>
+                <div className="flex justify-between"><span>5 images + 1 video</span><span className="text-gray-500">~300 credits</span></div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
