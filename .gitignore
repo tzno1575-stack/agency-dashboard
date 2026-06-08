@@ -15,6 +15,8 @@
 
 # next.js
 /.next/
+/.next.bad/
+/.next-*/
 /out/
 
 # production
@@ -23,6 +25,11 @@
 # misc
 .DS_Store
 *.pem
+# Stale duplicate files from earlier rename operations
+src/components/* 2.tsx
+src/components/* 3.tsx
+src/components/.KanbanBoard*
+src/components/*.bak
 
 # debug
 npm-debug.log*

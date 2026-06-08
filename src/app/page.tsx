@@ -54,6 +54,7 @@ export default function Dashboard() {
   const [selectedClientId, setSelectedClientId] = useState<string | null>(sampleClients[0]?.id ?? null);
   const [activeBoard, setActiveBoard] = useState<NavBoard>("briefing");
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [mobileExpanded, setMobileExpanded] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
   const [fatalError, setFatalError] = useState<string | null>(null);
 
@@ -233,6 +234,8 @@ export default function Dashboard() {
           reviewCount={reviewCount}
           collapsed={sidebarCollapsed}
           onToggleCollapse={() => setSidebarCollapsed(prev => !prev)}
+          onMobileExpand={() => setMobileExpanded(true)}
+          mobileExpanded={mobileExpanded}
         />
       </div>
 

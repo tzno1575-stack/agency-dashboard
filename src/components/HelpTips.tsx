@@ -19,12 +19,20 @@ interface Tip {
 const TIPS: Record<NavBoard, Tip[]> = {
   aichat: [
     {
-      text: "Free AI chat with 500+ models via Puter.js — select GPT, Claude, DeepSeek, or Gemini from the dropdown. Zero cost to Aql Digital.",
+      text: "Local LLM by default — your dashboard chats with Ollama running on this machine. Zero cost, fully private. Switch to Cloud only when you need a bigger model.",
+    },
+    {
+      text: "The model dropdown shows every model you've pulled with `ollama pull`. Use llama3.1:8b for general chat, qwen2.5-coder:7b for code.",
+    },
+  ],
+  frontdesk: [
+    {
+      text: "Front Desk is your client intake view — new leads land here, you can qualify, schedule, and hand off to active projects.",
     },
   ],
   briefing: [
     {
-      text: "Your daily briefing shows prayer times (Tipton, UK UoIS method), top 3 tasks, agent status, and upcoming deadlines — all in one glance.",
+      text: "Your daily briefing shows prayer times, top 3 tasks, agent status, and upcoming deadlines — all in one glance. Location is set in Settings.",
     },
     {
       text: "Tasks marked 'overdue' appear at the top in red. Complete them first to clear the board.",
