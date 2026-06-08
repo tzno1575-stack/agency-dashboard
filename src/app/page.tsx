@@ -6,6 +6,7 @@ import Sidebar from "@/components/Sidebar";
 import KanbanBoard from "@/components/KanbanBoard";
 import ChatWidget from "@/components/ChatWidget";
 import ReviewQueue from "@/components/ReviewQueue";
+import FrontDesk from "@/components/FrontDesk";
 import ClientDetail from "@/components/ClientDetail";
 import TaskForce from "@/components/TaskForce";
 import SocialAccountsPanel from "@/components/SocialAccountsPanel";
@@ -29,7 +30,7 @@ import { sampleClients, sampleTasks, sampleSocialAccounts, sampleAgents, sampleP
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import type { Client, Task, Agent, SocialAccount, ScheduledPost } from "@/lib/data";
 
-type NavBoard = "briefing" | "dashboard" | "aichat" | "setup" | "sitebuilder" | "videostudio" | "taskforce" | "autopilot" | "ideagen" | "standards" | "review" | "social" | "content" | "affiliates" | "kdp" | "clients" | "billing" | "notifications" | "messages" | "settings";
+type NavBoard = "briefing" | "frontdesk" | "dashboard" | "aichat" | "setup" | "sitebuilder" | "videostudio" | "taskforce" | "autopilot" | "ideagen" | "standards" | "review" | "social" | "content" | "affiliates" | "kdp" | "clients" | "billing" | "notifications" | "messages" | "settings";
 
 export default function Dashboard() {
   const [clientsRaw, setClientsRaw, clientsLoaded] = useLocalStorage<Client[]>("aqd_clients", sampleClients);
@@ -49,6 +50,7 @@ export default function Dashboard() {
   const [socialAccounts, setSocialAccounts, socialLoaded] = useLocalStorage<SocialAccount[]>("aqd_social", sampleSocialAccounts);
   const [posts, setPosts, postsLoaded] = useLocalStorage<ScheduledPost[]>("aqd_posts", samplePosts);
   const [reviewCount, setReviewCount] = useState(0);
+  const [frontdeskCount, setFrontdeskCount] = useState(0);
   const [selectedClientId, setSelectedClientId] = useState<string | null>(sampleClients[0]?.id ?? null);
   const [activeBoard, setActiveBoard] = useState<NavBoard>("briefing");
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
@@ -120,6 +122,19 @@ export default function Dashboard() {
     };
     fetchReview();
     const interval = setInterval(fetchReview, 15000);
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    const fetchFrontdesk = async () => {
+      try {
+        const res = await fetch("/api/frontdesk");
+        const data = await res.json();
+        setFrontdeskCount(data.counts?.total || 0);
+      } catch {}
+    };
+    fetchFrontdesk();
+    const interval = setInterval(fetchFrontdesk, 30000);
     return () => clearInterval(interval);
   }, []);
 
@@ -229,6 +244,7 @@ export default function Dashboard() {
         {/* Board name — always visible, centered on mobile */}
         <span className="text-base font-bold text-gray-800 flex-1 text-center md:text-left">
           {activeBoard === "briefing" && "☀️ Daily Briefing"}
+          {activeBoard === "frontdesk" && "🚪 Front Desk"}
           {activeBoard === "dashboard" && "📋 Tasks"}
           {activeBoard === "aichat" && "🤖 AI Chat"}
           {activeBoard === "setup" && "⚡ Hermes Setup"}
@@ -263,6 +279,7 @@ export default function Dashboard() {
         <HelpTips board={activeBoard} />
         <div className="flex-1 min-h-0 flex flex-col">
           {activeBoard === "briefing" && <DailyBriefing />}
+          {activeBoard === "frontdesk" && <FrontDesk />}
 
           {activeBoard === "setup" && <SetupBoard />}
 
@@ -348,7 +365,7 @@ export default function Dashboard() {
 
       {/* Bottom Navigation (mobile) */}
       <BottomNav activeView={chatOpen ? "messages" : activeBoard}
-        agentCount={agentCount} reviewCount={reviewCount} onNavigate={handleBottomNav} />
+        agentCount={agentCount} reviewCount={reviewCount} frontdeskCount={frontdeskCount} onNavigate={handleBottomNav} />
 
       {/* Chat panel — desktop only, full-width on mobile use Messages board */}
       {chatOpen && activeBoard !== "messages" && (

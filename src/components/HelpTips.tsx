@@ -5,7 +5,7 @@ import { Lightbulb, X } from "lucide-react";
 import { useState } from "react";
 
 export type NavBoard =
-  | "briefing" | "dashboard" | "aichat" | "setup" | "sitebuilder" | "videostudio" | "taskforce"
+  | "briefing" | "frontdesk" | "dashboard" | "aichat" | "setup" | "sitebuilder" | "videostudio" | "taskforce"
   | "autopilot" | "ideagen" | "standards" | "review" | "social"
   | "content" | "affiliates" | "kdp" | "clients" | "billing"
   | "notifications" | "messages" | "settings";
